@@ -1,4 +1,4 @@
-package UITest;
+package ConsoleTest;
 import java.util.LinkedList;
 import Entities.*;
 import Logic.*;
