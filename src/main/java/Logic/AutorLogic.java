@@ -1,29 +1,28 @@
 package Logic;
 
 import java.util.LinkedList;
-
-import Data.AutorData;
+import Data.DataAutor;
 import Entities.Autor;
 
 public class AutorLogic {
-	private AutorData autorData;
+	private DataAutor dataAutor;
 	
 	public AutorLogic(){
-		autorData = new AutorData();
+		dataAutor = new DataAutor();
 	}
 	public LinkedList<Autor> getAll(){
-		return autorData.getAll();
+		return dataAutor.getAll();
 	}
 	public Autor getOneById(Autor autor) {
-		return autorData.getById(autor);
+		return dataAutor.getById(autor);
 	}
 	public void add(Autor autor) {
-		autorData.add(autor);
+		dataAutor.add(autor);
 	}
 	public void update(Autor autor) {
-		autorData.update(autor);
+		dataAutor.update(autor);
 	}
 	public void remove(Autor autor) {
-		autorData.remove(autor);
+		dataAutor.remove(autor);
 	}
 }

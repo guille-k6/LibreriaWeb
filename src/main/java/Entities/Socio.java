@@ -8,6 +8,9 @@ public class Socio {
 	private String domicilio;
 	private String telefono;
 	private String estadoSocio;
+	private String contrasenia;
+	private String usuario;
+	private boolean isAdmin;
 	public int getIdSocio() {
 		return idSocio;
 	}
@@ -19,6 +22,18 @@ public class Socio {
 	}
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
+	}
+	public String getUsuario() {
+		return this.usuario;
+	}
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
+	}
+	public String getContrasenia() {
+		return this.contrasenia;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 	public String getNombre() {
 		return nombre;
@@ -49,6 +64,12 @@ public class Socio {
 	}
 	public void setEstadoSocio(String estadoSocio) {
 		this.estadoSocio = estadoSocio;
+	}
+	public boolean getAdmin() {
+		return isAdmin;
+	}
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 }

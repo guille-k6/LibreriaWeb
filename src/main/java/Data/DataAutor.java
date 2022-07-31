@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import Entities.*;
 
-public class AutorData {
+public class DataAutor {
 	
 	public LinkedList<Autor> getAll(){
 		Statement stmt=null;
@@ -148,6 +148,7 @@ public class AutorData {
             	e.printStackTrace();
             }
 		}
-	}	
+	}	// FIN METODO REMOVE
+
 
 }
