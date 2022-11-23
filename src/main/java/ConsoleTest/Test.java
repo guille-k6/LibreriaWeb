@@ -6,16 +6,12 @@ import Entities.*;
 import Logic.*;
 public class Test {
 
-	public static void main(String[] args) {
-		SocioLogic soclog = new SocioLogic();
-		DataSocio socData = new DataSocio();
+	public static void main(String[] args) {	
 		
-		// PRUEBA GETBYUSER
-		Socio miSocio = new Socio();
-		miSocio.setUsuario("juanperez");
-		miSocio.setContrasenia("juanperez1");
-		miSocio = socData.getByUser(miSocio);
-		System.out.println(miSocio.getIdSocio() +" "+ miSocio.getNombre());		
+		AutorLogic autlog = new AutorLogic();
+		Autor elAutor = new Autor();
+		elAutor.setIdAutor(12);
+		autlog.remove(elAutor);
 		
 		// PRUEBA GETALL
 		/*LinkedList<Socio> losSocios = soclog.getAll();

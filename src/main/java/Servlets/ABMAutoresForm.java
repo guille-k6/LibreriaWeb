@@ -29,7 +29,7 @@ public class ABMAutoresForm extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -37,38 +37,40 @@ public class ABMAutoresForm extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Recupero opción y usuario.
 		Socio socio = new Socio();		
 		socio = (Socio)request.getSession().getAttribute("usuario");		
 		String opc = request.getParameter("opcion");
+		String edit = request.getParameter("editar");
+		String eliminar = request.getParameter("eliminar");
 		
-		switch(opc) {
-		
-		case ("alta"):
+		if(opc!=null){
 			// Lo mando a la sección alta
-			request.getRequestDispatcher("WEB-INF/pages/admin/AltaAutores.jsp").forward(request, response);
-			break;
-		case("editar"):
+			request.getRequestDispatcher("WEB-INF/pages/admin/AltaAutores.jsp").forward(request, response);			
+		}else if(edit!=null){
 			// Recupero el ID y lo mando a la sección modificar
-			String idModificar = request.getParameter("data-id");
-			request.getSession().setAttribute("idModificar", idModificar);
-			request.getRequestDispatcher("WEB-INF/pages/admin/ModificarAutores.jsp").forward(request, response);
-			break;
-		case("eliminar"):
-			// Recupero el ID
-			String idBaja = request.getParameter("data-id");
+			String idModificar = request.getParameter("editar");
+			request.setAttribute("idModificar", idModificar);
 			DataAutor autlog = new DataAutor();
 			Autor autor = new Autor();
 			
-			// Busco el autor con ese ID y lo mando como parámetro al autor a la página de eliminar.
-			//autor.setIdAutor(Integer.parseInt(idBaja));
-			//Autor autorBaja = autlog.getById(autor);
-			request.setAttribute("idFalopa", idBaja);
-			request.getRequestDispatcher("WEB-INF/pages/admin/BajaAutores.jsp").forward(request, response);
-			break;
+			//Busco el autor con ese ID y lo mando como parámetro al autor a la página de modificar.
+			autor.setIdAutor(Integer.parseInt(idModificar));
+			Autor autorModificar = autlog.getById(autor);
+			request.setAttribute("autorModificar", autorModificar);
+			request.getRequestDispatcher("WEB-INF/pages/admin/ModificarAutores.jsp").forward(request, response);			
+		}else if(eliminar!=null){
+			String idBaja = request.getParameter("eliminar");
+			DataAutor autlog = new DataAutor();
+			Autor autor = new Autor();
+			
+			//Busco el autor con ese ID y lo mando como parámetro al autor a la página de eliminar.
+			autor.setIdAutor(Integer.parseInt(idBaja));
+			Autor autorBaja = autlog.getById(autor);
+			request.setAttribute("autorBaja", autorBaja);
+			request.getRequestDispatcher("WEB-INF/pages/admin/BajaAutores.jsp").forward(request, response);			
 		}
-		
 		// Mando al socio para que se quede logeado.
 		request.getSession().setAttribute("usuario", socio);
 	}

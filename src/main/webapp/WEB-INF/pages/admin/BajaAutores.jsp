@@ -20,8 +20,7 @@
 // 		if(!c.getAdmin()){
 // 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 // 		}
-		//Autor autor = (Autor)request.getAttribute("autorBaja");
-		String elId = (String)request.getAttribute("idFalopa");
+		Autor autor = (Autor)request.getAttribute("autorBaja");
 	%>
 </head>
 <body>
@@ -43,17 +42,20 @@
   </div>
 </nav>
 
-	<h2>Bienvenido, <%= c.getNombre() %> admin <%=elId %></h2>
+	<h2>Bienvenido, <%= c.getNombre() %> admin</h2>
 	<h3>Baja autor</h3>
 	<form action="bajaAutor" method="post">
+	
+		<label for="id">Id del autor:</label> <br>
+		<input type="text" class="form-control" name="id" value="<%=autor.getIdAutor()%>" readonly> <br>
 		
 		<label for="nombre">Nombre del autor:</label> <br>
-		<input type="text" class="form-control" name="nombre" disabled> <br>
+		<input type="text" class="form-control" name="nombre" value="<%=autor.getNombre()%>" readonly> <br>
 		
 		<label for="apellido">Apellido del autor:</label> <br>
-		<input type="text" class="form-control" name="apellido" disabled> <br>		
+		<input type="text" class="form-control" name="apellido" value="<%=autor.getApellido()%>" readonly> <br>		
 				
-		<button type="submit" name="opcion" value="bajaAutor" class="input-button">Eliminar autor</button>
+		<button type="submit" name="opcion" value="eliminar" class="input-button">Eliminar autor</button>
         <button type="submit" name="opcion" value="cancelar" class="input-button">Cancelar</button>
 	</form> 
 

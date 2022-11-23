@@ -19,6 +19,10 @@
 	<%
 		Socio c = (Socio)session.getAttribute("usuario");
 	 	String mensaje = (String)request.getAttribute("estado");
+	 	
+		LinkedList<Autor> autores = new LinkedList<Autor>();
+	    DataAutor autlog = new DataAutor();
+	    autores = autlog.getAll();		
 	%>
 </head>
 <body>
@@ -39,17 +43,12 @@
     </div>
   </div>
 </nav>
-	<h3>Autores .<%= c.getNombre() %> admin</h3>
+	<h3>Autores.<%= c.getNombre() %> admin</h3>
 	<%if(mensaje != null){ %>
 		<h4><%=mensaje%></h4>
 	<%} %>	
-	<form action="ABMAutoresForm" method="post">					
-		<button type="submit" name="opcion" value="alta" class="input-button">Añadir un autor</button>	
-		<% LinkedList<Autor> autores = new LinkedList<Autor>();
-		   DataAutor autlog = new DataAutor();
-		   autores = autlog.getAll();		
-		%>
-		
+	<form action="ABMAutoresForm" method="get">					
+		<button type="submit" name="opcion" value="alta" class="input-button">Añadir un autor</button>			
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -70,8 +69,8 @@
 									<td><%=aut.getIdAutor() %></td>
 									<td><%=aut.getNombre() %></td>
 									<td><%=aut.getApellido() %></td>
-									<td><button type="submit" name="opcion" value="editar" class="input-button" data-id="<%=aut.getIdAutor()%>">Editar</button></td>
-									<td><button type="submit" name="opcion" value="eliminar" class="input-button" data-id="<%=aut.getIdAutor()%>">Eliminar</button></td>
+									<td><button type="submit" name="editar" value="<%= aut.getIdAutor()%>" class="input-button">Editar</button></td>
+									<td><button type="submit" name="eliminar" value="<%=aut.getIdAutor()%>" class="input-button">Eliminar</button></td>
 								</tr>
 								<% }%>
 							</tbody>

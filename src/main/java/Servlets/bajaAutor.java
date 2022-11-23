@@ -1,30 +1,26 @@
 package Servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
-
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Entities.Autor;
-import Entities.Socio;
 import Logic.AutorLogic;
 
 /**
- * Servlet implementation class altaAutor
+ * Servlet implementation class bajaAutor
  */
-@WebServlet("/altaAutor")
-public class altaAutor extends HttpServlet {
+@WebServlet("/bajaAutor")
+public class bajaAutor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public altaAutor() {
+    public bajaAutor() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,34 +37,27 @@ public class altaAutor extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Recupero el usuario y veo que opcion eligió
-		Socio socio = new Socio();		
-		socio = (Socio)request.getSession().getAttribute("usuario");		
-		String opc = request.getParameter("opcion");
+		// Traigo mi ID de autor y la opción elegida.
 		
-		switch(opc) {
-		case("crearAutor"):
-			// Recupero el nombre y el apellido del form.
-			String nombre = request.getParameter("nombre");
-			String apellido = request.getParameter("apellido");
-			// Creo un autor y lo cargo a la DB.
-			AutorLogic autlog = new AutorLogic();
-			Autor autor = new Autor();
-			autor.setNombre(nombre);
-			autor.setApellido(apellido);
-			try {
-				autlog.add(autor);
-				String estado = "Alta existosa";
-				request.setAttribute("estado", estado);	
-			}catch (Exception e) {
-	            e.printStackTrace();
-			}		
+		String opc = request.getParameter("opcion");
+		String elId = request.getParameter("id");
+		int id = Integer.parseInt(elId);
+		Autor autor = new Autor();
+		autor.setIdAutor(id);
+		
+		AutorLogic autlog = new AutorLogic();
+		// Cargo la opcion y confirmo si lo quiere eliminar o no.
+		if(opc.equals("eliminar")){
+
+				autlog.remove(autor);
+				String estado = "Baja existosa";
+				request.setAttribute("estado", estado);
+				request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
+
+		}else if(opc.equals("cancelar")) {
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
-			break;
-		case("cancelar"):
-			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
-			break;
 		}
+		
 	}
 
 }
