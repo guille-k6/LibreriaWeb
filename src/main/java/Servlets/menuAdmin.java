@@ -29,7 +29,7 @@ public class menuAdmin extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -37,7 +37,7 @@ public class menuAdmin extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// Acá recupero el socio y el parámetro del menú.
 		Socio socio = new Socio();		
@@ -46,9 +46,12 @@ public class menuAdmin extends HttpServlet {
 		// Dependiendo de la opción que haya elegido hago algo.
 		switch(opc) {
 		case("abmAutores"):
-			request.getSession().setAttribute("usuario", socio);
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 			break;
+		case("abmLibros"):
+			request.getRequestDispatcher("WEB-INF/pages/admin/ABMLibros.jsp").forward(request, response);			
+			break;
+
 		}
 		
 	}

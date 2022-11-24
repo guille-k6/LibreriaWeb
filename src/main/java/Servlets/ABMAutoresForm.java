@@ -71,8 +71,6 @@ public class ABMAutoresForm extends HttpServlet {
 			request.setAttribute("autorBaja", autorBaja);
 			request.getRequestDispatcher("WEB-INF/pages/admin/BajaAutores.jsp").forward(request, response);			
 		}
-		// Mando al socio para que se quede logeado.
-		request.getSession().setAttribute("usuario", socio);
 	}
 
 }
