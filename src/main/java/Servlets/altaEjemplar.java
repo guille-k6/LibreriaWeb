@@ -8,19 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Entities.Autor;
+import Entities.Libro;
+import Entities.Ejemplar;
+import Entities.Socio;
 import Logic.AutorLogic;
+import Logic.LibroLogic;
+import Logic.EjemplarLogic;
 
 /**
- * Servlet implementation class bajaAutor
+ * Servlet implementation class altaEjemplar
  */
-@WebServlet("/bajaAutor")
-public class bajaAutor extends HttpServlet {
+@WebServlet("/altaEjemplar")
+public class altaEjemplar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public bajaAutor() {
+    public altaEjemplar() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,27 +42,38 @@ public class bajaAutor extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Traigo mi ID de autor y la opción elegida.
-		
+		Socio socio = new Socio();		
+		socio = (Socio)request.getSession().getAttribute("usuario");		
 		String opc = request.getParameter("opcion");
-		String elId = request.getParameter("id");
-		int id = Integer.parseInt(elId);
-		Autor autor = new Autor();
-		autor.setIdAutor(id);
 		
-		AutorLogic autlog = new AutorLogic();
-		// Cargo la opcion y confirmo si lo quiere eliminar o no.
-		if(opc.equals("eliminar")){
-
-				autlog.remove(autor);
-				String estado = "Baja existosa";
-				request.setAttribute("estado", estado);
-				request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
-
-		}else if(opc.equals("cancelar")) {
+		switch(opc) {
+		case("crearEjemplar"):
+			// Recupero los datos del ejemplar del form.
+			String idLibro = request.getParameter("titulo");
+			// Recupero el libro.
+			LibroLogic liblog = new LibroLogic();
+			Libro libro = new Libro();
+			libro.setIdLibro(Integer.parseInt(idLibro));
+			libro = liblog.getOneById(libro);
+			// Creo un ejemplar con los datos del form.
+			EjemplarLogic ejelog = new EjemplarLogic();
+			Ejemplar ejemplar = new Ejemplar();
+			ejemplar.setLibro(libro);
+				
+			
+			try {
+				ejelog.add(ejemplar);
+				String estado = "Alta existosa";
+				request.setAttribute("estado", estado);	
+			}catch (Exception e) {
+	            e.printStackTrace();
+			}		
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
+			break;
+		case("cancelar"):
+			request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
+			break;
 		}
-		
 	}
 
 }

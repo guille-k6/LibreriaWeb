@@ -7,20 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Entities.Autor;
-import Logic.AutorLogic;
+import Entities.Ejemplar;
+import Logic.EjemplarLogic;
 
 /**
- * Servlet implementation class bajaAutor
+ * Servlet implementation class bajaEjemplar
  */
-@WebServlet("/bajaAutor")
-public class bajaAutor extends HttpServlet {
+@WebServlet("/bajaEjemplar")
+public class bajaEjemplar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public bajaAutor() {
+    public bajaEjemplar() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,19 +37,19 @@ public class bajaAutor extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Traigo mi ID de autor y la opción elegida.
+		// Traigo mi ID de Libro y la opción elegida.
 		
 		String opc = request.getParameter("opcion");
 		String elId = request.getParameter("id");
 		int id = Integer.parseInt(elId);
-		Autor autor = new Autor();
-		autor.setIdAutor(id);
+		Ejemplar ejemplar = new Ejemplar();
+		ejemplar.setIdEjemplar(id);
 		
-		AutorLogic autlog = new AutorLogic();
+		EjemplarLogic ejelog = new EjemplarLogic();
 		// Cargo la opcion y confirmo si lo quiere eliminar o no.
 		if(opc.equals("eliminar")){
 
-				autlog.remove(autor);
+				ejelog.remove(ejemplar);
 				String estado = "Baja existosa";
 				request.setAttribute("estado", estado);
 				request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
@@ -57,7 +57,6 @@ public class bajaAutor extends HttpServlet {
 		}else if(opc.equals("cancelar")) {
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
 		}
-		
 	}
 
 }

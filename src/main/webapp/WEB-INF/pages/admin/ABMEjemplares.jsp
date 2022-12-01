@@ -1,6 +1,7 @@
 <%@page import="java.util.LinkedList"%>
 <%@ page import = "java.io.*,java.util.*" %>
 <%@page import="Entities.Socio"%>
+<%@page import="Entities.Ejemplar, Logic.EjemplarLogic"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -13,13 +14,15 @@
     <!-- Bootstrap 5.2 CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
  	<!-- local styles -->
-<title>Menú principal</title>
+<title>Ejemplares</title>
 
 	<%
- 	  	Socio c = (Socio)session.getAttribute("usuario");
-// 		if(!c.getAdmin()){
-// 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
-// 		}
+		Socio c = (Socio)session.getAttribute("usuario");
+	 	String mensaje = (String)request.getAttribute("estado");
+	 	
+		LinkedList<Ejemplar> ejemplares = new LinkedList<Ejemplar>();
+	    EjemplarLogic ejelog = new EjemplarLogic();
+	    ejemplares = ejelog.getAll();		
 	%>
 </head>
 <body>
@@ -40,15 +43,39 @@
     </div>
   </div>
 </nav>
-
-	<h2>Bienvenido, <%= c.getNombre() %> admin</h2>
-	<form action="menuAdmin" method="get">		
-		<h3>MENU PRINCIPAL</h3>		
-		<button type="submit" name="opcion" value="abmAutores" class="input-button">ABM Autores</button>
-        <button type="submit" name="opcion" value="abmLibros" class="input-button">ABM Libros</button>
-        <button type="submit" name="opcion" value="abmEjemplares" class="input-button">ABM Ejemplares</button>
+	<h3>Ejemplares. <%= c.getNombre() %> admin</h3>
+	<%if(mensaje != null){ %>
+		<h4><%=mensaje%></h4>
+	<%} %>	
+	<form action="ABMEjemplaresForm" method="get">					
+		<button type="submit" name="opcion" value="alta" class="input-button">Añadir un ejemplar</button>			
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12, col-sm-12, col-12">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Libro</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% for (Ejemplar eje : ejemplares) {%>
+								<tr>
+									<td><%=eje.getIdEjemplar() %></td>
+									<td><%=eje.getLibro().getTitulo() + " " + eje.getLibro().getAutor().getApellido() %></td>
+									<td><button type="submit" name="editar" value="<%= eje.getIdEjemplar()%>" class="input-button">Editar</button></td>
+									<td><button type="submit" name="eliminar" value="<%=eje.getIdEjemplar()%>" class="input-button">Eliminar</button></td>
+								</tr>
+								<% }%>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 	</form> 
 
-<%//<a href="WEB-INF/pages/admin/ABMAutores.jsp">Ir a abm autores</a> %>
 </body>
 </html>
