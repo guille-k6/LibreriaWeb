@@ -13,6 +13,8 @@ import Entities.Libro;
 import Entities.Socio;
 import Logic.AutorLogic;
 import Logic.LibroLogic;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Servlet implementation class altaLibro
@@ -66,9 +68,17 @@ public class altaLibro extends HttpServlet {
 			libro.setTitulo(titulo);
 			libro.setEditorial(editorial);
 			// Parseo la fecha de edicicon como Date
-			//SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-			//String laFecha = formato.format(fechaEdicion);
-			libro.setFechaEdicion(fechaEdicion);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			// se usa java.util.date porque el parse es exclusivo de este pero luego se transfarma de util.date a sql.date
+			java.util.Date parsed = null;
+			try {
+				parsed = sdf.parse(fechaEdicion);
+			 } catch (ParseException e1) {
+			        // TODO Auto-generated catch block
+			        e1.printStackTrace();
+			}
+			java.sql.Date data = new java.sql.Date(parsed.getTime());
+			libro.setFechaEdicion(data);
 			libro.setCantDiasMaxPrestamo(Integer.parseInt(maxDias));
 			libro.setAutor(autor);			
 			

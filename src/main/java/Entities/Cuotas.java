@@ -3,8 +3,8 @@ package Entities;
 public class Cuotas {
 	private int idCuota;
 	private String estado;
-	private String fechaDesde;
-	private String fechaHasta;
+	private java.sql.Date fechaDesde;
+	private java.sql.Date fechaHasta;
 	private Socio socio;
 	public int getIdCuota() {
 		return idCuota;
@@ -18,16 +18,16 @@ public class Cuotas {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	public String getFechaDesde() {
+	public java.sql.Date getFechaDesde() {
 		return fechaDesde;
 	}
-	public void setFechaDesde(String fechaDesde) {
+	public void setFechaDesde(java.sql.Date fechaDesde) {
 		this.fechaDesde = fechaDesde;
 	}
-	public String getFechaHasta() {
+	public java.sql.Date getFechaHasta() {
 		return fechaHasta;
 	}
-	public void setFechaHasta(String fechaHasta) {
+	public void setFechaHasta(java.sql.Date fechaHasta) {
 		this.fechaHasta = fechaHasta;
 	}
 	public Socio getSocio() {

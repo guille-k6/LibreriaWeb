@@ -6,40 +6,37 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 
-import Entities.Autor;
-import Entities.Libro;
-import Logic.AutorLogic;
+import Entities.Cuotas;
+import Entities.Socio;
+import Logic.SocioLogic;
 
-public class DataLibro {
+public class DataCuotas {
 
-	public LinkedList<Libro> getAll(){
+	public LinkedList<Cuotas> getAll(){
 		Statement stmt=null;
 		ResultSet rs=null;
-		LinkedList<Libro> libros= new LinkedList<>();
+		LinkedList<Cuotas> cuotas= new LinkedList<>();
 		
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select * from libro");
+			rs= stmt.executeQuery("select * from cuotas");
 			if(rs!=null) {
 				while(rs.next()) {
-					Libro l=new Libro();
-					l.setIdLibro(rs.getInt("idlibro"));
-					l.setIsbn(rs.getString("isbn"));
-					l.setTitulo(rs.getString("titulo"));
-					l.setEditorial(rs.getString("editorial"));
-					l.setFechaEdicion(rs.getDate("fechaEdicion"));
-					l.setCantDiasMaxPrestamo(rs.getInt("cantDiasMaxPrestamo"));
-					
+					Cuotas c=new Cuotas();
+					c.setIdCuota(rs.getInt("idcuotas")); //La clase se llama en plural el get es en singular pero la columna en la bd es en plural
+					c.setEstado(rs.getString("estado"));
+					c.setFechaDesde(rs.getDate("fechaDesde"));
+					c.setFechaHasta(rs.getDate("fechaHasta"));
 					// Busco el objeto autor para el libro
-					int idAutor = rs.getInt("idAutor");
-					AutorLogic autlog = new AutorLogic();
-					Autor elAutor = new Autor();
-					elAutor.setIdAutor(idAutor);
-					elAutor = autlog.getOneById(elAutor);
+					int idSocio = rs.getInt("idSocio");
+					SocioLogic soclog = new SocioLogic();
+					Socio elSocio = new Socio();
+					elSocio.setIdSocio(idSocio);
+					elSocio = soclog.getOneById(elSocio);
 					// Le agrego el autor
-					l.setAutor(elAutor);	
+					c.setSocio(elSocio);	
 					// Añado el libro con autor incluido a la LinkedList.
-					libros.add(l);
+					cuotas.add(c);
 				}
 			}
 			
@@ -55,35 +52,33 @@ public class DataLibro {
 				e.printStackTrace();
 			}
 		}
-		return libros;
+		return cuotas;
 	} // fin metodo GetAll
 	
-	public Libro getById(Libro libroToSearch) {
-		Libro l=null;
+	public Cuotas getById(Cuotas cuotasToSearch) {
+		Cuotas c=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select * from libro where idlibro=?"
+					"select * from cuotas where idcuotas=?"
 					);
-			stmt.setInt(1, libroToSearch.getIdLibro());
+			stmt.setInt(1, cuotasToSearch.getIdCuota());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
-				l=new Libro();
-				l.setIdLibro(rs.getInt("idlibro"));
-				l.setIsbn(rs.getString("isbn"));
-				l.setTitulo(rs.getString("titulo"));
-				l.setEditorial(rs.getString("editorial"));
-				l.setFechaEdicion(rs.getDate("fechaEdicion"));
-				l.setCantDiasMaxPrestamo(rs.getInt("cantDiasMaxPrestamo"));			
+				c=new Cuotas();
+				c.setIdCuota(rs.getInt("idcuotas")); //La clase se llama en plural el get es en singular pero la columna en la bd es en plural
+				c.setEstado(rs.getString("estado"));
+				c.setFechaDesde(rs.getDate("fechaDesde"));
+				c.setFechaHasta(rs.getDate("fechaHasta"));
 				// Busco el objeto autor para el libro
-				int idAutor = rs.getInt("idAutor");
-				AutorLogic autlog = new AutorLogic();
-				Autor elAutor = new Autor();
-				elAutor.setIdAutor(idAutor);
-				elAutor = autlog.getOneById(elAutor);
+				int idSocio = rs.getInt("idSocio");
+				SocioLogic soclog = new SocioLogic();
+				Socio elSocio = new Socio();
+				elSocio.setIdSocio(idSocio);
+				elSocio = soclog.getOneById(elSocio);
 				// Le agrego el autor
-				l.setAutor(elAutor);	
+				c.setSocio(elSocio);	
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -97,30 +92,28 @@ public class DataLibro {
 			}
 		}
 		
-		return l;
+		return c;
 	} // Fin Metodo GetById
 
-	public void add(Libro libro) {
+	public void add(Cuotas cuotas) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
 		//SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"insert into libro(isbn, titulo, editorial, fechaEdicion, cantDiasMaxPrestamo, idAutor) values(?,?,?,?,?,?)",
+							"insert into cuotas(estado, fechaDesde, fechaHasta, idSocio) values(?,?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
-			stmt.setString(1, libro.getIsbn());
-			stmt.setString(2, libro.getTitulo());
-			stmt.setString(3, libro.getEditorial());
-			stmt.setString(4, libro.getFechaEdicion().toString()); // OJO ACA (MIRAR COMO MAPEA)
-			stmt.setInt(5, libro.getCantDiasMaxPrestamo());
-			stmt.setInt(6, libro.getAutor().getIdAutor());
+			stmt.setString(1, cuotas.getEstado());
+			stmt.setString(2, cuotas.getFechaDesde().toString());
+			stmt.setString(3, cuotas.getFechaHasta().toString());
+			stmt.setInt(4, cuotas.getSocio().getIdSocio());
 			stmt.executeUpdate();
 			
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
-                libro.setIdLibro(keyResultSet.getInt(1));
+                cuotas.setIdCuota(keyResultSet.getInt(1));
             }
 
 			
@@ -138,19 +131,17 @@ public class DataLibro {
 
 	} // FIN METODO ADD
 	
-	public void update(Libro libro) {
+	public void update(Cuotas cuotas) {
 		PreparedStatement stmt= null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"update libro set isbn=?, titulo=?, editorial=?, fechaEdicion=?, cantDiasMaxPrestamo=?, idAutor=? where idlibro=?");
-			stmt.setString(1, libro.getIsbn());
-			stmt.setString(2, libro.getTitulo());
-			stmt.setString(3, libro.getEditorial());
-			stmt.setString(4, libro.getFechaEdicion().toString()); // OJO ACA (MIRAR COMO MAPEA)
-			stmt.setInt(5, libro.getCantDiasMaxPrestamo());
-			stmt.setInt(6, libro.getAutor().getIdAutor());
-			stmt.setInt(7, libro.getIdLibro());
+							"update cuotas set estado=?, fechaDesde=?, fechaHasta=?, idSocio=? where idcuotas = ?");
+			stmt.setString(1, cuotas.getEstado());
+			stmt.setString(2, cuotas.getFechaDesde().toString());
+			stmt.setString(3, cuotas.getFechaHasta().toString());
+			stmt.setInt(4, cuotas.getSocio().getIdSocio());
+			stmt.setInt(5, cuotas.getIdCuota());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
             e.printStackTrace();
@@ -164,13 +155,13 @@ public class DataLibro {
 		}
 	} // FIN METODO UPDATE
 	
-	public void remove(Libro libro) {
+	public void remove(Cuotas cuotas) {
 		PreparedStatement stmt= null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"delete from libro where idlibro=?");
-			stmt.setInt(1, libro.getIdLibro());
+							"delete from cuotas where idcuotas=?");
+			stmt.setInt(1, cuotas.getIdCuota());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
             e.printStackTrace();

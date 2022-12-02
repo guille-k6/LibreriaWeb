@@ -2,7 +2,7 @@ package Entities;
 
 public class Sancion {
 	private int idSancion;
-	private String fechaSancion;
+	private java.sql.Date fechaSancion;
 	private int diasSancion;
 	private boolean estado;
 	private Socio socio;
@@ -12,10 +12,10 @@ public class Sancion {
 	public void setIdSancion(int idSancion) {
 		this.idSancion = idSancion;
 	}
-	public String getFechaSancion() {
+	public java.sql.Date getFechaSancion() {
 		return fechaSancion;
 	}
-	public void setFechaSancion(String fechaSancion) {
+	public void setFechaSancion(java.sql.Date fechaSancion) {
 		this.fechaSancion = fechaSancion;
 	}
 	public int getDiasSancion() {

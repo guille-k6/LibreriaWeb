@@ -1,18 +1,18 @@
 package Entities;
 
 public class ValorCuotas {
-	private String fechaDesde;
-	private float valor;
-	public String getFechaDesde() {
+	private java.sql.Date fechaDesde;
+	private double valor;
+	public java.sql.Date getFechaDesde() {
 		return fechaDesde;
 	}
-	public void setFechaDesde(String fechaDesde) {
+	public void setFechaDesde(java.sql.Date fechaDesde) {
 		this.fechaDesde = fechaDesde;
 	}
-	public float getValor() {
+	public double getValor() {
 		return valor;
 	}
-	public void setValor(float valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 

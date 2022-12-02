@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class Venta {
 	private int idVenta;
-	private String fechaVenta;
+	private java.sql.Date fechaVenta;
 	private float precioTotal;
 	private Socio socio;
 	public int getIdVenta() {
@@ -13,10 +13,10 @@ public class Venta {
 	public void setIdVenta(int idVenta) {
 		this.idVenta = idVenta;
 	}
-	public String getFechaVenta() {
+	public java.sql.Date getFechaVenta() {
 		return fechaVenta;
 	}
-	public void setFechaVenta(String fechaVenta) {
+	public void setFechaVenta(java.sql.Date fechaVenta) {
 		this.fechaVenta = fechaVenta;
 	}
 	public float getPrecioTotal() {

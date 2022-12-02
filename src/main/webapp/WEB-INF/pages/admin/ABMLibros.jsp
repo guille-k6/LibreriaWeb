@@ -72,7 +72,7 @@
 									<td><%=lib.getIsbn() %></td>
 									<td><%=lib.getTitulo() %></td>
 									<td><%=lib.getEditorial() %></td>
-									<td><%=lib.getFechaEdicion() %></td>
+									<td><%=lib.getFechaEdicion().toString() %></td>
 									<td><%=lib.getCantDiasMaxPrestamo() %></td>
 									<td><%=lib.getAutor().getNombre() + " " + lib.getAutor().getApellido() %></td>
 									<td><button type="submit" name="editar" value="<%= lib.getIdLibro()%>" class="input-button">Editar</button></td>

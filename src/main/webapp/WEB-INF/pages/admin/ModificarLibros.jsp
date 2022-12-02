@@ -63,7 +63,7 @@
 		<input type="text" class="form-control" name="editorial" value="<%=libro.getEditorial()%>"> <br>	
 		
 		<label for="fechaEdicion">Fecha de edición del libro:</label> <br>
-		<input type="date" class="form-control" name="fechaEdicion" value="<%=libro.getFechaEdicion()%>"> <br>
+		<input type="date" class="form-control" name="fechaEdicion" value="<%=libro.getFechaEdicion().toString()%>"> <br>
 		
 		<label for="maxDias">Días máximos permitidos para prestar del libro:</label> <br>
 		<input type="text" class="form-control" name="maxDias" value="<%=libro.getCantDiasMaxPrestamo()%>"> <br>

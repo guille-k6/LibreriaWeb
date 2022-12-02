@@ -3,7 +3,7 @@ import java.util.LinkedList;
 
 public class Prestamo {
 	private int idPrestamo;
-	private String fechaPrestamo;
+	private java.sql.Date fechaPrestamo;
 	private LinkedList<LineaDePrestamo> lineasDePrestamo;
 	private Socio socio;
 	public int getIdPrestamo() {
@@ -12,10 +12,10 @@ public class Prestamo {
 	public void setIdPrestamo(int idPrestamo) {
 		this.idPrestamo = idPrestamo;
 	}
-	public String getFechaPrestamo() {
+	public java.sql.Date getFechaPrestamo() {
 		return fechaPrestamo;
 	}
-	public void setFechaPrestamo(String fechaPrestamo) {
+	public void setFechaPrestamo(java.sql.Date fechaPrestamo) {
 		this.fechaPrestamo = fechaPrestamo;
 	}
 	public LinkedList<LineaDePrestamo> getLineasDePrestamo() {

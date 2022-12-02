@@ -2,8 +2,8 @@ package Entities;
 
 public class LineaDePrestamo {
 	private int idLineaPrestamo;
-	private String fechaDevolucionTeorica;
-	private String fechaDevolucionReal;
+	private java.sql.Date fechaDevolucionTeorica;
+	private java.sql.Date fechaDevolucionReal;
 	private String estadoLinea;
 	private Ejemplar ejemplar;
 	public int getIdLineaPrestamo() {
@@ -12,16 +12,16 @@ public class LineaDePrestamo {
 	public void setIdLineaPrestamo(int idLineaPrestamo) {
 		this.idLineaPrestamo = idLineaPrestamo;
 	}
-	public String getFechaDevolucionTeorica() {
+	public java.sql.Date getFechaDevolucionTeorica() {
 		return fechaDevolucionTeorica;
 	}
-	public void setFechaDevolucionTeorica(String fechaDevolucionTeorica) {
+	public void setFechaDevolucionTeorica(java.sql.Date fechaDevolucionTeorica) {
 		this.fechaDevolucionTeorica = fechaDevolucionTeorica;
 	}
-	public String getFechaDevolucionReal() {
+	public java.sql.Date getFechaDevolucionReal() {
 		return fechaDevolucionReal;
 	}
-	public void setFechaDevolucionReal(String fechaDevolucionReal) {
+	public void setFechaDevolucionReal(java.sql.Date fechaDevolucionReal) {
 		this.fechaDevolucionReal = fechaDevolucionReal;
 	}
 	public String getEstadoLinea() {

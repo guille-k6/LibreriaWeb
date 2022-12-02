@@ -1,24 +1,20 @@
 package ConsoleTest;
 import java.util.LinkedList;
 
-import Data.DataSocio;
+
 import Entities.*;
 import Logic.*;
 public class Test {
 
 	public static void main(String[] args) {	
-		
+		/*
 		AutorLogic autlog = new AutorLogic();
 		Autor elAutor = new Autor();
 		elAutor.setIdAutor(12);
 		autlog.remove(elAutor);
-		
+		*/
 		// PRUEBA GETALL
-		/*LinkedList<Socio> losSocios = soclog.getAll();
-		for (Socio socio : losSocios) {
-			System.out.println(socio.getIdSocio() +" "+ socio.getNombre());
-		}*/
-		
+
 		// PRUEBA GETONEBYID
 		/*Socio miSocio = new Socio();
 		miSocio.setIdSocio(1);

@@ -1,6 +1,9 @@
 package Servlets;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -68,7 +71,18 @@ public class modificarLibro extends HttpServlet {
 			libro.setIsbn(isbn);
 			libro.setTitulo(titulo);
 			libro.setEditorial(editorial);
-			libro.setFechaEdicion(fechaEdicion);
+			// Parseo la fecha de edicicon como Date
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			// se usa java.util.date porque el parse es exclusivo de este pero luego se transfarma de util.date a sql.date
+			java.util.Date parsed = null;
+			try {
+				parsed = sdf.parse(fechaEdicion);
+				} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+						    e1.printStackTrace();
+				}
+			java.sql.Date data = new java.sql.Date(parsed.getTime());
+			libro.setFechaEdicion(data);
 			libro.setCantDiasMaxPrestamo(maxDias);
 			libro.setAutor(autor);
 			

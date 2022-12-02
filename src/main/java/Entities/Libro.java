@@ -26,10 +26,10 @@ public class Libro {
 	public void setEditorial(String editorial) {
 		this.editorial = editorial;
 	}
-	public String getFechaEdicion() {
+	public java.sql.Date getFechaEdicion() {
 		return fechaEdicion;
 	}
-	public void setFechaEdicion(String fechaEdicion) {
+	public void setFechaEdicion(java.sql.Date fechaEdicion) {
 		this.fechaEdicion = fechaEdicion;
 	}
 	public int getCantDiasMaxPrestamo() {
@@ -47,7 +47,7 @@ public class Libro {
 	private String isbn;
 	private String titulo;
 	private String editorial;
-	private String fechaEdicion;
+	private java.sql.Date fechaEdicion;
 	private int cantDiasMaxPrestamo;
 	private Autor autor;
 	
