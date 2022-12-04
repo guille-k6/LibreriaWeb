@@ -50,7 +50,7 @@
 
 	<h2>Bienvenido, <%= c.getNombre() %> noAdmin</h2>
 
-	<form action="pagarCuotasForm" method="get">							
+	<form action="pagarCuotasForm" method="post">							
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -62,6 +62,7 @@
 									<th>Fecha hasta</th>
 									<th>Precio</th>
 									<th>Estado</th>
+									<th>Pagar?</th>									
 								</tr>
 							</thead>
 							<tbody>
@@ -71,15 +72,18 @@
 									<td><%=cuo.getFechaHasta().toString() %></td>
 									<td><%=valorCuotas%></td>
 									<td><%=cuo.getEstado() %></td>
+									<td><input type="checkbox" name="idcheck" value="<%=cuo.getIdCuota() %>"></td>
 								</tr>
 								<% }%>
 							</tbody>
 						</table>
+								<button type="submit" name="opcion" value="pagar" class="input-button">Pagar seleccionadas</button>	
+								<button type="submit" name="opcion" value="cancelar" class="input-button">Cancelar</button>	
 					</div>
 				</div>
 			</div>
 		</div>
-		<button type="submit" name="opcion" value="alta" class="input-button">Añadir un ejemplar</button>	
+		
 	</form>  
 
 
