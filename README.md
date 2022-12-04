@@ -2,4 +2,3 @@
 ## Integrantes: 
 ##Bernardo Dominguez
 ##Guillermo Casey
-##Tomas Peresin

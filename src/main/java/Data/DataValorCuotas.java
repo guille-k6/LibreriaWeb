@@ -150,5 +150,31 @@ public class DataValorCuotas {
 		}
 	}	// FIN METODO REMOVE
 	
+	public double getValorActual() {
+		double valor = 0;
+		PreparedStatement stmt= null;
+		ResultSet rs=null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"SELECT fechaDesde, valorcuotascol FROM valorcuotas v inner join (SELECT max(fechaDesde) maxifecha FROM valorcuotas) fe on fe.maxifecha = v.fechaDesde"
+							);
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()) {
+				valor = rs.getDouble("valorcuotascol");
+			}
+		} catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }}
+            
+        return valor;
+		} // FIN METOVO getValorActual
+	
 	
 }

@@ -1,5 +1,5 @@
 <%@page import="java.util.LinkedList"%>
-<%@page import="Entities.Socio"%>
+<%@page import="Entities.Socio, Logic.CuotasLogic, Entities.Cuotas, Logic.ValorCuotasLogic"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -15,11 +15,18 @@
 <title>Menú principal</title>
 
 	<%
-	  	Socio c = (Socio)session.getAttribute("usuario");
-		
 		//if(!c.getAdmin()){
 		//	response.sendRedirect("WEB-INF/pages/menuUser.jsp");
-		//}
+		//}  	
+		
+		Socio c = (Socio)session.getAttribute("usuario");
+		
+		CuotasLogic cuolog = new CuotasLogic();
+		LinkedList<Cuotas> lasCuotas = cuolog.getCuotasImpagasByUser(c);
+		ValorCuotasLogic valcuolog = new ValorCuotasLogic();
+		double valorCuotas = valcuolog.getValorActual();
+		
+
 	%>
 </head>
 <body>
@@ -43,10 +50,37 @@
 
 	<h2>Bienvenido, <%= c.getNombre() %> noAdmin</h2>
 
-	<form action="menuUser" method="get">		
-		<h3>MENU PRINCIPAL</h3>		
-		<button type="submit" name="opcion" value="verCuotasImpagas" class="input-button">Ver cuotas impagas</button>
-	</form> 
+	<form action="pagarCuotasForm" method="get">							
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12, col-sm-12, col-12">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Fecha desde</th>
+									<th>Fecha hasta</th>
+									<th>Precio</th>
+									<th>Estado</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% for (Cuotas cuo : lasCuotas) {%>
+								<tr>
+									<td><%=cuo.getFechaDesde().toString() %></td>
+									<td><%=cuo.getFechaHasta().toString() %></td>
+									<td><%=valorCuotas%></td>
+									<td><%=cuo.getEstado() %></td>
+								</tr>
+								<% }%>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="submit" name="opcion" value="alta" class="input-button">Añadir un ejemplar</button>	
+	</form>  
 
 
 </body>

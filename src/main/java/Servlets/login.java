@@ -58,21 +58,12 @@ public class login extends HttpServlet {
 			//request.setAttribute("listaSocios", losSocios);
 			if(socio.getAdmin()) {
 				request.getRequestDispatcher("WEB-INF/pages/menuAdmin.jsp").forward(request, response);
-				//response.sendRedirect(request.getContextPath()+ "/src/main/webapp/WEB-INF/pages/menuAdmin.jsp");
-				}
-				
-			//}else {
-			//	request.getRequestDispatcher("WEB-INF/pages/menuUser.jsp").forward(request, response);						
-			//}
+			}	
+			else{
+				request.getRequestDispatcher("WEB-INF/pages/menuUser.jsp").forward(request, response);						
+			}
+		};
+		response.getWriter().append("No se encontro socio");
 
-		}else {
-			response.getWriter().append("No se encontro socio");
-		}
-		
-
-		
-		
-		//doGet(request, response);
 	}
-
 }
