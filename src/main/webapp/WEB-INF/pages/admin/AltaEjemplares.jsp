@@ -50,7 +50,7 @@
 		<label for="nombre">Titulo:</label> <br>
 		<select name="titulo" id="cars">
 			<% for (Libro lib : libros){ %>
-	    	<option value="<%=lib.getIdLibro()%>"> <%=lib.getTitulo()%>  <%=lib.getAutor().getApellido()%> </option>
+	    	<option value="<%=lib.getIdLibro()%>"> <%=lib.getTitulo() + " " + lib.getAutor().getApellido() + " " + lib.getAutor().getNombre()%> </option>
 	    	<%} %>
 	    </select>
 	    <br>

@@ -56,7 +56,7 @@
 		<label for="titulo">Titulo:</label> <br>
 		<select name="idLibro" id="cars">
 			<% for (Libro lib : libros){ %>
-	    	<option value="<%=lib.getIdLibro()%>" <%if(lib.getIdLibro() == ejemplar.getLibro().getIdLibro() ){%> selected <% } %>> <%=lib.getTitulo()%>  <%=lib.getAutor().getApellido()%> </option>
+	    	<option value="<%=lib.getIdLibro()%>" <%if(lib.getIdLibro() == ejemplar.getLibro().getIdLibro() ){%> selected <% } %>> <%=lib.getTitulo()%>  <%=lib.getAutor().getApellido() + " " + lib.getAutor().getNombre()%> </option>
 	    	<%} %>
 	    </select>
 	    <br>

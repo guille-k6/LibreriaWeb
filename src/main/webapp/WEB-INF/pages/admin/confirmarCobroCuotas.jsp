@@ -1,7 +1,5 @@
 <%@page import="java.util.LinkedList"%>
-<%@ page import = "java.io.*,java.util.*" %>
-<%@page import="Entities.Socio"%>
-<%@page import="Entities.Ejemplar, Logic.EjemplarLogic"%>
+<%@page import="Entities.Socio, Logic.CuotasLogic, Entities.Cuotas, Logic.ValorCuotasLogic"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -14,15 +12,34 @@
     <!-- Bootstrap 5.2 CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
  	<!-- local styles -->
-<title>Ejemplares</title>
+<title>Confirmar el cobro de las cuotas</title>
 
 	<%
-		Socio c = (Socio)session.getAttribute("usuario");
-	 	String mensaje = (String)request.getAttribute("estado");
-	 	
-		LinkedList<Ejemplar> ejemplares = new LinkedList<Ejemplar>();
-	    EjemplarLogic ejelog = new EjemplarLogic();
-	    ejemplares = ejelog.getAll();		
+		//if(!c.getAdmin()){
+		//	response.sendRedirect("WEB-INF/pages/menuUser.jsp");
+		//}  	
+		
+		Socio c = (Socio)session.getAttribute("usuario");		
+		String[] lasCuotas = (String[])request.getAttribute("cuotasCobrar");	
+		
+		LinkedList<Cuotas> cuotasAMostrar = new LinkedList<Cuotas>();
+		CuotasLogic cuolog = new CuotasLogic();
+		ValorCuotasLogic valcuolog = new ValorCuotasLogic();
+		double costoPorCuota = valcuolog.getValorActual();
+		double costoTotal = 0;
+		
+		for(String elIdCuota : lasCuotas){
+			int elId = Integer.parseInt(elIdCuota);
+			Cuotas cuota = new Cuotas();
+			cuota.setIdCuota(elId);
+			cuota = cuolog.getOneById(cuota);
+			cuotasAMostrar.add(cuota);
+		}
+		
+		for(Cuotas cuota : cuotasAMostrar){
+				costoTotal += costoPorCuota; // Ya no se tiene el estado pendiente o atrasado asi que no se le puede calcular el * 1.5
+		}
+
 	%>
 </head>
 <body>
@@ -43,12 +60,10 @@
     </div>
   </div>
 </nav>
-	<h3>Ejemplares. <%= c.getNombre() %> admin</h3>
-	<%if(mensaje != null){ %>
-		<h4><%=mensaje%></h4>
-	<%} %>	
-	<form action="ABMEjemplaresForm" method="get">					
-		<button type="submit" name="opcion" value="alta" class="input-button">Añadir un ejemplar</button>			
+
+	<h2>Bienvenido, <%= c.getNombre() %> Admin</h2>
+
+	<form action="ConfirmarCobroCuotas" method="post">							
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -56,28 +71,32 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>ID</th>
-									<th>Libro</th>
-									<th>Autor</th>
+									<th>Fecha desde</th>
+									<th>Fecha hasta</th>
+									<th>Estado</th>								
 								</tr>
 							</thead>
 							<tbody>
-								<% for (Ejemplar eje : ejemplares) {%>
+								<% for (Cuotas cuo : cuotasAMostrar) {%>
 								<tr>
-									<td><%=eje.getIdEjemplar() %></td>
-									<td><%=eje.getLibro().getTitulo() %></td>
-									<td><%=eje.getLibro().getAutor().getApellido() + " " + eje.getLibro().getAutor().getNombre() %></td>
-									<td><button type="submit" name="editar" value="<%= eje.getIdEjemplar()%>" class="input-button">Editar</button></td>
-									<td><button type="submit" name="eliminar" value="<%=eje.getIdEjemplar()%>" class="input-button">Eliminar</button></td>
+									<td><%=cuo.getFechaDesde().toString() %></td>
+									<td><%=cuo.getFechaHasta().toString() %></td>
+									<td><%=cuo.getEstado()%></td>
+									<td><input type="checkbox" name="idcheck" value="<%=cuo.getIdCuota()%>" checked hidden></td>
 								</tr>
 								<% }%>
 							</tbody>
 						</table>
+						<h3>El total a cobrar es de: <%=costoTotal %></h3>
+						<button type="submit" name="opcion" value="cobrar" class="input-button">Cobrar</button>	
+						<button type="submit" name="opcion" value="cancelar" class="input-button">Cancelar</button>	
 					</div>
 				</div>
 			</div>
 		</div>
-	</form> 
+
+	</form>  
+
 
 </body>
 </html>

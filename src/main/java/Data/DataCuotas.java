@@ -275,5 +275,86 @@ public class DataCuotas {
 		return lasCuotas;
 	} // Fin Metodo GetById
 	
+	public LinkedList<Cuotas> getCuotasAConfirmarByUser(Socio socio) {
+		LinkedList<Cuotas> lasCuotas = new LinkedList<Cuotas>();
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select * from cuotas where idSocio=? and estado =?"
+					);
+			stmt.setInt(1, socio.getIdSocio());
+			stmt.setString(2, "A_Confirmar");
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+				Cuotas c=new Cuotas();
+				c.setIdCuota(rs.getInt("idcuotas")); //La clase se llama en plural el get es en singular pero la columna en la bd es en plural
+				c.setFechaPago(rs.getDate("fechaPago"));
+				c.setFechaDesde(rs.getDate("fechaDesde"));
+				c.setFechaHasta(rs.getDate("fechaHasta"));
+				// Busco el objeto autor para el libro
+				int idSocio = rs.getInt("idSocio");
+				SocioLogic soclog = new SocioLogic();
+				Socio elSocio = new Socio();
+				elSocio.setIdSocio(idSocio);
+				elSocio = soclog.getOneById(elSocio);
+				// Le agrego el autor
+				c.setSocio(elSocio);
+				c.setEstado(rs.getString("estado"));
+				
+				lasCuotas.add(c);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return lasCuotas;
+	} // Fin Metodo GetById
+	
+	public LinkedList<Socio> getUsuariosAConfirmar() {
+		LinkedList<Socio> losSocios = new LinkedList<Socio>();
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"SELECT distinct idSocio FROM cuotas where estado =?"
+					);
+			stmt.setString(1, "A_Confirmar");
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+				Socio s=new Socio();
+				int idSocio = rs.getInt("idSocio");
+				SocioLogic soclog = new SocioLogic();
+				s.setIdSocio(idSocio);
+				s = soclog.getOneById(s);				
+				losSocios.add(s);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return losSocios;
+	} // Fin Metodo GetById
+	
 	
 }

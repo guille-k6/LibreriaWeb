@@ -9,22 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Entities.Autor;
 import Entities.Cuotas;
-import Logic.AutorLogic;
 import Logic.CuotasLogic;
+import java.util.Calendar;
 
 /**
- * Servlet implementation class ConfirmarPagoCuotas
+ * Servlet implementation class ConfirmarCobroCuotas
  */
-@WebServlet("/ConfirmarPagoCuotas")
-public class ConfirmarPagoCuotas extends HttpServlet {
+@WebServlet("/ConfirmarCobroCuotas")
+public class ConfirmarCobroCuotas extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ConfirmarPagoCuotas() {
+    public ConfirmarCobroCuotas() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,7 +45,7 @@ public class ConfirmarPagoCuotas extends HttpServlet {
 		
 		String opc = request.getParameter("opcion");
 		switch(opc) {
-		case("pagar"):
+		case("cobrar"):
 			LinkedList<Cuotas> lasCuotas = new LinkedList<Cuotas>();
 			String cuotasPagar[] = request.getParameterValues("idcheck"); // Array con los ID de las cuotas a pagar.
 			
@@ -56,18 +55,22 @@ public class ConfirmarPagoCuotas extends HttpServlet {
 				cuota.setIdCuota(elId);
 				cuota = cuolog.getOneById(cuota);
 				lasCuotas.add(cuota);
-				cuota.setEstado("A_Confirmar"); // Las actualiza para que el admin se las de como pagas
+				cuota.setEstado("Pagada"); // Las actualiza para que el admin se las de como pagas
+				Calendar calendar = Calendar.getInstance();
+				java.util.Date currentDate = calendar.getTime();
+				java.sql.Date date = new java.sql.Date(currentDate.getTime());
+				cuota.setFechaPago(date);
 				cuolog.update(cuota);			
 			}
-			String estado = "Solicitud de pago enviada. Realice el pago fisicamente a la biblioteca y se le aprobará la solicitud.";
+			String estado = "Cobro realizado con exito.";
 			
 			request.setAttribute("estado", estado);
-			request.getRequestDispatcher("WEB-INF/pages/menuUser.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/pages/menuAdmin.jsp").forward(request, response);
 			break;
 		case("cancelar"):
-			request.getRequestDispatcher("WEB-INF/pages/user/pagarCuotas.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/pages/user/UsuariosAConfirmar.jsp").forward(request, response);
 			break;
-		}		
+		}	
 	}
 
 }

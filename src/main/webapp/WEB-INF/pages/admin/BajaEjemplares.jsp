@@ -50,7 +50,7 @@
 		<input type="text" class="form-control" name="id" value="<%=ejemplar.getIdEjemplar()%>" readonly> <br>
 		
 		<label for="titulo">Titulo del libro:</label> <br>
-		<input type="text" class="form-control" name="titulo" value="<%=ejemplar.getLibro().getIdLibro()%> <%=ejemplar.getLibro().getTitulo()%>" readonly> <br>
+		<input type="text" class="form-control" name="titulo" value="<%=ejemplar.getLibro().getIdLibro()%> <%=ejemplar.getLibro().getTitulo() + " " + ejemplar.getLibro().getAutor().getApellido() + " " +ejemplar.getLibro().getAutor().getNombre()%>" readonly> <br>
 				
 		<button type="submit" name="opcion" value="eliminar" class="input-button">Eliminar libro</button>
         <button type="submit" name="opcion" value="cancelar" class="input-button">Cancelar</button>

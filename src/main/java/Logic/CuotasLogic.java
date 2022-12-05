@@ -45,4 +45,10 @@ public class CuotasLogic {
 		
 		return cuotasNoPendientes;
 	}
+	public LinkedList<Cuotas> getCuotasAConfirmarByUser(Socio socio){
+		return dataCuotas.getCuotasAConfirmarByUser(socio);
+	}
+	public LinkedList<Socio> getSocioAConfirmar(){
+		return dataCuotas.getUsuariosAConfirmar();
+	}
 }
