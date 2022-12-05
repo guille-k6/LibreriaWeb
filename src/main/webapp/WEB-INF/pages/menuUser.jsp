@@ -16,6 +16,7 @@
 
 	<%
 	  	Socio c = (Socio)session.getAttribute("usuario");
+		String mensaje = (String)request.getAttribute("estado");
 		
 		//if(!c.getAdmin()){
 		//	response.sendRedirect("WEB-INF/pages/menuUser.jsp");
@@ -42,6 +43,10 @@
 </nav>
 
 	<h2>Bienvenido, <%= c.getNombre() %> noAdmin</h2>
+	
+		<%if(mensaje != null){ %>
+		<h4><%=mensaje%></h4>
+		<%} %>
 
 	<form action="menuUser" method="get">		
 		<h3>MENU PRINCIPAL</h3>		

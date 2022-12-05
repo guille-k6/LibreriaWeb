@@ -1,13 +1,13 @@
 package Entities;
 
-import Data.DataFecha;
-
 public class Cuotas {
 	private int idCuota;
 	private java.sql.Date fechaPago;
 	private java.sql.Date fechaDesde;
 	private java.sql.Date fechaHasta;
 	private Socio socio;
+	private String estado;
+	
 	public int getIdCuota() {
 		return idCuota;
 	}
@@ -38,18 +38,11 @@ public class Cuotas {
 	public void setSocio(Socio socio) {
 		this.socio = socio;
 	}
-	
-	public String getEstado() { // es una variable calculada
-		String respuesta = null;
-		DataFecha dataFecha = new DataFecha();
-		int valor = this.getFechaHasta().compareTo(dataFecha.getFechaActual());	
-		
-		if(valor<0) {
-			respuesta="Cuota vencida";
-		}else {
-			respuesta="Pendiente";
-		}
-		return respuesta;
+	public String getEstado() {
+		return this.estado;
+	}
+	public void setEstado(String estado){
+		this.estado = estado;
 	}
 
 }

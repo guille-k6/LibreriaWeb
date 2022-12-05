@@ -34,7 +34,8 @@ public class DataCuotas {
 					elSocio.setIdSocio(idSocio);
 					elSocio = soclog.getOneById(elSocio);
 					// Le agrego el autor
-					c.setSocio(elSocio);	
+					c.setSocio(elSocio);
+					c.setEstado(rs.getString("estado"));
 					// Añado el libro con autor incluido a la LinkedList.
 					cuotas.add(c);
 				}
@@ -79,6 +80,7 @@ public class DataCuotas {
 				elSocio = soclog.getOneById(elSocio);
 				// Le agrego el autor
 				c.setSocio(elSocio);	
+				c.setEstado(rs.getString("estado"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -102,13 +104,14 @@ public class DataCuotas {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"insert into cuotas(fechaPago, fechaDesde, fechaHasta, idSocio) values(?,?,?,?)",
+							"insert into cuotas(fechaPago, fechaDesde, fechaHasta, idSocio, estado) values(?,?,?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 			stmt.setString(1, cuotas.getFechaPago().toString());
 			stmt.setString(2, cuotas.getFechaDesde().toString());
 			stmt.setString(3, cuotas.getFechaHasta().toString());
 			stmt.setInt(4, cuotas.getSocio().getIdSocio());
+			stmt.setString(5, cuotas.getEstado());
 			stmt.executeUpdate();
 			
 			keyResultSet=stmt.getGeneratedKeys();
@@ -133,15 +136,23 @@ public class DataCuotas {
 	
 	public void update(Cuotas cuotas) {
 		PreparedStatement stmt= null;
+		String fechaPago;
+		if(cuotas.getFechaPago()==null) {
+			fechaPago=null;
+		}else {
+			fechaPago=cuotas.getFechaPago().toString();
+		}
+
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"update cuotas set fechaPago=?, fechaDesde=?, fechaHasta=?, idSocio=? where idcuotas = ?");
-			stmt.setString(1, cuotas.getFechaPago().toString());
+							"update cuotas set fechaPago=?, fechaDesde=?, fechaHasta=?, idSocio=?, estado=? where idcuotas = ?");
+			stmt.setString(1, fechaPago);
 			stmt.setString(2, cuotas.getFechaDesde().toString());
 			stmt.setString(3, cuotas.getFechaHasta().toString());
 			stmt.setInt(4, cuotas.getSocio().getIdSocio());
-			stmt.setInt(5, cuotas.getIdCuota());
+			stmt.setString(5, cuotas.getEstado());
+			stmt.setInt(6, cuotas.getIdCuota());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
             e.printStackTrace();
@@ -175,7 +186,7 @@ public class DataCuotas {
 		}
 	}	// FIN METODO REMOVE
 
-	public LinkedList<Cuotas> getCuotasByUser(Socio socio) {
+	public LinkedList<Cuotas> getCuotasByUser(Socio socio) { // GUARDA CON ESTE NO SE SI ANDA BIEN
 		LinkedList<Cuotas> c= new LinkedList<Cuotas>();
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
@@ -199,6 +210,7 @@ public class DataCuotas {
 				elSocio = soclog.getOneById(elSocio);
 				// Le agrego el autor
 				q.setSocio(elSocio);	
+				q.setEstado(rs.getString("estado"));
 				// Añado la cuota a la lista de cuotas
 				c.add(q);
 			}
@@ -243,6 +255,7 @@ public class DataCuotas {
 				elSocio = soclog.getOneById(elSocio);
 				// Le agrego el autor
 				c.setSocio(elSocio);
+				c.setEstado(rs.getString("estado"));
 				
 				lasCuotas.add(c);
 				}

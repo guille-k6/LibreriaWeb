@@ -55,18 +55,16 @@ public class Test {
 		miSocio = soclog.getOneById(miSocio);
 		soclog.remove(miSocio);
 		*/
-		SocioLogic soclog = new SocioLogic();
-		Socio elSocio = new Socio();
-		elSocio.setIdSocio(4);
-		elSocio = soclog.getOneById(elSocio);
 		
 		
 		CuotasLogic cuolog = new CuotasLogic();	
-		LinkedList<Cuotas> lasCuotas = cuolog.getCuotasImpagasByUser(elSocio);
 		
-		for(Cuotas cuo : lasCuotas) {
-			System.out.println(cuo.getIdCuota() +" "+ cuo.getFechaDesde()+" "+ cuo.getFechaHasta() + " "+ cuo.getEstado());			
-		}
+		Cuotas laCuota = new Cuotas();
+		laCuota.setIdCuota(7);
+		laCuota = cuolog.getOneById(laCuota);
+		laCuota.setEstado("Pendiente");
+		cuolog.update(laCuota);
+		System.out.println(laCuota.getIdCuota() +" "+laCuota.getEstado()+" "+laCuota.getFechaHasta());
 	}
 
 }
