@@ -57,14 +57,19 @@ public class Test {
 		*/
 		
 		
-		CuotasLogic cuolog = new CuotasLogic();	
+//		CuotasLogic cuolog = new CuotasLogic();	
+//		
+//		Cuotas laCuota = new Cuotas();
+//		laCuota.setIdCuota(7);
+//		laCuota = cuolog.getOneById(laCuota);
+//		laCuota.setEstado("Pendiente");
+//		cuolog.update(laCuota);
+//		System.out.println(laCuota.getIdCuota() +" "+laCuota.getEstado()+" "+laCuota.getFechaHasta());
 		
-		Cuotas laCuota = new Cuotas();
-		laCuota.setIdCuota(7);
-		laCuota = cuolog.getOneById(laCuota);
-		laCuota.setEstado("Pendiente");
-		cuolog.update(laCuota);
-		System.out.println(laCuota.getIdCuota() +" "+laCuota.getEstado()+" "+laCuota.getFechaHasta());
+		AutorLogic aulog = new AutorLogic();
+		Autor elAutor = new Autor();
+		LinkedList<String> pruebaLinked = new LinkedList<String>();
+		System.out.println(pruebaLinked.isEmpty());
 	}
 
 }

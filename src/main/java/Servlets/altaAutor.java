@@ -2,6 +2,7 @@ package Servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -47,6 +48,7 @@ public class altaAutor extends HttpServlet {
 		String opc = request.getParameter("opcion");
 		
 		switch(opc) {
+		// CREAR
 		case("crearAutor"):
 			// Recupero el nombre y el apellido del form.
 			String nombre = request.getParameter("nombre");
@@ -56,6 +58,13 @@ public class altaAutor extends HttpServlet {
 			Autor autor = new Autor();
 			autor.setNombre(nombre);
 			autor.setApellido(apellido);
+			LinkedList<String> errores = autlog.validar(autor);
+			if(!errores.isEmpty()) { // HAY ERRORES
+				request.setAttribute("listaErrores", errores);
+				request.getRequestDispatcher("WEB-INF/pages/admin/AltaAutores.jsp").forward(request, response);		
+				return;
+			}
+			// NO HAY ERRORES, AGREGO EL AUTOR
 			try {
 				autlog.add(autor);
 				String estado = "Alta existosa";
@@ -65,6 +74,8 @@ public class altaAutor extends HttpServlet {
 			}		
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 			break;
+			
+		// CANCELAR	
 		case("cancelar"):
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 			break;

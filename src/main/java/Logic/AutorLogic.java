@@ -25,4 +25,14 @@ public class AutorLogic {
 	public void remove(Autor autor) {
 		dataAutor.remove(autor);
 	}
+	
+	public LinkedList<String> validar(Autor autor){
+		LinkedList<String> losErrores = new LinkedList<String>();
+		if(autor.getNombre().equals("")) {
+			losErrores.add("No se puede ingresar un nombre nulo.");
+		}if(autor.getApellido().equals("")) {
+			losErrores.add("No se puede ingresar un apellido nulo.");
+		}
+		return losErrores; // si losErrores está vacío significa que aprobó la validación
+	}
 }

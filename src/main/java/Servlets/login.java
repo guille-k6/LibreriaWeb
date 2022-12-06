@@ -49,21 +49,23 @@ public class login extends HttpServlet {
 		socio.setUsuario(usuario);
 		socio.setContrasenia(password);
 		
-		socio = login.validate(socio);
+//		LinkedList<String> errores = login.validar(socio); // errores tiene la cantidad de cosas que no se validaron
+		socio = login.validate(socio); // este me devuelve el socio
+		
 		
 		if(socio!=null) {
-			//LinkedList<Socio> losSocios = login.getAll();
-
 			request.getSession().setAttribute("usuario", socio);
-			//request.setAttribute("listaSocios", losSocios);
 			if(socio.getAdmin()) {
 				request.getRequestDispatcher("WEB-INF/pages/menuAdmin.jsp").forward(request, response);
 			}	
 			else{
 				request.getRequestDispatcher("WEB-INF/pages/menuUser.jsp").forward(request, response);						
 			}
-		};
-		response.getWriter().append("No se encontro socio");
+		}else {
+			response.getWriter().append("No se encontró usuario.");			
+//			request.setAttribute("listaErrores", errores);
+//			request.getRequestDispatcher("index.html").forward(request, response);	
+		}
 
 	}
 }

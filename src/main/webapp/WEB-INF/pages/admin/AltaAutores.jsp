@@ -20,6 +20,9 @@
 // 		if(!c.getAdmin()){
 // 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 // 		}
+
+		LinkedList<String> errores = (LinkedList<String>)request.getAttribute("listaErrores");
+		
 	%>
 </head>
 <body>
@@ -42,6 +45,11 @@
 </nav>
 
 	<h2>Alta autor.<%= c.getNombre() %> admin</h2>
+	<%if(!(errores == null)){
+	for (String error : errores) {%>
+	<p><%=error %></p>
+	<%}};%>
+	
 	<form action="altaAutor" method="post">	
 		<label for="nombre">Nombre del autor:</label> <br>
 		<input type="text" class="form-control" name="nombre"> <br>

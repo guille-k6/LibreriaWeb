@@ -25,7 +25,11 @@ public class LibroLogic {
 	}
 	public void remove(Libro libro) {
 		dataLibro.remove(libro);
-	}	
+	}
+	
+//	public LinkedList<String> validar(){
+//		
+//	}
 	
 
 }

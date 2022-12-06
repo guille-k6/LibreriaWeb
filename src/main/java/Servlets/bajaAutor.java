@@ -52,10 +52,10 @@ public class bajaAutor extends HttpServlet {
 				autlog.remove(autor);
 				String estado = "Baja existosa";
 				request.setAttribute("estado", estado);
-				request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
+				request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 
 		}else if(opc.equals("cancelar")) {
-			request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 		}
 		
 	}
