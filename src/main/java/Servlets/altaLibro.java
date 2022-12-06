@@ -15,6 +15,7 @@ import Logic.AutorLogic;
 import Logic.LibroLogic;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
 
 /**
  * Servlet implementation class altaLibro
@@ -79,8 +80,16 @@ public class altaLibro extends HttpServlet {
 			}
 			java.sql.Date data = new java.sql.Date(parsed.getTime());
 			libro.setFechaEdicion(data);
+			// Parse int no funciona con un string vacio y un int no puede ser nulo, por default es 0 asi que le asigno 0
+			if(maxDias == "") {maxDias="0";}
 			libro.setCantDiasMaxPrestamo(Integer.parseInt(maxDias));
-			libro.setAutor(autor);			
+			libro.setAutor(autor);
+			LinkedList<String> errores = liblog.validar(libro);
+			if(!errores.isEmpty()) { // HAY ERRORES
+				request.setAttribute("listaErrores", errores);
+				request.getRequestDispatcher("WEB-INF/pages/admin/AltaLibros.jsp").forward(request, response);		
+				return;
+			}
 			
 			try {
 				liblog.add(libro);

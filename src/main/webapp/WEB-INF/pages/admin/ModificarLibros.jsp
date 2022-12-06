@@ -25,6 +25,7 @@
 		AutorLogic autlog = new AutorLogic();
 		LinkedList<Autor> autores = new LinkedList<Autor>();
 		autores = autlog.getAll();
+		LinkedList<String> errores = (LinkedList<String>)request.getAttribute("listaErrores");
 	%>
 </head>
 <body>
@@ -48,6 +49,10 @@
 
 	<h2>Bienvenido, <%= c.getNombre() %> admin</h2>
 	<h3>Modificar libro</h3>
+		<%if(!(errores == null)){
+	for (String error : errores) {%>
+	<p><%=error %></p>
+	<%}};%>
 	<form action="modificarLibro" method="post">
 	
 		<label for="id">Id del libro:</label> <br>

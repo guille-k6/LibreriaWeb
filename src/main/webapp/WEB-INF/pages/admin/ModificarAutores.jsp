@@ -21,6 +21,7 @@
 // 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 // 		}
 		Autor autor = (Autor)request.getAttribute("autorModificar");
+		LinkedList<String> errores = (LinkedList<String>)request.getAttribute("listaErrores");
 	%>
 </head>
 <body>
@@ -44,6 +45,11 @@
 
 	<h2>Bienvenido, <%= c.getNombre() %> admin</h2>
 	<h3>Modificar autor</h3>
+		<%if(!(errores == null)){
+	for (String error : errores) {%>
+	<p><%=error %></p>
+	<%}};%>
+	
 	<form action="modificarAutor" method="post">
 	
 		<label for="id">Id del autor:</label> <br>

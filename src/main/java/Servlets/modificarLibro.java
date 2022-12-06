@@ -3,6 +3,7 @@ package Servlets;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,12 +55,17 @@ public class modificarLibro extends HttpServlet {
 		AutorLogic autlog = new AutorLogic();
 		// Cargo la opcion y confirmo si lo quiere eliminar o no.
 		if(opc.equals("editar")){
+			// Guardo el atributo autorModificar para que se carguen los datos en la recarga
+			Libro libroModificar = liblog.getOneById(libro);
+			request.setAttribute("libroModificar", libroModificar);
+			
 			// Traigo los valores de los inputs
+			
 			String isbn = request.getParameter("isbn");
 			String titulo = request.getParameter("titulo");
 			String editorial = request.getParameter("editorial");
 			String fechaEdicion = request.getParameter("fechaEdicion");
-			int maxDias = Integer.parseInt(request.getParameter("maxDias"));
+			String maxDias = request.getParameter("maxDias");
 			// Recupero el id de autor y lo inicializo con sus valores
 			int idAutor = Integer.parseInt(request.getParameter("autor"));
 			Autor autor = new Autor();
@@ -83,9 +89,16 @@ public class modificarLibro extends HttpServlet {
 				}
 			java.sql.Date data = new java.sql.Date(parsed.getTime());
 			libro.setFechaEdicion(data);
-			libro.setCantDiasMaxPrestamo(maxDias);
+			// Parse int no funciona con un string vacio y un int no puede ser nulo, por default es 0 asi que le asigno 0
+			if(maxDias == "") {maxDias="0";}
+			libro.setCantDiasMaxPrestamo(Integer.parseInt(maxDias));
 			libro.setAutor(autor);
-			
+			LinkedList<String> errores = liblog.validar(libro);
+			if(!errores.isEmpty()) { // HAY ERRORES
+				request.setAttribute("listaErrores", errores);
+				request.getRequestDispatcher("WEB-INF/pages/admin/ModificarLibros.jsp").forward(request, response);		
+				return;
+			}
 			
 			// Updateo el autor con sus nuevos datos (nombre y apellido).
 			liblog.update(libro);
