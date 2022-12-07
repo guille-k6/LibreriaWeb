@@ -17,13 +17,13 @@
 <title>Confirmar el pago de las cuotas</title>
 
 	<%
-		//if(!c.getAdmin()){
-		//	response.sendRedirect("WEB-INF/pages/menuUser.jsp");
-		//}  	
+		Socio c = (Socio)session.getAttribute("usuario");	
+		if(c.getAdmin()){
+			response.sendRedirect("WEB-INF/pages/menuAdmin.jsp");
+			return;
+		}  	
 		
-		Socio c = (Socio)session.getAttribute("usuario");		
-		String[] lasCuotas = (String[])request.getAttribute("cuotasPagar");	
-		
+		String[] lasCuotas = (String[])request.getAttribute("cuotasPagar");			
 		LinkedList<Cuotas> cuotasAMostrar = new LinkedList<Cuotas>();
 		CuotasLogic cuolog = new CuotasLogic();
 		ValorCuotasLogic valcuolog = new ValorCuotasLogic();
@@ -60,9 +60,10 @@
 	</div>
 </form>
 
-	<h2>Bienvenido, <%= c.getNombre() %> noAdmin</h2>
+<div class="container">
+	<p class="bienvenidoTitulo">Confirmar pago de cuotas.</p>
 
-	<form action="ConfirmarPagoCuotas" method="post">							
+	<form action="ConfirmarPagoCuotas" method="post" class="w-50">							
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -87,15 +88,14 @@
 							</tbody>
 						</table>
 						<h3>El total a pagar es de: <%=costoTotal %></h3>
-						<button type="submit" name="opcion" value="pagar" class="input-button">Pagar</button>	
-						<button type="submit" name="opcion" value="cancelar" class="input-button">Cancelar</button>	
+						<button type="submit" name="opcion" value="pagar" class="btn btn-success mt-3">Pagar</button>	
+						<button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>	
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</form>  
-
+</div>
 
 </body>
 </html>

@@ -16,7 +16,7 @@
  	<!-- local styles -->
  	<link rel="stylesheet" type="text/css" href="css/style.css">
  	
-<title>Autores</title>
+<title>Pago de cuotas</title>
 
 	<%
 		Socio c = (Socio)session.getAttribute("usuario");
@@ -38,11 +38,10 @@
 	</div>
 </form>
 
-	<h3>Pago. <%= c.getNombre() %> admin</h3>
-	<%if(mensaje != null){ %>
-		<h4><%=mensaje%></h4>
-	<%} %>	
-	<form action="UsuariosAConfirmarForm" method="get">							
+
+<div class="container">
+	<p class="bienvenidoTitulo">Socio a cobrar la cuota.</p>
+	<form action="UsuariosAConfirmarForm" method="get" class="w-50">							
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -53,6 +52,7 @@
 									<th>ID</th>
 									<th>Apellido</th>
 									<th>Nombre</th>
+									<th>Cobrar</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -61,7 +61,7 @@
 									<td><%=soc.getIdSocio() %></td>
 									<td><%=soc.getApellido() %></td>
 									<td><%=soc.getNombre() %></td>
-									<td><button type="submit" name="pagar" value="<%= soc.getIdSocio()%>" class="input-button">Cobrar</button></td>
+									<td><button type="submit" name="pagar" value="<%= soc.getIdSocio()%>" class="btn btn-primary">Cobrar</button></td>
 								</tr>
 								<% }%>
 							</tbody>
@@ -71,6 +71,7 @@
 			</div>
 		</div>
 	</form> 
+</div>
 
 </body>
 </html>

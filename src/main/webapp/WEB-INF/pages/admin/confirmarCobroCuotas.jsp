@@ -56,9 +56,10 @@
 	</div>
 </form>
 
-	<h2>Bienvenido, <%= c.getNombre() %> Admin</h2>
 
-	<form action="ConfirmarCobroCuotas" method="post">							
+<div class="container">
+	<p class="bienvenidoTitulo">Confirmar cobro de cuotas.</p>
+	<form action="ConfirmarCobroCuotas" method="post" class="w-50">							
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -83,15 +84,14 @@
 							</tbody>
 						</table>
 						<h3>El total a cobrar es de: <%=costoTotal %></h3>
-						<button type="submit" name="opcion" value="cobrar" class="input-button">Cobrar</button>	
-						<button type="submit" name="opcion" value="cancelar" class="input-button">Cancelar</button>	
+						<button type="submit" name="opcion" value="cobrar" class="btn btn-success mt-3">Cobrar</button>	
+						<button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>	
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</form>  
-
+</div>
 
 </body>
 </html>

@@ -68,7 +68,7 @@ public class ConfirmarCobroCuotas extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/pages/menuAdmin.jsp").forward(request, response);
 			break;
 		case("cancelar"):
-			request.getRequestDispatcher("WEB-INF/pages/user/UsuariosAConfirmar.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/pages/admin/UsuariosAConfirmar.jsp").forward(request, response);
 			break;
 		}	
 	}

@@ -14,7 +14,7 @@
  	<!-- local styles -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
      
-<title>Menú principal</title>
+<title>Pagar cuotas</title>
 
 	<%
 		//if(!c.getAdmin()){
@@ -44,9 +44,10 @@
 	</div>
 </form>
 
-	<h2>Bienvenido, <%= c.getNombre() %> noAdmin</h2>
+<div class="container">
+	<p class="bienvenidoTitulo">Pago de cuotas.</p>
 	<%if(!(error == null)){%>
-	<p class="errorMensaje"><%=error %></p>
+	<p class="errorMensaje w-100"><%=error %></p>
 	<%};%>
 	<form action="pagarCuotasForm" method="post">							
 		<div class="container">
@@ -75,15 +76,16 @@
 								<% }%>
 							</tbody>
 						</table>
-								<button type="submit" name="opcion" value="pagar" class="input-button">Pagar seleccionadas</button>	
-								<button type="submit" name="opcion" value="cancelar" class="input-button">Cancelar</button>	
+								<button type="submit" name="opcion" value="pagar" class="btn btn-success mt-3">Pagar seleccionadas</button>	
+								<button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>	
 					</div>
 				</div>
 			</div>
 		</div>
 		
 	</form>  
-
+</div>
 
 </body>
+<script src="js/eliminarErrores.js"></script>
 </html>
