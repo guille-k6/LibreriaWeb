@@ -27,6 +27,7 @@
 		LinkedList<Cuotas> lasCuotas = cuolog.getCuotasAConfirmarByUser(socioACobrar);
 		ValorCuotasLogic valcuolog = new ValorCuotasLogic();
 		double valorCuotas = valcuolog.getValorActual();
+		String error = (String)request.getAttribute("error");
 		
 
 	%>
@@ -44,6 +45,9 @@
 </form>
 
 	<h2>Bienvenido, <%= c.getNombre() %> Admin</h2>
+	<%if(!(error == null)){%>
+	<p class="errorMensaje"><%=error %></p>
+	<%};%>
 
 	<form action="cobrarCuotasForm" method="post">							
 		<div class="container">
@@ -68,6 +72,7 @@
 									<td><%=valorCuotas%></td>
 									<td><%=cuo.getEstado() %></td>
 									<td><input type="checkbox" name="idcheck" value="<%=cuo.getIdCuota() %>"></td>
+									<td><input type="checkbox" name="idcheckSocio" value="<%=cuo.getSocio().getIdSocio()%>" checked hidden></td>
 								</tr>
 								<% }%>
 							</tbody>

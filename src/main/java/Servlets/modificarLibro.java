@@ -90,10 +90,10 @@ public class modificarLibro extends HttpServlet {
 			java.sql.Date data = new java.sql.Date(parsed.getTime());
 			libro.setFechaEdicion(data);
 			// Parse int no funciona con un string vacio y un int no puede ser nulo, por default es 0 asi que le asigno 0
-			if(maxDias == "") {maxDias="0";}
-			libro.setCantDiasMaxPrestamo(Integer.parseInt(maxDias));
+			// if(maxDias == "") {maxDias="0";}
+			// libro.setCantDiasMaxPrestamo(Integer.parseInt(maxDias));
 			libro.setAutor(autor);
-			LinkedList<String> errores = liblog.validar(libro);
+			LinkedList<String> errores = liblog.validar(libro,maxDias);
 			if(!errores.isEmpty()) { // HAY ERRORES
 				request.setAttribute("listaErrores", errores);
 				request.getRequestDispatcher("WEB-INF/pages/admin/ModificarLibros.jsp").forward(request, response);		
@@ -101,6 +101,7 @@ public class modificarLibro extends HttpServlet {
 			}
 			
 			// Updateo el autor con sus nuevos datos (nombre y apellido).
+			libro.setCantDiasMaxPrestamo(Integer.parseInt(maxDias));
 			liblog.update(libro);
 			String estado = "Modificacion existosa";
 			request.setAttribute("estado", estado);

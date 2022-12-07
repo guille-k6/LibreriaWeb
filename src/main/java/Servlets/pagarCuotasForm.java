@@ -48,7 +48,13 @@ public class pagarCuotasForm extends HttpServlet {
 		case("pagar"):
 			// Recupero el nombre y el apellido del form.
 			String cuotasPagar[] = request.getParameterValues("idcheck"); // Array con los ID de las cuotas a pagar.
-		
+			if(cuotasPagar==null) {
+				String error = "Selecciona como minimo una cuota";
+				request.setAttribute("error", error);
+				request.getRequestDispatcher("WEB-INF/pages/user/pagarCuotas.jsp").forward(request, response);		
+				return;
+				
+			}
 			request.setAttribute("cuotasPagar", cuotasPagar);
 			
 			request.getRequestDispatcher("WEB-INF/pages/user/confirmarPagoCuotas.jsp").forward(request, response);		

@@ -27,6 +27,7 @@
 		LinkedList<Cuotas> lasCuotas = cuolog.getCuotasImpagasByUser(c);
 		ValorCuotasLogic valcuolog = new ValorCuotasLogic();
 		double valorCuotas = valcuolog.getValorActual();
+		String error = (String)request.getAttribute("error");
 		
 
 	%>
@@ -44,7 +45,9 @@
 </form>
 
 	<h2>Bienvenido, <%= c.getNombre() %> noAdmin</h2>
-
+	<%if(!(error == null)){%>
+	<p class="errorMensaje"><%=error %></p>
+	<%};%>
 	<form action="pagarCuotasForm" method="post">							
 		<div class="container">
 			<div class="row">

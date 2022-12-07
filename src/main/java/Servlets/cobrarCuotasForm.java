@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Entities.Socio;
+import Logic.SocioLogic;
 
 /**
  * Servlet implementation class cobrarCuotasForm
@@ -44,7 +45,24 @@ public class cobrarCuotasForm extends HttpServlet {
 		case("cobrar"):
 			// Recupero el nombre y el apellido del form.
 			String cuotasCobrar[] = request.getParameterValues("idcheck"); // Array con los ID de las cuotas a pagar.
-		
+			if(cuotasCobrar==null) {
+				String idSocio[] = request.getParameterValues("idcheckSocio");
+				String elidSocio = idSocio[0];
+				SocioLogic soclog = new SocioLogic();
+				Socio socioACobrar = new Socio();
+				
+				
+				//Busco el libro con ese ID y lo mando como parámetro al autor a la página de modificar.
+				socioACobrar.setIdSocio(Integer.parseInt(elidSocio));
+				socioACobrar = soclog.getOneById(socioACobrar);
+				request.setAttribute("socioACobrar", socioACobrar);
+				//
+				String error = "Selecciona como minimo una cuota";
+				request.setAttribute("error", error);
+				request.getRequestDispatcher("WEB-INF/pages/admin/CobrarSocio.jsp").forward(request, response);		
+				return;
+				
+			}
 			request.setAttribute("cuotasCobrar", cuotasCobrar);
 			
 			request.getRequestDispatcher("WEB-INF/pages/admin/confirmarCobroCuotas.jsp").forward(request, response);		
