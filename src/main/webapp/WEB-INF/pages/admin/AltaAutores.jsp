@@ -13,13 +13,15 @@
     <!-- Bootstrap 5.2 CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
  	<!-- local styles -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
 <title>Alta autor</title>
 
 	<%
  	  	Socio c = (Socio)session.getAttribute("usuario");
-// 		if(!c.getAdmin()){
-// 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
-// 		}
+		if(!c.getAdmin()){
+			request.getRequestDispatcher("index.html").forward(request, response);		
+		}
 
 		LinkedList<String> errores = (LinkedList<String>)request.getAttribute("listaErrores");
 		
@@ -27,30 +29,24 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
-        <a class="nav-link" href="#">Features</a>
-        <a class="nav-link" href="#">Pricing</a>
-        <a class="nav-link disabled">Disabled</a>
-      </div>
-    </div>
-  </div>
-</nav>
+<form action="headerForm" method="post">
+	<div class="contenedorNavBar">
+		<div class="d-flex flex-row justify-content-start align-items-stretch">
+			<div class="navBarItem navBarItem-Main">JAVAUTNFRRO2022</div>
+			<div class="navBarItem"><button type="submit" name="opcion" value="menu" class="botonMenu">Menu</button></div>
+			<div class="navBarItem ms-auto opcionLogout">Usuario: <%=c.getUsuario() %> <button class="btn btn-danger" type="submit" name="opcion" value="logout">Logout</button></div>
+		</div>
+	</div>
+</form>
 
-	<h2>Alta autor.<%= c.getNombre() %> admin</h2>
+<div class="container">
+	<p class="bienvenidoTitulo">Alta de un autor.</p>
 	<%if(!(errores == null)){
 	for (String error : errores) {%>
-	<p><%=error %></p>
+	<p class="errorMensaje"><%=error %></p>
 	<%}};%>
 	
-	<form action="altaAutor" method="post">	
+	<form action="altaAutor" method="post" class="w-50">	
 		<label for="nombre">Nombre del autor:</label> <br>
 		<input type="text" class="form-control" name="nombre"> <br>
 		
@@ -58,9 +54,10 @@
 		<input type="text" class="form-control" name="apellido"> <br>
 		
 		
-		<button type="submit" name="opcion" value="crearAutor" class="input-button">Crear</button>
-        <button type="submit" name="opcion" value="cancelar" class="input-button">Cancelar</button>
+		<button type="submit" name="opcion" value="crearAutor" class="btn btn-success mt-3">Crear</button>
+        <button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>
 	</form> 
-
+</div>
 </body>
+<script src="js/eliminarErrores.js"></script>
 </html>

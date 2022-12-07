@@ -1,0 +1,83 @@
+.contenedorNavBar{
+	background-color: #1b1b1b;
+	padding: 0em 4em;
+	color: #e3e3e3;
+	font-weight: bold;
+}
+.body{
+	background-color: #f3f3f3;
+}
+
+.navBarItem{
+	font-size: 1.33em;
+	padding: 10px 20px;
+}
+
+.navBarItem-Main{
+	background-color: #FF8C00;
+	color: #f5f5f5;
+	vertical-align: middle;
+}
+
+.botonMenu{
+	color: #e3e3e3;
+	border: none;
+	background: none;
+	padding: 4px 8px;
+	border-radius: 8px;
+}
+
+.botonMenu:hover{
+	background-color: #e3e3e3;
+	color: #1b1b1b;
+	transition: all 250ms ease-in-out;
+}
+
+.opcionLogout{
+	font-size: 1.2em;
+	font-weight: normal;
+}
+.bienvenidoTitulo{
+	font-size: 3em;
+}
+
+.opcionMenu{
+	background-color: #FF8C00;
+	padding: 1em;
+	border-radius: 8px;
+	margin: 0.3em;
+	border: none;
+	color: white;
+	font-weight: bold;
+	width: 10em;
+}
+
+.opcionMenu:hover{
+	background-color: #1b1b1b;
+	color: #f3f3f3;
+	transition: all 250ms ease-in-out;
+}
+
+.mensajeInfo{
+	width: 50%;
+	margin:auto;
+	padding: 0.5em 2em;
+	text-align: center;
+	font-size: 1.2em;
+	font-weight: bold;
+	background-color: #FF8C00;
+	color: #f5f5f5;
+	border: solid 2px;
+	border-radius: 8px;
+}
+
+.errorMensaje{
+	width: 50%;
+	margin: 1em 0.2em;
+	padding: 4px;
+	text-align: center;
+	font-size: 1em;
+	background-color: rgba(255, 0, 0, 0.44);
+	color: rgba(0, 0, 0, 0.88);
+	border-radius: 8px;
+}

@@ -42,8 +42,7 @@ public class altaEjemplar extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Socio socio = new Socio();		
-		socio = (Socio)request.getSession().getAttribute("usuario");		
+
 		String opc = request.getParameter("opcion");
 		
 		switch(opc) {
