@@ -3,6 +3,13 @@ package Entities;
 public class Ejemplar {
 	private int idEjemplar;
 	private Libro libro;
+	private boolean isDisponible;
+	public boolean isDisponible() {
+		return isDisponible;
+	}
+	public void setDisponible(boolean isDisponible) {
+		this.isDisponible = isDisponible;
+	}
 	public int getIdEjemplar() {
 		return idEjemplar;
 	}
