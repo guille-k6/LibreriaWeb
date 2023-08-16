@@ -27,7 +27,7 @@ public class EjemplarLogic {
 	public void remove(Ejemplar ejemplar) {
 		dataEjemplar.remove(ejemplar);
 	}	
-	public LinkedList<Ejemplar> getAllByIdLibro(Libro libro){
+	public LinkedList<Ejemplar> getAllEjemplaresByLibro(Libro libro){
 		// Dado un libro devuelve los ejemplares de ese libro
 		LinkedList<Ejemplar> listaLibros = dataEjemplar.getAll();
 		LinkedList<Ejemplar> listaFiltrada = new LinkedList<>();

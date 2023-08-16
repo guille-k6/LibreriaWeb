@@ -23,6 +23,7 @@ public class DataEjemplar {
 				while(rs.next()) {
 					Ejemplar e=new Ejemplar();
 					e.setIdEjemplar(rs.getInt("idejemplar"));
+					e.setDisponible(rs.getBoolean("disponible"));
 					
 					// Busco el objeto libro para el ejemplar
 					int idLibro = rs.getInt("idLibro");
@@ -32,7 +33,7 @@ public class DataEjemplar {
 					elLibro = liblog.getOneById(elLibro);
 					// Le agrego el libro
 					e.setLibro(elLibro);	
-					// Añado el ejemplar con libro incluido a la LinkedList.
+					// Aï¿½ado el ejemplar con libro incluido a la LinkedList.
 					ejemplares.add(e);
 				}
 			}
@@ -65,6 +66,7 @@ public class DataEjemplar {
 			if(rs!=null && rs.next()) {
 				e=new Ejemplar();
 				e.setIdEjemplar(rs.getInt("idejemplar"));
+				e.setDisponible(rs.getBoolean("disponible"));
 						
 				// Busco el objeto libro para el ejemplar
 				int idLibro = rs.getInt("idLibro");
@@ -97,11 +99,12 @@ public class DataEjemplar {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"insert into ejemplar(idLibro) values(?)",
+							"insert into ejemplar(idLibro,disponible) values(?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 
 			stmt.setInt(1, ejemplar.getLibro().getIdLibro());
+			stmt.setBoolean(2,true); // falta test
 			stmt.executeUpdate();
 			
 			keyResultSet=stmt.getGeneratedKeys();
@@ -130,9 +133,10 @@ public class DataEjemplar {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"update ejemplar set idLibro=? where idejemplar=?");
+							"update ejemplar set idLibro=?, disponible=? where idejemplar=?");
 			stmt.setInt(1, ejemplar.getLibro().getIdLibro());
-			stmt.setInt(2, ejemplar.getIdEjemplar());
+			stmt.setBoolean(2,ejemplar.isDisponible()); // falta test
+			stmt.setInt(3, ejemplar.getIdEjemplar());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
             e.printStackTrace();

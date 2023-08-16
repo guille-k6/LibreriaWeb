@@ -27,7 +27,16 @@ public class SocioLogic {
 	public void remove(Socio socio) {
 		dataSocio.remove(socio);
 	}
-	
+	public LinkedList<Socio> getAllByApellido(Socio socio) {
+		LinkedList<Socio> losSocios = dataSocio.getAll();
+		LinkedList<Socio> sociosFiltrados = new LinkedList<Socio>();
+		for (Socio s : losSocios) {
+			if (s.getApellido().toLowerCase().contains(socio.getApellido().toLowerCase())) {
+				sociosFiltrados.add(s);
+			}
+		}
+		return sociosFiltrados;
+	}
 	/*
 	public Socio getByUser(Socio socio){
 		Socio elSocio = new Socio();

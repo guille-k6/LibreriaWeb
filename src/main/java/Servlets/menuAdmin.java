@@ -39,11 +39,11 @@ public class menuAdmin extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// Acá recupero el socio y el parámetro del menú.
+		// Acï¿½ recupero el socio y el parï¿½metro del menï¿½.
 		Socio socio = new Socio();		
 		socio = (Socio)request.getSession().getAttribute("usuario");		
 		String opc = request.getParameter("opcion");
-		// Dependiendo de la opción que haya elegido hago algo.
+		// Dependiendo de la opciï¿½n que haya elegido hago algo.
 		switch(opc) {
 		case("abmAutores"):
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
@@ -56,6 +56,12 @@ public class menuAdmin extends HttpServlet {
 			break;
 		case("cobrarCuotas"):
 			request.getRequestDispatcher("WEB-INF/pages/admin/UsuariosAConfirmar.jsp").forward(request, response);			
+			break;
+		case("prestarEjemplar"):
+			request.getRequestDispatcher("WEB-INF/pages/admin/EjemplaresDisponibles.jsp").forward(request, response);			
+			break;
+		case("buscarSocio"):
+			request.getRequestDispatcher("WEB-INF/pages/admin/BuscarSocio.jsp").forward(request, response);			
 			break;
 
 		}
