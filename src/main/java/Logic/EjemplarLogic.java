@@ -38,5 +38,8 @@ public class EjemplarLogic {
 		 }
 		 return listaFiltrada;
 	}
+	 public String[] dividirString(String entrada, char separador) {
+	        return entrada.split(String.valueOf(separador));
+	 }
 
 }

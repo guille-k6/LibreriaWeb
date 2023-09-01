@@ -90,7 +90,7 @@
 									<td><%=soc.getApellido() %></td>
 									<td><%=soc.getTelefono() %></td>
 									<td><%=soc.getEstadoSocio() %></td>
-									<td><button type="submit" name="Elegir" value="<%=soc.getIdSocio()%>" class="btn btn-primary">Elegir</button></td>
+									<td><button type="submit" name="elegir" <%= (soc.getEstadoSocio().equals("Sancionado")) ? "disabled" : "" %> value="<%=soc.getIdSocio()%>" class="btn btn-primary">Elegir</button></td>
 								</tr>
 								<% }%>
 							</tbody>

@@ -19,6 +19,7 @@
 
 	<%
 		Socio c = (Socio)session.getAttribute("usuario");
+		Socio alquila = (Socio)request.getAttribute("socioPrestar");
 		if(!c.getAdmin()){
 			request.getRequestDispatcher("index.html").forward(request, response);		
 		}
@@ -37,7 +38,8 @@
 		<div class="d-flex flex-row justify-content-start align-items-stretch">
 			<div class="navBarItem navBarItem-Main">JAVAUTNFRRO2022</div>
 			<div class="navBarItem"><button type="submit" name="opcion" value="menu" class="botonMenu">Menu</button></div>
-			<div class="navBarItem ms-auto opcionLogout">Usuario: <%=c.getUsuario() %> <button class="btn btn-danger" type="submit" name="opcion" value="logout">Logout</button></div>
+			<div class="navBarItem ms-auto opcionLogout">Usuario: <%=c.getUsuario() %>  <button class="btn btn-danger" type="submit" name="opcion" value="logout">Logout</button></div>
+			<div class="navBarItem">Usuario a prestar: <%=alquila.getUsuario() %> </div>
 		</div>
 	</div>
 </form>
@@ -77,7 +79,7 @@
 									<td><%=lib.getCantDiasMaxPrestamo() %></td>
 									<td><%=lib.getAutor().getNombre() + " " + lib.getAutor().getApellido() %></td>
 									<td><%=ejelog.getAllEjemplaresByLibro(lib).size() %></td>
-									<td><button type="submit" name="pedir" value="<%=lib.getIdLibro()%>" class="btn btn-danger">Pedir</button></td>
+									<td><button type="submit" name="pedir" <%= (ejelog.getAllEjemplaresByLibro(lib).size() == 0) ? "disabled" : "" %> value="<%=lib.getIdLibro()+"-"+alquila.getIdSocio()%>" class="btn btn-danger">Pedir</button></td>
 								</tr>
 								<% }%>
 							</tbody>

@@ -38,17 +38,12 @@ public class BusquedaSocioForm extends HttpServlet {
 		Socio socio = new Socio();		
 		socio = (Socio)request.getSession().getAttribute("usuario");		
 		String opc = request.getParameter("elegir"); // Asi se llama el name del socio a adjudicarle el prestamo.
-		String edit = request.getParameter("editar");
-		String eliminar = request.getParameter("eliminar");
 		
 		if(opc!=null){
 			// Recupero el ID y lo mando a la secci�n modificar
 			String idElegir = request.getParameter("elegir");
 			SocioLogic soclog = new SocioLogic();
-			Socio socioPrestamista = new Socio();
-			
-			request.setAttribute("idElegir", idElegir);
-			
+			Socio socioPrestamista = new Socio();						
 			//Busco el libro con ese ID y lo mando como par�metro al autor a la p�gina de modificar.
 			socioPrestamista.setIdSocio(Integer.parseInt(idElegir));
 			Socio socioPrestar = soclog.getOneById(socioPrestamista);
