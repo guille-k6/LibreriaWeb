@@ -155,8 +155,8 @@ public class DataLineaDePrestamo {
 								"insert into lineadeprestamo(fechaDevolucionTeorica, fechaDevolucionReal, estadoLinea, idPrestamo, idEjemplar) values(?,?,?,?,?)",
 								PreparedStatement.RETURN_GENERATED_KEYS
 								);
-				stmt.setString(1, l.getFechaDevolucionTeorica().toString());
-				stmt.setString(2, l.getFechaDevolucionReal().toString());
+				stmt.setDate(1, l.getFechaDevolucionTeorica());
+				stmt.setDate(2, l.getFechaDevolucionReal());
 				stmt.setString(3, l.getEstadoLinea());
 				stmt.setInt(4, prestamo.getIdPrestamo());
 				stmt.setInt(5, l.getEjemplar().getIdEjemplar());

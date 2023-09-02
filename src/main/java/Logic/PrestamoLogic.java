@@ -1,9 +1,10 @@
 package Logic;
 
 import java.util.LinkedList;
+
 import Data.DataPrestamo;
-import Logic.LineaDePrestamoLogic;
 import Entities.Prestamo;
+import Entities.Socio;
 import Entities.LineaDePrestamo;
 
 public class PrestamoLogic {
@@ -36,6 +37,23 @@ public class PrestamoLogic {
 			liLogic.remove(lineaDePrestamo);
 		}
 		dataPrestamo.remove(prestamo);
+	}
+	public int getCantidadLibrosPrestadosBySocio(Socio socio) {
+		LinkedList<Prestamo> prestamos = dataPrestamo.getAll();
+		LinkedList<Prestamo> prestamosDelSocio = new LinkedList<>();
+		int librosPedidosDelSocio = 0;
+		for(Prestamo p : prestamos) {
+			if(p.getSocio().getIdSocio() == socio.getIdSocio()) {
+				// Cargo el prestamo con sus lineas de prestamo.
+				prestamosDelSocio.add(p);
+			}
+		}
+		for(Prestamo p : prestamosDelSocio) {
+			for(LineaDePrestamo ldp : p.getLineasDePrestamo()) {
+				if(ldp.getFechaDevolucionReal() == null) librosPedidosDelSocio++;
+			}
+		}
+		return librosPedidosDelSocio;
 	}
 	
 

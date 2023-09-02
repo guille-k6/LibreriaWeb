@@ -11,6 +11,46 @@ public class Socio {
 	private String contrasenia;
 	private String usuario;
 	private boolean isAdmin;
+	
+	
+	public Socio() {};
+	
+	public Socio(int idSocio,
+				String apellido,
+				String nombre,
+				String email,
+				String domicilio,
+				String telefono,
+				String estadosocio,
+				String contrasenia,
+				String usuario,
+				boolean isAdmin) {
+		this.apellido = apellido;
+		this.nombre = nombre;
+		this.domicilio = domicilio;
+		this.telefono = telefono;
+		this.estadoSocio = estadosocio;
+		this.contrasenia = contrasenia;
+		this.usuario = usuario;
+		this.isAdmin = isAdmin;
+	}
+	
+	public Socio(int idSocio,
+			String apellido,
+			String nombre,
+			String email,
+			String domicilio,
+			String telefono,
+			String estadosocio,
+			String usuario) {
+	this.apellido = apellido;
+	this.nombre = nombre;
+	this.domicilio = domicilio;
+	this.telefono = telefono;
+	this.estadoSocio = estadosocio;
+	this.usuario = usuario;
+}
+	
 	public int getIdSocio() {
 		return idSocio;
 	}

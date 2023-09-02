@@ -2,6 +2,30 @@ package Entities;
 
 public class Libro {
 	private int idLibro;
+	private String isbn;
+	private String titulo;
+	private String editorial;
+	private java.sql.Date fechaEdicion;
+	private int cantDiasMaxPrestamo;
+	private Autor autor;
+	
+	public Libro() {};
+	public Libro(int idLibro,
+				 String isbn,
+				 String titulo,
+				 String editorial,
+				 java.sql.Date fechaEdicion,
+				 int cantDiasMaxPrestamo,
+				 Autor autor) {
+		this.idLibro = idLibro;
+		this.isbn = isbn;
+		this.titulo = titulo;
+		this.editorial = editorial;
+		this.fechaEdicion = fechaEdicion;
+		this.cantDiasMaxPrestamo = cantDiasMaxPrestamo;
+		this.autor = autor;
+	}
+	
 	public int getIdLibro() {
 		return idLibro;
 	}
@@ -44,11 +68,5 @@ public class Libro {
 	public void setAutor(Autor autor) {
 		this.autor = autor;
 	}
-	private String isbn;
-	private String titulo;
-	private String editorial;
-	private java.sql.Date fechaEdicion;
-	private int cantDiasMaxPrestamo;
-	private Autor autor;
 	
 }

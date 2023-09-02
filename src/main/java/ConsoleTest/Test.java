@@ -4,9 +4,12 @@ import java.util.LinkedList;
 
 import Entities.*;
 import Logic.*;
+import Data.*;
 public class Test {
 
-	public static void main(String[] args) {	
+	public static void main(String[] args) {
+		
+		
 		/*
 		AutorLogic autlog = new AutorLogic();
 		Autor elAutor = new Autor();
@@ -70,6 +73,19 @@ public class Test {
 		Autor elAutor = new Autor();
 		LinkedList<String> pruebaLinked = new LinkedList<String>();
 		System.out.println(pruebaLinked.isEmpty());
+		
+		DataPrestamo dp = new DataPrestamo();
+		Prestamo np = new Prestamo();
+		np.setIdPrestamo(1);
+		Prestamo p = dp.getOneById(np);
+		DataLineaDePrestamo dldp = new DataLineaDePrestamo();
+		try {
+			dldp.addOne(p, new LineaDePrestamo(55, new java.sql.Date(System.currentTimeMillis()), null, "todo bien 2", new Ejemplar(1, true, null)));
+			System.out.println("Se inserto una linea de prestamo....");
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 
 }

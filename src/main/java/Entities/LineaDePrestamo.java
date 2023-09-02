@@ -6,6 +6,20 @@ public class LineaDePrestamo {
 	private java.sql.Date fechaDevolucionReal;
 	private String estadoLinea;
 	private Ejemplar ejemplar;
+	
+	public LineaDePrestamo() {};
+	public LineaDePrestamo(int idLineaPrestamo,
+						   java.sql.Date fechaDevolucionTeorica,
+						   java.sql.Date fechaDevolucionReal,
+						   String estadoLinea,
+						   Ejemplar ejemplar) {
+		this.idLineaPrestamo = idLineaPrestamo;
+		this.fechaDevolucionReal = fechaDevolucionReal;
+		this.fechaDevolucionTeorica = fechaDevolucionTeorica;
+		this.estadoLinea = estadoLinea;
+		this.ejemplar = ejemplar;
+	}
+	
 	public int getIdLineaPrestamo() {
 		return idLineaPrestamo;
 	}

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
+
 import Entities.*;
 import Logic.SocioLogic;
 
@@ -13,25 +14,42 @@ public class DataPrestamo {
 	public LinkedList<Prestamo> getAll(){
 		Statement stmt=null;
 		ResultSet rs=null;
-		LinkedList<Prestamo> prestamos= new LinkedList<>();
+		LinkedList<Prestamo> prestamos = new LinkedList<>();
 		
 		try {
+			String query = "SELECT p.idPrestamo, p.fechaPrestamo, p.idSocio, ldp.idlineadeprestamo, ldp.fechaDevolucionTeorica, ldp.fechaDevolucionReal, ldp.estadoLinea, ldp.idEjemplar, s.idsocio, s.apellido, s.nombre, s.email, s.domicilio, s.telefono, s.estadoSocio, s.contrasenia, s.isAdmin, s.usuario, e.disponible, l.idLibro, l.isbn, l.titulo, l.editorial, l.fechaEdicion, l.cantDiasMaxPrestamo, a.idautor, a.nombre as NombreAutor, a.apellido as ApellidoAutor FROM prestamo p INNER JOIN lineadeprestamo ldp ON p.idprestamo = ldp.idPrestamo INNER JOIN socio s ON s.idsocio = p.idSocio INNER JOIN ejemplar e ON ldp.idEjemplar = e.idejemplar INNER JOIN libro l ON e.idLibro = l.idlibro INNER JOIN autor a ON l.idAutor = a.idautor ORDER BY p.idprestamo";
 			stmt= DbConnector.getInstancia().getConn().createStatement();
-			  rs = stmt.executeQuery("SELECT * FROM prestamo");
+			  rs = stmt.executeQuery(query);
 	            if (rs != null) {
+	            	int idAnterior = -1;
+                	Prestamo p = new Prestamo();
+                	LinkedList<LineaDePrestamo> lineasDePrestamo = new LinkedList<>();
 	                while (rs.next()) {
-	                    Prestamo p = new Prestamo();
-	                    p.setIdPrestamo(rs.getInt("idprestamo"));
-	                    p.setFechaPrestamo(rs.getDate("fechaPrestamo"));
-	                    // Busco el objeto socio para el préstamo
-	                    int idSocio = rs.getInt("idSocio");
-	                    SocioLogic sociolog = new SocioLogic();
-	                    Socio elSocio = new Socio();
-	                    elSocio.setIdSocio(idSocio);
-	                    elSocio = sociolog.getOneById(elSocio);
-
-	                    // Le asigno el socio al préstamo
-	                    p.setSocio(elSocio);
+	                	if(idAnterior != rs.getInt("idprestamo")) {
+	                		if(idAnterior != -1) { // No en la primera pasada
+	                			p.setLineasDePrestamo(lineasDePrestamo);
+	                			prestamos.add(p);
+	                		}
+	                		idAnterior = rs.getInt("idprestamo");
+		                	lineasDePrestamo.clear();
+		                	p = new Prestamo();
+		                    p.setIdPrestamo(rs.getInt("idprestamo"));
+		                    p.setFechaPrestamo(rs.getDate("fechaPrestamo"));
+		                    p.setSocio(new Socio(rs.getInt("idsocio"), rs.getString("apellido"), rs.getString("nombre"), rs.getString("email"), rs.getString("domicilio"), rs.getString("telefono"), rs.getString("estadoSocio"), rs.getString("usuario")));
+		                	
+		                	Autor autor = new Autor(rs.getInt("idautor"), rs.getString("NombreAutor"), rs.getString("ApellidoAutor"));
+		                	Libro libro = new Libro(rs.getInt("idLibro"), rs.getString("isbn"), rs.getString("titulo"), rs.getString("editorial"), rs.getDate("fechaEdicion"), rs.getInt("cantDiasMaxPrestamo"), autor);
+		                	Ejemplar ejemplar = new Ejemplar(rs.getInt("idejemplar"), rs.getBoolean("disponible"), libro);
+		                	LineaDePrestamo ldp = new LineaDePrestamo(rs.getInt("idlineadeprestamo"), rs.getDate("fechaDevolucionTeorica"), rs.getDate("fechaDevolucionReal"), rs.getString("estadoLinea"), ejemplar);
+		                	lineasDePrestamo.add(ldp);
+	                	} else { // Ids de prestamo iguales (es otra linea del mismo prestmo)
+		                	Autor autor = new Autor(rs.getInt("idautor"), rs.getString("NombreAutor"), rs.getString("ApellidoAutor"));
+		                	Libro libro = new Libro(rs.getInt("idLibro"), rs.getString("isbn"), rs.getString("titulo"), rs.getString("editorial"), rs.getDate("fechaEdicion"), rs.getInt("cantDiasMaxPrestamo"), autor);
+		                	Ejemplar ejemplar = new Ejemplar(rs.getInt("idejemplar"), rs.getBoolean("disponible"), libro);
+		                	LineaDePrestamo ldp = new LineaDePrestamo(rs.getInt("idlineadeprestamo"), rs.getDate("fechaDevolucionTeorica"), rs.getDate("fechaDevolucionReal"), rs.getString("estadoLinea"), ejemplar);
+		                	lineasDePrestamo.add(ldp);
+	                	}
+	                	return prestamos;
 				}
 			}
 			

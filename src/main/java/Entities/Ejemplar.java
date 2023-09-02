@@ -4,6 +4,14 @@ public class Ejemplar {
 	private int idEjemplar;
 	private Libro libro;
 	private boolean isDisponible;
+	
+	public Ejemplar() {};
+	public Ejemplar(int idEjemplar, boolean isDisponible, Libro libro) {
+		this.idEjemplar = idEjemplar;
+		this.isDisponible = isDisponible;
+		this.libro = libro;
+	}
+	
 	public boolean isDisponible() {
 		return isDisponible;
 	}
