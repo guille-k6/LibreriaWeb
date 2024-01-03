@@ -6,35 +6,28 @@ import Data.*;
 import Entities.*;
 
 public class Login {
-	private DataSocio ds;
-	
-	public Login() {
-		ds=new DataSocio();
-	}
-	
-	public Socio validate(Socio s) { // Este valida que exista el socio.
+	private DataSocio dataSocio = new DataSocio();
+
+	public Socio validate(Socio s) { 
+		// Este valida que exista el socio.
+		String hashedPassword = PasswordEncrypter.sha256(s.getContrasenia());
+		s.setContrasenia(hashedPassword);
 		
-		
-		/* para hacer más seguro el manejo de passwords este sería un lugar 
-		 * adecuado para generar un hash de la password utilizando un cifrado
-		 * asimétrico como sha256 y utilizar el hash en lugar de la password en plano 
-		 */
-		
-		return ds.getByUser(s);
+		return dataSocio.getByUser(s);
 	}
 	
 	public LinkedList<String> validar(Socio socio){
 		LinkedList<String> losErrores = new LinkedList<String>();
 		
 		if(socio.getUsuario().equals("")) {
-			losErrores.add("El nombre no puede estar vacío.");
+			losErrores.add("El nombre no puede estar vacio.");
 		}
 		if(socio.getContrasenia().equals("")) {
-			losErrores.add("La contraseña no puede estar vacía.");
+			losErrores.add("La contrasenia no puede estar vacia.");
 		}
 		Socio elSocio = this.validate(socio);
 		if(elSocio== null) {
-			losErrores.add("Nombre y/o contraseña incorrectos.");
+			losErrores.add("Nombre y/o contrasenia incorrectos.");
 		}
 		return losErrores;
 	}

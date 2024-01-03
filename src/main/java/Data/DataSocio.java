@@ -179,7 +179,7 @@ public class DataSocio {
 	}	// FIN METODO REMOVE
 	
 	public Socio getByUser(Socio socio) {
-		Socio s=null;
+		Socio returnedSocio = null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
@@ -190,17 +190,17 @@ public class DataSocio {
 			stmt.setString(2, socio.getContrasenia());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
-				s=new Socio();
-				s.setIdSocio(rs.getInt("idsocio"));
-				s.setNombre(rs.getString("nombre"));
-				s.setApellido(rs.getString("apellido"));
-				s.setEmail(rs.getString("email"));
-				s.setDomicilio(rs.getString("domicilio"));
-				s.setTelefono(rs.getString("telefono"));
-				s.setEstadoSocio(rs.getString("estadoSocio"));
-				s.setContrasenia(rs.getString("contrasenia"));
-				s.setAdmin(rs.getBoolean("isAdmin"));
-				s.setUsuario(rs.getString("usuario"));
+				returnedSocio=new Socio();
+				returnedSocio.setIdSocio(rs.getInt("idsocio"));
+				returnedSocio.setNombre(rs.getString("nombre"));
+				returnedSocio.setApellido(rs.getString("apellido"));
+				returnedSocio.setEmail(rs.getString("email"));
+				returnedSocio.setDomicilio(rs.getString("domicilio"));
+				returnedSocio.setTelefono(rs.getString("telefono"));
+				returnedSocio.setEstadoSocio(rs.getString("estadoSocio"));
+				returnedSocio.setContrasenia(rs.getString("contrasenia"));
+				returnedSocio.setAdmin(rs.getBoolean("isAdmin"));
+				returnedSocio.setUsuario(rs.getString("usuario"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -214,7 +214,7 @@ public class DataSocio {
 			}
 		}
 		
-		return s;		
-	} // FIN METODO GET BY USER
+		return returnedSocio;		
+	}
 	
 }

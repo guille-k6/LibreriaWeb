@@ -1,10 +1,13 @@
-package ConsoleTest;
+package consoleTest;
+
 import java.util.LinkedList;
 
+import com.mysql.cj.util.StringUtils;
 
 import Entities.*;
 import Logic.*;
 import Data.*;
+
 public class Test {
 
 	public static void main(String[] args) {
@@ -69,7 +72,7 @@ public class Test {
 //		cuolog.update(laCuota);
 //		System.out.println(laCuota.getIdCuota() +" "+laCuota.getEstado()+" "+laCuota.getFechaHasta());
 		
-		AutorLogic aulog = new AutorLogic();
+		/*AutorLogic aulog = new AutorLogic();
 		Autor elAutor = new Autor();
 		LinkedList<String> pruebaLinked = new LinkedList<String>();
 		System.out.println(pruebaLinked.isEmpty());
@@ -84,7 +87,10 @@ public class Test {
 			System.out.println("Se inserto una linea de prestamo....");
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
-		}
+		}*/
+		String guille = " j";
+		System.out.println(StringUtils.isNullOrEmpty(guille.trim()));
+		System.out.println(guille);
 		
 	}
 

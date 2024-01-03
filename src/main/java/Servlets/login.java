@@ -8,6 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.mysql.cj.util.StringUtils;
+
+import Data.PasswordEncrypter;
 import Entities.*;
 import Logic.Login;
 
@@ -49,6 +53,12 @@ public class login extends HttpServlet {
 		socio.setUsuario(usuario);
 		socio.setContrasenia(password);
 		
+		String error = null;
+		if(StringUtils.isNullOrEmpty(usuario.trim()) || StringUtils.isNullOrEmpty(password.trim())) {
+			error = "Debe completar usuario y contraseña.";
+			request.setAttribute("loginError", error);
+			return;
+		}
 //		LinkedList<String> errores = login.validar(socio); // errores tiene la cantidad de cosas que no se validaron
 		socio = login.validate(socio); // este me devuelve el socio
 		
@@ -62,9 +72,7 @@ public class login extends HttpServlet {
 				request.getRequestDispatcher("WEB-INF/pages/menuUser.jsp").forward(request, response);						
 			}
 		}else {
-			response.getWriter().append("No se encontr� usuario.");			
-//			request.setAttribute("listaErrores", errores);
-//			request.getRequestDispatcher("index.html").forward(request, response);	
+			response.getWriter().append("No se encontró usuario.");				
 		}
 
 	}

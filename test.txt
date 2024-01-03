@@ -1,1 +1,6 @@
-adsadfsaffdsa
+usuarios y contraseñas:
+
+juanperez : juanperez1
+johndoe : johndoe1
+juanNoAdmin : noadmin
+
