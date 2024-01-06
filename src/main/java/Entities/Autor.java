@@ -4,14 +4,14 @@ public class Autor {
 	private int idAutor;
 	private String nombre;
 	private String apellido;
-	
-	public Autor() {};
+
+	public Autor() {}
 	public Autor(int idAutor, String nombre, String apellido) {
 		this.idAutor = idAutor;
 		this.nombre = nombre;
 		this.apellido = apellido;
 	}
-	
+
 	public int getIdAutor() {
 		return idAutor;
 	}

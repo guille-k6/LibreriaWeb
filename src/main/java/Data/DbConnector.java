@@ -1,11 +1,13 @@
 package Data;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DbConnector {
 
 	private static DbConnector instancia;
-	
+
 	private String driver="com.mysql.cj.jdbc.Driver";
 	private String host="localhost";
 	private String port="3306";
@@ -14,7 +16,7 @@ public class DbConnector {
 	private String db="biblioteca";
 	private int conectados=0;
 	private Connection conn=null;
-	
+
 	private DbConnector() {
 		try {
 			Class.forName(driver);
@@ -22,14 +24,14 @@ public class DbConnector {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static DbConnector getInstancia() {
 		if (instancia == null) {
 			instancia = new DbConnector();
 		}
 		return instancia;
 	}
-	
+
 	public Connection getConn() {
 		try {
 			if(conn==null || conn.isClosed()) {
@@ -42,7 +44,7 @@ public class DbConnector {
 		conectados++;
 		return conn;
 	}
-	
+
 	public void releaseConn() {
 		conectados--;
 		try {

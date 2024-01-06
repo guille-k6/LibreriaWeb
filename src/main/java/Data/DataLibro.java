@@ -16,7 +16,7 @@ public class DataLibro {
 		Statement stmt=null;
 		ResultSet rs=null;
 		LinkedList<Libro> libros= new LinkedList<>();
-		
+
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			rs= stmt.executeQuery("select * from libro");
@@ -29,7 +29,7 @@ public class DataLibro {
 					l.setEditorial(rs.getString("editorial"));
 					l.setFechaEdicion(rs.getDate("fechaEdicion"));
 					l.setCantDiasMaxPrestamo(rs.getInt("cantDiasMaxPrestamo"));
-					
+
 					// Busco el objeto autor para el libro
 					int idAutor = rs.getInt("idAutor");
 					AutorLogic autlog = new AutorLogic();
@@ -37,15 +37,15 @@ public class DataLibro {
 					elAutor.setIdAutor(idAutor);
 					elAutor = autlog.getOneById(elAutor);
 					// Le agrego el autor
-					l.setAutor(elAutor);	
-					// Añado el libro con autor incluido a la LinkedList.
+					l.setAutor(elAutor);
+					// Aï¿½ado el libro con autor incluido a la LinkedList.
 					libros.add(l);
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 		} finally {
 			try {
 				if(rs!=null) {rs.close();}
@@ -57,7 +57,7 @@ public class DataLibro {
 		}
 		return libros;
 	} // fin metodo GetAll
-	
+
 	public Libro getById(Libro libroToSearch) {
 		Libro l=null;
 		PreparedStatement stmt=null;
@@ -75,7 +75,7 @@ public class DataLibro {
 				l.setTitulo(rs.getString("titulo"));
 				l.setEditorial(rs.getString("editorial"));
 				l.setFechaEdicion(rs.getDate("fechaEdicion"));
-				l.setCantDiasMaxPrestamo(rs.getInt("cantDiasMaxPrestamo"));			
+				l.setCantDiasMaxPrestamo(rs.getInt("cantDiasMaxPrestamo"));
 				// Busco el objeto autor para el libro
 				int idAutor = rs.getInt("idAutor");
 				AutorLogic autlog = new AutorLogic();
@@ -83,7 +83,7 @@ public class DataLibro {
 				elAutor.setIdAutor(idAutor);
 				elAutor = autlog.getOneById(elAutor);
 				// Le agrego el autor
-				l.setAutor(elAutor);	
+				l.setAutor(elAutor);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -96,7 +96,7 @@ public class DataLibro {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return l;
 	} // Fin Metodo GetById
 
@@ -108,7 +108,7 @@ public class DataLibro {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
 							"insert into libro(isbn, titulo, editorial, fechaEdicion, cantDiasMaxPrestamo, idAutor) values(?,?,?,?,?,?)",
-							PreparedStatement.RETURN_GENERATED_KEYS
+							Statement.RETURN_GENERATED_KEYS
 							);
 			stmt.setString(1, libro.getIsbn());
 			stmt.setString(2, libro.getTitulo());
@@ -117,13 +117,13 @@ public class DataLibro {
 			stmt.setInt(5, libro.getCantDiasMaxPrestamo());
 			stmt.setInt(6, libro.getAutor().getIdAutor());
 			stmt.executeUpdate();
-			
+
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
                 libro.setIdLibro(keyResultSet.getInt(1));
             }
 
-			
+
 		} catch (SQLException e) {
             e.printStackTrace();
 		} finally {
@@ -137,7 +137,7 @@ public class DataLibro {
 		}
 
 	} // FIN METODO ADD
-	
+
 	public void update(Libro libro) {
 		PreparedStatement stmt= null;
 		try {
@@ -163,7 +163,7 @@ public class DataLibro {
             }
 		}
 	} // FIN METODO UPDATE
-	
+
 	public void remove(Libro libro) {
 		PreparedStatement stmt= null;
 		try {
@@ -183,6 +183,6 @@ public class DataLibro {
             }
 		}
 	}	// FIN METODO REMOVE
-	
-	
+
+
 }

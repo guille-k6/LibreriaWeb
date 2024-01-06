@@ -16,7 +16,7 @@ public class DataCuotas {
 		Statement stmt=null;
 		ResultSet rs=null;
 		LinkedList<Cuotas> cuotas= new LinkedList<>();
-		
+
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			rs= stmt.executeQuery("select * from cuotas");
@@ -36,14 +36,14 @@ public class DataCuotas {
 					// Le agrego el autor
 					c.setSocio(elSocio);
 					c.setEstado(rs.getString("estado"));
-					// Añado el libro con autor incluido a la LinkedList.
+					// Aï¿½ado el libro con autor incluido a la LinkedList.
 					cuotas.add(c);
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 		} finally {
 			try {
 				if(rs!=null) {rs.close();}
@@ -55,7 +55,7 @@ public class DataCuotas {
 		}
 		return cuotas;
 	} // fin metodo GetAll
-	
+
 	public Cuotas getById(Cuotas cuotasToSearch) {
 		Cuotas c=null;
 		PreparedStatement stmt=null;
@@ -79,7 +79,7 @@ public class DataCuotas {
 				elSocio.setIdSocio(idSocio);
 				elSocio = soclog.getOneById(elSocio);
 				// Le agrego el autor
-				c.setSocio(elSocio);	
+				c.setSocio(elSocio);
 				c.setEstado(rs.getString("estado"));
 			}
 		} catch (SQLException e) {
@@ -93,7 +93,7 @@ public class DataCuotas {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return c;
 	} // Fin Metodo GetById
 
@@ -105,7 +105,7 @@ public class DataCuotas {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
 							"insert into cuotas(fechaPago, fechaDesde, fechaHasta, idSocio, estado) values(?,?,?,?,?)",
-							PreparedStatement.RETURN_GENERATED_KEYS
+							Statement.RETURN_GENERATED_KEYS
 							);
 			stmt.setString(1, cuotas.getFechaPago().toString());
 			stmt.setString(2, cuotas.getFechaDesde().toString());
@@ -113,13 +113,13 @@ public class DataCuotas {
 			stmt.setInt(4, cuotas.getSocio().getIdSocio());
 			stmt.setString(5, cuotas.getEstado());
 			stmt.executeUpdate();
-			
+
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
                 cuotas.setIdCuota(keyResultSet.getInt(1));
             }
 
-			
+
 		} catch (SQLException e) {
             e.printStackTrace();
 		} finally {
@@ -133,7 +133,7 @@ public class DataCuotas {
 		}
 
 	} // FIN METODO ADD
-	
+
 	public void update(Cuotas cuotas) {
 		PreparedStatement stmt= null;
 		String fechaPago;
@@ -165,7 +165,7 @@ public class DataCuotas {
             }
 		}
 	} // FIN METODO UPDATE
-	
+
 	public void remove(Cuotas cuotas) {
 		PreparedStatement stmt= null;
 		try {
@@ -187,7 +187,7 @@ public class DataCuotas {
 	}	// FIN METODO REMOVE
 
 	public LinkedList<Cuotas> getCuotasByUser(Socio socio) { // GUARDA CON ESTE NO SE SI ANDA BIEN
-		LinkedList<Cuotas> c= new LinkedList<Cuotas>();
+		LinkedList<Cuotas> c= new LinkedList<>();
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
@@ -209,9 +209,9 @@ public class DataCuotas {
 				elSocio.setIdSocio(idSocio);
 				elSocio = soclog.getOneById(elSocio);
 				// Le agrego el autor
-				q.setSocio(elSocio);	
+				q.setSocio(elSocio);
 				q.setEstado(rs.getString("estado"));
-				// Añado la cuota a la lista de cuotas
+				// Aï¿½ado la cuota a la lista de cuotas
 				c.add(q);
 			}
 		} catch (SQLException e) {
@@ -225,13 +225,13 @@ public class DataCuotas {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return c;
 	// Fin Metodo getCuotasByUser
 	}
 
 	public LinkedList<Cuotas> getCuotasImpagasByUser(Socio socio) {
-		LinkedList<Cuotas> lasCuotas = new LinkedList<Cuotas>();
+		LinkedList<Cuotas> lasCuotas = new LinkedList<>();
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
@@ -256,7 +256,7 @@ public class DataCuotas {
 				// Le agrego el autor
 				c.setSocio(elSocio);
 				c.setEstado(rs.getString("estado"));
-				
+
 				lasCuotas.add(c);
 				}
 			}
@@ -271,12 +271,12 @@ public class DataCuotas {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return lasCuotas;
 	} // Fin Metodo GetById
-	
+
 	public LinkedList<Cuotas> getCuotasAConfirmarByUser(Socio socio) {
-		LinkedList<Cuotas> lasCuotas = new LinkedList<Cuotas>();
+		LinkedList<Cuotas> lasCuotas = new LinkedList<>();
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
@@ -302,7 +302,7 @@ public class DataCuotas {
 				// Le agrego el autor
 				c.setSocio(elSocio);
 				c.setEstado(rs.getString("estado"));
-				
+
 				lasCuotas.add(c);
 				}
 			}
@@ -317,12 +317,12 @@ public class DataCuotas {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return lasCuotas;
 	} // Fin Metodo GetById
-	
+
 	public LinkedList<Socio> getUsuariosAConfirmar() {
-		LinkedList<Socio> losSocios = new LinkedList<Socio>();
+		LinkedList<Socio> losSocios = new LinkedList<>();
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
@@ -337,7 +337,7 @@ public class DataCuotas {
 				int idSocio = rs.getInt("idSocio");
 				SocioLogic soclog = new SocioLogic();
 				s.setIdSocio(idSocio);
-				s = soclog.getOneById(s);				
+				s = soclog.getOneById(s);
 				losSocios.add(s);
 				}
 			}
@@ -352,9 +352,9 @@ public class DataCuotas {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return losSocios;
 	} // Fin Metodo GetById
-	
-	
+
+
 }

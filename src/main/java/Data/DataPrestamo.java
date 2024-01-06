@@ -6,16 +6,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 
-import Entities.*;
+import Entities.Autor;
+import Entities.Ejemplar;
+import Entities.Libro;
+import Entities.LineaDePrestamo;
+import Entities.Prestamo;
+import Entities.Socio;
 import Logic.SocioLogic;
 
 public class DataPrestamo {
-	
+
 	public LinkedList<Prestamo> getAll(){
 		Statement stmt=null;
 		ResultSet rs=null;
 		LinkedList<Prestamo> prestamos = new LinkedList<>();
-		
+
 		try {
 			String query = "SELECT p.idPrestamo, p.fechaPrestamo, p.idSocio, ldp.idlineadeprestamo, ldp.fechaDevolucionTeorica, ldp.fechaDevolucionReal, ldp.estadoLinea, ldp.idEjemplar, s.idsocio, s.apellido, s.nombre, s.email, s.domicilio, s.telefono, s.estadoSocio, s.contrasenia, s.isAdmin, s.usuario, e.disponible, l.idLibro, l.isbn, l.titulo, l.editorial, l.fechaEdicion, l.cantDiasMaxPrestamo, a.idautor, a.nombre as NombreAutor, a.apellido as ApellidoAutor FROM prestamo p INNER JOIN lineadeprestamo ldp ON p.idprestamo = ldp.idPrestamo INNER JOIN socio s ON s.idsocio = p.idSocio INNER JOIN ejemplar e ON ldp.idEjemplar = e.idejemplar INNER JOIN libro l ON e.idLibro = l.idlibro INNER JOIN autor a ON l.idAutor = a.idautor ORDER BY p.idprestamo";
 			stmt= DbConnector.getInstancia().getConn().createStatement();
@@ -36,7 +41,7 @@ public class DataPrestamo {
 		                    p.setIdPrestamo(rs.getInt("idprestamo"));
 		                    p.setFechaPrestamo(rs.getDate("fechaPrestamo"));
 		                    p.setSocio(new Socio(rs.getInt("idsocio"), rs.getString("apellido"), rs.getString("nombre"), rs.getString("email"), rs.getString("domicilio"), rs.getString("telefono"), rs.getString("estadoSocio"), rs.getString("usuario")));
-		                	
+
 		                	Autor autor = new Autor(rs.getInt("idautor"), rs.getString("NombreAutor"), rs.getString("ApellidoAutor"));
 		                	Libro libro = new Libro(rs.getInt("idLibro"), rs.getString("isbn"), rs.getString("titulo"), rs.getString("editorial"), rs.getDate("fechaEdicion"), rs.getInt("cantDiasMaxPrestamo"), autor);
 		                	Ejemplar ejemplar = new Ejemplar(rs.getInt("idejemplar"), rs.getBoolean("disponible"), libro);
@@ -52,10 +57,10 @@ public class DataPrestamo {
 	                	return prestamos;
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 		} finally {
 			try {
 				if(rs!=null) {rs.close();}
@@ -65,11 +70,11 @@ public class DataPrestamo {
 				e.printStackTrace();
 			}
 		}
-		
-		
+
+
 		return prestamos;
 	} // fin metodo GetAll
-	
+
 	public Prestamo getOneById(Prestamo prestamoToSearch) {
 	    Prestamo p = null;
 	    PreparedStatement stmt = null;
@@ -106,10 +111,10 @@ public class DataPrestamo {
 	            e.printStackTrace();
 	        }
 	    }
-	    
+
 	    return p;
 	} // Fin Metodo GetById
-	
+
 	public void add(Prestamo prestamo) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
@@ -118,18 +123,18 @@ public class DataPrestamo {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
 							"INSERT INTO prestamo(fechaPrestamo, idSocio) VALUES (?, ?)",
-							PreparedStatement.RETURN_GENERATED_KEYS
+							Statement.RETURN_GENERATED_KEYS
 							);
 			stmt.setString(1, prestamo.getFechaPrestamo().toString()); // OJO ACA (MIRAR COMO MAPEA)
 			stmt.setInt(2, prestamo.getSocio().getIdSocio());
 			stmt.executeUpdate();
-			
+
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
             	prestamo.setIdPrestamo(keyResultSet.getInt(1));
             }
 
-			
+
 		} catch (SQLException e) {
             e.printStackTrace();
 		} finally {
@@ -143,8 +148,8 @@ public class DataPrestamo {
 		}
 
 	} // FIN METODO ADD
-	
-	
+
+
 	public void update(Prestamo prestamo) {
 		PreparedStatement stmt= null;
 		try {
@@ -166,7 +171,7 @@ public class DataPrestamo {
             }
 		}
 	} // FIN METODO UPDATE
-	
+
 	public void remove(Prestamo prestamo) {
 		PreparedStatement stmt= null;
 		try {

@@ -22,7 +22,7 @@ import Logic.LibroLogic;
 @WebServlet("/modificarLibro")
 public class modificarLibro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -34,6 +34,7 @@ public class modificarLibro extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -42,15 +43,16 @@ public class modificarLibro extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Traigo mi ID de autor y la opción elegida.
-		
+		// Traigo mi ID de autor y la opciï¿½n elegida.
+
 		String opc = request.getParameter("opcion");
 		String elId = request.getParameter("id");
 		int id = Integer.parseInt(elId);
 		Libro libro = new Libro();
 		libro.setIdLibro(id);
-		
+
 		LibroLogic liblog = new LibroLogic();
 		AutorLogic autlog = new AutorLogic();
 		// Cargo la opcion y confirmo si lo quiere eliminar o no.
@@ -58,9 +60,9 @@ public class modificarLibro extends HttpServlet {
 			// Guardo el atributo autorModificar para que se carguen los datos en la recarga
 			Libro libroModificar = liblog.getOneById(libro);
 			request.setAttribute("libroModificar", libroModificar);
-			
+
 			// Traigo los valores de los inputs
-			
+
 			String isbn = request.getParameter("isbn");
 			String titulo = request.getParameter("titulo");
 			String editorial = request.getParameter("editorial");
@@ -71,7 +73,7 @@ public class modificarLibro extends HttpServlet {
 			Autor autor = new Autor();
 			autor.setIdAutor(idAutor);
 			autor = autlog.getOneById(autor);
-			
+
 			// Lleno los datos del libro a modificar con sus respectivos valores
 			libro.setIdLibro(id);
 			libro.setIsbn(isbn);
@@ -96,10 +98,10 @@ public class modificarLibro extends HttpServlet {
 			LinkedList<String> errores = liblog.validar(libro,maxDias);
 			if(!errores.isEmpty()) { // HAY ERRORES
 				request.setAttribute("listaErrores", errores);
-				request.getRequestDispatcher("WEB-INF/pages/admin/ModificarLibros.jsp").forward(request, response);		
+				request.getRequestDispatcher("WEB-INF/pages/admin/ModificarLibros.jsp").forward(request, response);
 				return;
 			}
-			
+
 			// Updateo el autor con sus nuevos datos (nombre y apellido).
 			libro.setCantDiasMaxPrestamo(Integer.parseInt(maxDias));
 			liblog.update(libro);

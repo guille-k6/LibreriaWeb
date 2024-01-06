@@ -1,36 +1,22 @@
 package Logic;
 
-import java.util.LinkedList;
-
-import Data.*;
-import Entities.*;
+import Data.DataSocio;
+import Data.PasswordEncrypter;
+import Entities.Socio;
 
 public class Login {
 	private DataSocio dataSocio = new DataSocio();
 
-	public Socio validate(Socio s) { 
-		// Este valida que exista el socio.
-		String hashedPassword = PasswordEncrypter.sha256(s.getContrasenia());
-		s.setContrasenia(hashedPassword);
-		
-		return dataSocio.getByUser(s);
-	}
-	
-	public LinkedList<String> validar(Socio socio){
-		LinkedList<String> losErrores = new LinkedList<String>();
-		
-		if(socio.getUsuario().equals("")) {
-			losErrores.add("El nombre no puede estar vacio.");
-		}
-		if(socio.getContrasenia().equals("")) {
-			losErrores.add("La contrasenia no puede estar vacia.");
-		}
-		Socio elSocio = this.validate(socio);
-		if(elSocio== null) {
-			losErrores.add("Nombre y/o contrasenia incorrectos.");
-		}
-		return losErrores;
-	}
+	/**
+	 * Valida las credenciales de un socio en el login.
+	 * @param socio Un socio con nombre de usuario y contraseña.
+	 * @return un socio si las credenciales son correctas o nulo si las credenciales son incorrectas.
+	 */
+	public Socio validate(Socio socio) {
+		String hashedPassword = PasswordEncrypter.sha256(socio.getContrasenia());
+		socio.setContrasenia(hashedPassword);
 
+		return dataSocio.getByUser(socio);
+	}
 
 }

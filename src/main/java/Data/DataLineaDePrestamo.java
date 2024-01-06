@@ -3,18 +3,22 @@ package Data;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
-import Entities.*;
+
+import Entities.Ejemplar;
+import Entities.LineaDePrestamo;
+import Entities.Prestamo;
 import Logic.EjemplarLogic;
 
 public class DataLineaDePrestamo {
-	
+
 	public Prestamo getAllByPrestamo(Prestamo prestamo){
 		LineaDePrestamo l = null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		LinkedList<LineaDePrestamo> prestamos= new LinkedList<>();
-		
+
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
 					"select * from lineadeprestamo where idprestamo=?"
@@ -29,7 +33,7 @@ public class DataLineaDePrestamo {
 					l.setFechaDevolucionTeorica(rs.getDate("fechaDevolucionReal"));
 					l.setEstadoLinea(rs.getString("estadoLinea"));
 
-					
+
 					// Busco el objeto ejemplar para la linea
 					int idEjemplar = rs.getInt("idEjemplar");
 					EjemplarLogic ejelog = new EjemplarLogic();
@@ -39,16 +43,16 @@ public class DataLineaDePrestamo {
 					// Le agrego el ejemplar
 					l.setEjemplar(elEjemplar);
 
-				
+
 					// Aniado la linea con el ejemplar incluido a la LinkedList.
 					prestamos.add(l);
 				}
 				prestamo.setLineasDePrestamo(prestamos);
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 		} finally {
 			try {
 				if(rs!=null) {rs.close();}
@@ -60,7 +64,7 @@ public class DataLineaDePrestamo {
 		}
 		return prestamo;
 	} // fin metodo GetAll
-	
+
 	public LineaDePrestamo getById(LineaDePrestamo lineaToSearch) {
 		LineaDePrestamo l=null;
 		PreparedStatement stmt=null;
@@ -76,7 +80,7 @@ public class DataLineaDePrestamo {
 				l.setIdLineaPrestamo(rs.getInt("idlineadeprestamo"));
 				l.setFechaDevolucionTeorica(rs.getDate("fechaDevolucionTeorica"));
 				l.setFechaDevolucionTeorica(rs.getDate("fechaDevolucionReal"));
-				l.setEstadoLinea(rs.getString("estadoLinea"));	
+				l.setEstadoLinea(rs.getString("estadoLinea"));
 				// Busco el objeto ejemplar para la linea
 				int idEjemplar = rs.getInt("idEjemplar");
 				EjemplarLogic ejelog = new EjemplarLogic();
@@ -97,7 +101,7 @@ public class DataLineaDePrestamo {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return l;
 	} // Fin Metodo GetById
 
@@ -105,8 +109,8 @@ public class DataLineaDePrestamo {
 		LinkedList<LineaDePrestamo>lineas=prestamo.getLineasDePrestamo();
 		// hacer for each
 		for (LineaDePrestamo l : lineas) {
-				
-			
+
+
 			PreparedStatement stmt= null;
 			ResultSet keyResultSet=null;
 			//SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
@@ -114,7 +118,7 @@ public class DataLineaDePrestamo {
 				stmt=DbConnector.getInstancia().getConn().
 						prepareStatement(
 								"insert into lineadeprestamo(fechaDevolucionTeorica, fechaDevolucionReal, estadoLinea, idPrestamo, idEjemplar) values(?,?,?,?,?)",
-								PreparedStatement.RETURN_GENERATED_KEYS
+								Statement.RETURN_GENERATED_KEYS
 								);
 				stmt.setString(1, l.getFechaDevolucionTeorica().toString());
 				stmt.setString(2, l.getFechaDevolucionReal().toString());
@@ -122,13 +126,13 @@ public class DataLineaDePrestamo {
 				stmt.setInt(4, prestamo.getIdPrestamo());
 				stmt.setInt(5, l.getEjemplar().getIdEjemplar());
 				stmt.executeUpdate();
-				
+
 				keyResultSet=stmt.getGeneratedKeys();
 	            if(keyResultSet!=null && keyResultSet.next()){
 	                l.setIdLineaPrestamo(keyResultSet.getInt(1));
 	            }
-	
-				
+
+
 			} catch (SQLException e) {
 	            e.printStackTrace();
 			} finally {
@@ -143,9 +147,9 @@ public class DataLineaDePrestamo {
 		}
 
 	} // FIN METODO ADD
-	
+
 	public void addOne(Prestamo prestamo,LineaDePrestamo l) {
-							
+
 			PreparedStatement stmt= null;
 			ResultSet keyResultSet=null;
 			//SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
@@ -153,7 +157,7 @@ public class DataLineaDePrestamo {
 				stmt=DbConnector.getInstancia().getConn().
 						prepareStatement(
 								"insert into lineadeprestamo(fechaDevolucionTeorica, fechaDevolucionReal, estadoLinea, idPrestamo, idEjemplar) values(?,?,?,?,?)",
-								PreparedStatement.RETURN_GENERATED_KEYS
+								Statement.RETURN_GENERATED_KEYS
 								);
 				stmt.setDate(1, l.getFechaDevolucionTeorica());
 				stmt.setDate(2, l.getFechaDevolucionReal());
@@ -161,13 +165,13 @@ public class DataLineaDePrestamo {
 				stmt.setInt(4, prestamo.getIdPrestamo());
 				stmt.setInt(5, l.getEjemplar().getIdEjemplar());
 				stmt.executeUpdate();
-				
+
 				keyResultSet=stmt.getGeneratedKeys();
 	            if(keyResultSet!=null && keyResultSet.next()){
 	                l.setIdLineaPrestamo(keyResultSet.getInt(1));
 	            }
-	
-				
+
+
 			} catch (SQLException e) {
 	            e.printStackTrace();
 			} finally {
@@ -181,7 +185,7 @@ public class DataLineaDePrestamo {
 			}
 
 	} // FIN METODO ADD ONE
-	
+
 	public void update(LineaDePrestamo linea,Prestamo pres) {
 		PreparedStatement stmt= null;
 		try {
@@ -206,7 +210,7 @@ public class DataLineaDePrestamo {
             }
 		}
 	} // FIN METODO UPDATE
-	
+
 	public void remove(LineaDePrestamo linea) {
 		PreparedStatement stmt= null;
 		try {

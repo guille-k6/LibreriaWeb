@@ -1,12 +1,13 @@
 package Logic;
 
 import java.util.LinkedList;
+
 import Data.DataAutor;
 import Entities.Autor;
 
 public class AutorLogic {
 	private DataAutor dataAutor;
-	
+
 	public AutorLogic(){
 		dataAutor = new DataAutor();
 	}
@@ -25,14 +26,14 @@ public class AutorLogic {
 	public void remove(Autor autor) {
 		dataAutor.remove(autor);
 	}
-	
+
 	public LinkedList<String> validar(Autor autor){
-		LinkedList<String> losErrores = new LinkedList<String>();
+		LinkedList<String> losErrores = new LinkedList<>();
 		if(autor.getNombre().equals("")) {
 			losErrores.add("No se puede ingresar un nombre nulo.");
 		}if(autor.getApellido().equals("")) {
 			losErrores.add("No se puede ingresar un apellido nulo.");
 		}
-		return losErrores; // si losErrores está vacío significa que aprobó la validación
+		return losErrores; // si losErrores estï¿½ vacï¿½o significa que aprobï¿½ la validaciï¿½n
 	}
 }

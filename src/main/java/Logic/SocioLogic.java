@@ -3,12 +3,12 @@ package Logic;
 import java.util.LinkedList;
 
 import Data.DataSocio;
-import Entities.*;
+import Entities.Socio;
 
 public class SocioLogic {
-	
+
 	private DataSocio dataSocio;
-	
+
 	public SocioLogic(){
 		dataSocio = new DataSocio();
 	}
@@ -29,7 +29,7 @@ public class SocioLogic {
 	}
 	public LinkedList<Socio> getAllByApellido(Socio socio) {
 		LinkedList<Socio> losSocios = dataSocio.getAll();
-		LinkedList<Socio> sociosFiltrados = new LinkedList<Socio>();
+		LinkedList<Socio> sociosFiltrados = new LinkedList<>();
 		for (Socio s : losSocios) {
 			if (s.getApellido().toLowerCase().contains(socio.getApellido().toLowerCase())) {
 				sociosFiltrados.add(s);

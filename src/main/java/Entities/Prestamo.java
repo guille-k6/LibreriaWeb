@@ -6,10 +6,10 @@ public class Prestamo {
 	private java.sql.Date fechaPrestamo;
 	private LinkedList<LineaDePrestamo> lineasDePrestamo;
 	private Socio socio;
-	
-	public Prestamo(){};
-	
-	
+
+	public Prestamo(){}
+
+
 	public int getIdPrestamo() {
 		return idPrestamo;
 	}

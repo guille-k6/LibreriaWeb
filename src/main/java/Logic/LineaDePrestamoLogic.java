@@ -1,13 +1,12 @@
 package Logic;
 
-import java.util.LinkedList;
 import Data.DataLineaDePrestamo;
 import Entities.LineaDePrestamo;
 import Entities.Prestamo;
 
 public class LineaDePrestamoLogic {
 	private DataLineaDePrestamo dataLineaDePrestamo;
-	
+
 	public LineaDePrestamoLogic(){
 		dataLineaDePrestamo = new DataLineaDePrestamo();
 	}
@@ -29,5 +28,5 @@ public class LineaDePrestamoLogic {
 	public void remove(LineaDePrestamo linea) {
 		dataLineaDePrestamo.remove(linea);
 	}
-	
+
 }

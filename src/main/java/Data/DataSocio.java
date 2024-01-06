@@ -5,7 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
-import Entities.*;
+
+import Entities.Socio;
 
 public class DataSocio {
 
@@ -13,7 +14,7 @@ public class DataSocio {
 		Statement stmt=null;
 		ResultSet rs=null;
 		LinkedList<Socio> socios= new LinkedList<>();
-		
+
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			rs= stmt.executeQuery("select * from socio");
@@ -33,10 +34,10 @@ public class DataSocio {
 					socios.add(s);
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 		} finally {
 			try {
 				if(rs!=null) {rs.close();}
@@ -46,11 +47,11 @@ public class DataSocio {
 				e.printStackTrace();
 			}
 		}
-		
-		
+
+
 		return socios;
 	} // fin metodo GetAll
-	
+
 	public Socio getById(Socio socioToSearch) {
 		Socio s=null;
 		PreparedStatement stmt=null;
@@ -76,6 +77,7 @@ public class DataSocio {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			// Logger e.getMessage();
 		}finally {
 			try {
 				if(rs!=null) {rs.close();}
@@ -85,10 +87,10 @@ public class DataSocio {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return s;
 	} // Fin Metodo GetById
-	
+
 	public void add(Socio socio) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
@@ -96,7 +98,7 @@ public class DataSocio {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
 							"insert into socio(nombre, apellido, email, domicilio, telefono, estadoSocio, contrasenia, isAdmin, usuario) values(?,?,?,?,?,?,?,?,?)",
-							PreparedStatement.RETURN_GENERATED_KEYS
+							Statement.RETURN_GENERATED_KEYS
 							);
 			stmt.setString(1, socio.getNombre());
 			stmt.setString(2, socio.getApellido());
@@ -108,13 +110,13 @@ public class DataSocio {
 			stmt.setBoolean(8, socio.getAdmin());
 			stmt.setString(9, socio.getUsuario());
 			stmt.executeUpdate();
-			
+
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
                 socio.setIdSocio(keyResultSet.getInt(1));
             }
 
-			
+
 		} catch (SQLException e) {
             e.printStackTrace();
 		} finally {
@@ -128,7 +130,7 @@ public class DataSocio {
 		}
 
 	} // FIN METODO ADD
-	
+
 	public void update(Socio socio) {
 		PreparedStatement stmt= null;
 		try {
@@ -157,7 +159,7 @@ public class DataSocio {
             }
 		}
 	} // FIN METODO UPDATE
-	
+
 	public void remove(Socio socio) {
 		PreparedStatement stmt= null;
 		try {
@@ -177,7 +179,7 @@ public class DataSocio {
             }
 		}
 	}	// FIN METODO REMOVE
-	
+
 	public Socio getByUser(Socio socio) {
 		Socio returnedSocio = null;
 		PreparedStatement stmt=null;
@@ -213,8 +215,8 @@ public class DataSocio {
 				e.printStackTrace();
 			}
 		}
-		
-		return returnedSocio;		
+
+		return returnedSocio;
 	}
-	
+
 }

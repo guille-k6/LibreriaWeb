@@ -1,14 +1,15 @@
 package Logic;
 
 import java.util.LinkedList;
+
 import Data.DataCuotas;
 import Entities.Cuotas;
 import Entities.Socio;
 
 public class CuotasLogic {
-	
+
 	private DataCuotas dataCuotas;
-	
+
 	public CuotasLogic(){
 		dataCuotas = new DataCuotas();
 	}
@@ -30,19 +31,19 @@ public class CuotasLogic {
 	public LinkedList<Cuotas> getCuotasByUser(Socio socio){
 		return dataCuotas.getCuotasByUser(socio);
 	}
-	
+
 	public LinkedList<Cuotas> getCuotasImpagasByUser(Socio socio){
-		// Estas cuotas son las que están impagas y no tienen el estado "A_Confirmar".
-		LinkedList<Cuotas> cuotasNoPendientes = new LinkedList<Cuotas>(); 
+		// Estas cuotas son las que estï¿½n impagas y no tienen el estado "A_Confirmar".
+		LinkedList<Cuotas> cuotasNoPendientes = new LinkedList<>();
 		// Estas cuotas estan impagas, pero pueden tener el estado "A_Confirmar".
 		LinkedList<Cuotas> lasCuotas = dataCuotas.getCuotasImpagasByUser(socio);
-		
+
 		for(Cuotas cuo : lasCuotas) {
 			if(!cuo.getEstado().equals("A_Confirmar")) {
 				cuotasNoPendientes.add(cuo);
 			}
 		}
-		
+
 		return cuotasNoPendientes;
 	}
 	public LinkedList<Cuotas> getCuotasAConfirmarByUser(Socio socio){

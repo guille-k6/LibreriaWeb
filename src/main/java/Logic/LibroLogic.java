@@ -3,12 +3,11 @@ package Logic;
 import java.util.LinkedList;
 
 import Data.DataLibro;
-import Entities.Autor;
 import Entities.Libro;
 
 public class LibroLogic {
 	private DataLibro dataLibro;
-	
+
 	public LibroLogic() {
 		dataLibro = new DataLibro();
 	}
@@ -27,9 +26,9 @@ public class LibroLogic {
 	public void remove(Libro libro) {
 		dataLibro.remove(libro);
 	}
-	
+
 	public LinkedList<String> validar(Libro libro, String cantDiasMaxPrestamo){
-		LinkedList<String> losErrores = new LinkedList<String>();
+		LinkedList<String> losErrores = new LinkedList<>();
 		int numero;
 		if(libro.getIsbn().equals("")) {
 			losErrores.add("No se puede ingresar un isbn nulo.");
@@ -53,7 +52,7 @@ public class LibroLogic {
 			if(numero > 1000) {
 				losErrores.add("No se puede ingresar un cant dias max prestamo mayor a 1000.");}
 		}
-		return losErrores; // si losErrores está vacío significa que aprobó la validación
+		return losErrores; // si losErrores estï¿½ vacï¿½o significa que aprobï¿½ la validaciï¿½n
 	}
 	public boolean parsestring(String cantDiasMaxPrestamo) {
 		int numero;

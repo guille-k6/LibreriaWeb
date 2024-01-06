@@ -1,6 +1,7 @@
 package Servlets;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 import javax.servlet.ServletException;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import Entities.Cuotas;
 import Logic.CuotasLogic;
-import java.util.Calendar;
 
 /**
  * Servlet implementation class ConfirmarCobroCuotas
@@ -19,7 +19,7 @@ import java.util.Calendar;
 @WebServlet("/ConfirmarCobroCuotas")
 public class ConfirmarCobroCuotas extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -31,6 +31,7 @@ public class ConfirmarCobroCuotas extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -39,16 +40,17 @@ public class ConfirmarCobroCuotas extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		CuotasLogic cuolog = new CuotasLogic();
-		
+
 		String opc = request.getParameter("opcion");
 		switch(opc) {
 		case("cobrar"):
-			LinkedList<Cuotas> lasCuotas = new LinkedList<Cuotas>();
+			LinkedList<Cuotas> lasCuotas = new LinkedList<>();
 			String cuotasPagar[] = request.getParameterValues("idcheck"); // Array con los ID de las cuotas a pagar.
-			
+
 			for(String idCuota : cuotasPagar) {
 				int elId = Integer.parseInt(idCuota);
 				Cuotas cuota = new Cuotas();
@@ -60,17 +62,17 @@ public class ConfirmarCobroCuotas extends HttpServlet {
 				java.util.Date currentDate = calendar.getTime();
 				java.sql.Date date = new java.sql.Date(currentDate.getTime());
 				cuota.setFechaPago(date);
-				cuolog.update(cuota);			
+				cuolog.update(cuota);
 			}
 			String estado = "Cobro realizado con exito.";
-			
+
 			request.setAttribute("estado", estado);
 			request.getRequestDispatcher("WEB-INF/pages/menuAdmin.jsp").forward(request, response);
 			break;
 		case("cancelar"):
 			request.getRequestDispatcher("WEB-INF/pages/admin/UsuariosAConfirmar.jsp").forward(request, response);
 			break;
-		}	
+		}
 	}
 
 }

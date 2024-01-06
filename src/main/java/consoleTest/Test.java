@@ -1,18 +1,14 @@
 package consoleTest;
 
-import java.util.LinkedList;
-
 import com.mysql.cj.util.StringUtils;
 
-import Entities.*;
-import Logic.*;
-import Data.*;
+import Data.PasswordEncrypter;
 
 public class Test {
 
 	public static void main(String[] args) {
-		
-		
+
+
 		/*
 		AutorLogic autlog = new AutorLogic();
 		Autor elAutor = new Autor();
@@ -26,7 +22,7 @@ public class Test {
 		miSocio.setIdSocio(1);
 		miSocio = soclog.getOneById(miSocio);
 		System.out.println(miSocio.getIdSocio() +" "+ miSocio.getNombre());*/
-		
+
 		// PRUEBA ADD
 		/*Socio miSocio = new Socio();
 		miSocio.setNombre("Juanjo");
@@ -41,19 +37,19 @@ public class Test {
 		soclog.add(miSocio);
 		System.out.println(miSocio.getIdSocio() +" "+ miSocio.getNombre() +" "+miSocio.getAdmin());
 		*/
-		
+
 		// PRUEBA UPDATE
-		
+
 		/*Socio miSocio = new Socio();
 		miSocio.setIdSocio(3);
 		miSocio = soclog.getOneById(miSocio);
-		
+
 		miSocio.setNombre("Jorge");
 		miSocio.setApellido("LopezCambiado");
 		soclog.update(miSocio);
 		System.out.println(miSocio.getIdSocio() +" "+ miSocio.getNombre()+" "+ miSocio.getApellido());
 		*/
-		
+
 		// PRUEBA REMOVE
 		/*
 		Socio miSocio = new Socio();
@@ -61,22 +57,22 @@ public class Test {
 		miSocio = soclog.getOneById(miSocio);
 		soclog.remove(miSocio);
 		*/
-		
-		
-//		CuotasLogic cuolog = new CuotasLogic();	
-//		
+
+
+//		CuotasLogic cuolog = new CuotasLogic();
+//
 //		Cuotas laCuota = new Cuotas();
 //		laCuota.setIdCuota(7);
 //		laCuota = cuolog.getOneById(laCuota);
 //		laCuota.setEstado("Pendiente");
 //		cuolog.update(laCuota);
 //		System.out.println(laCuota.getIdCuota() +" "+laCuota.getEstado()+" "+laCuota.getFechaHasta());
-		
+
 		/*AutorLogic aulog = new AutorLogic();
 		Autor elAutor = new Autor();
 		LinkedList<String> pruebaLinked = new LinkedList<String>();
 		System.out.println(pruebaLinked.isEmpty());
-		
+
 		DataPrestamo dp = new DataPrestamo();
 		Prestamo np = new Prestamo();
 		np.setIdPrestamo(1);
@@ -92,6 +88,8 @@ public class Test {
 		System.out.println(StringUtils.isNullOrEmpty(guille.trim()));
 		System.out.println(guille);
 		
+		System.out.println(PasswordEncrypter.sha256("noadmin"));
+
 	}
 
 }

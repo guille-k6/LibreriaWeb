@@ -18,7 +18,7 @@ import Logic.AutorLogic;
 @WebServlet("/modificarAutor")
 public class modificarAutor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -30,6 +30,7 @@ public class modificarAutor extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -38,16 +39,17 @@ public class modificarAutor extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Traigo mi ID de autor y la opción elegida.
-		
+		// Traigo mi ID de autor y la opciï¿½n elegida.
+
 		String opc = request.getParameter("opcion");
 		String elId = request.getParameter("id");
 		int id = Integer.parseInt(elId);
 		Autor autor = new Autor();
 		autor.setIdAutor(id);
 
-		
+
 		AutorLogic autlog = new AutorLogic();
 		// Cargo la opcion y confirmo si lo quiere eliminar o no.
 		if(opc.equals("editar")){
@@ -62,7 +64,7 @@ public class modificarAutor extends HttpServlet {
 			LinkedList<String> errores = autlog.validar(autor);
 			if(!errores.isEmpty()) { // HAY ERRORES
 				request.setAttribute("listaErrores", errores);
-				request.getRequestDispatcher("WEB-INF/pages/admin/ModificarAutores.jsp").forward(request, response);		
+				request.getRequestDispatcher("WEB-INF/pages/admin/ModificarAutores.jsp").forward(request, response);
 				return;
 			}
 			// Updateo el autor con sus nuevos datos (nombre y apellido).
@@ -72,7 +74,7 @@ public class modificarAutor extends HttpServlet {
 			request.setAttribute("estado", estado);
 			}catch (Exception e) {
 	            e.printStackTrace();
-			}	
+			}
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 
 		}else if(opc.equals("cancelar")) {

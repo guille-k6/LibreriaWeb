@@ -1,15 +1,14 @@
 package Servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import Entities.Socio;
-import Logic.Login;
 
 /**
  * Servlet implementation class menuAdmin
@@ -17,7 +16,7 @@ import Logic.Login;
 @WebServlet("/menuAdmin")
 public class menuAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -29,6 +28,7 @@ public class menuAdmin extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -37,11 +37,12 @@ public class menuAdmin extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// Ac� recupero el socio y el par�metro del men�.
-		Socio socio = new Socio();		
-		socio = (Socio)request.getSession().getAttribute("usuario");		
+		Socio socio = new Socio();
+		socio = (Socio)request.getSession().getAttribute("usuario");
 		String opc = request.getParameter("opcion");
 		// Dependiendo de la opci�n que haya elegido hago algo.
 		switch(opc) {
@@ -49,23 +50,23 @@ public class menuAdmin extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 			break;
 		case("abmLibros"):
-			request.getRequestDispatcher("WEB-INF/pages/admin/ABMLibros.jsp").forward(request, response);			
+			request.getRequestDispatcher("WEB-INF/pages/admin/ABMLibros.jsp").forward(request, response);
 			break;
 		case("abmEjemplares"):
-			request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);			
+			request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
 			break;
 		case("cobrarCuotas"):
-			request.getRequestDispatcher("WEB-INF/pages/admin/UsuariosAConfirmar.jsp").forward(request, response);			
+			request.getRequestDispatcher("WEB-INF/pages/admin/UsuariosAConfirmar.jsp").forward(request, response);
 			break;
 		case("prestarEjemplar"):
-			request.getRequestDispatcher("WEB-INF/pages/admin/EjemplaresDisponibles.jsp").forward(request, response);			
+			request.getRequestDispatcher("WEB-INF/pages/admin/EjemplaresDisponibles.jsp").forward(request, response);
 			break;
 		case("buscarSocio"):
-			request.getRequestDispatcher("WEB-INF/pages/admin/BuscarSocio.jsp").forward(request, response);			
+			request.getRequestDispatcher("WEB-INF/pages/admin/BuscarSocio.jsp").forward(request, response);
 			break;
 
 		}
-		
+
 	}
 
 }

@@ -3,9 +3,10 @@ package Data;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date;
 
 public class DataFecha {
-	public java.sql.Date getFechaActual() {
+	public Date getFechaActual() {
 		java.sql.Date fechaActual = null;
 		PreparedStatement stmt= null;
 		ResultSet rs=null;
@@ -27,7 +28,7 @@ public class DataFecha {
             } catch (SQLException e) {
             	e.printStackTrace();
             }}
-            
+
         return fechaActual;
-		} // FIN METOVO getFechaActual
+		} 
 }

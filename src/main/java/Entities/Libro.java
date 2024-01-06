@@ -8,8 +8,8 @@ public class Libro {
 	private java.sql.Date fechaEdicion;
 	private int cantDiasMaxPrestamo;
 	private Autor autor;
-	
-	public Libro() {};
+
+	public Libro() {}
 	public Libro(int idLibro,
 				 String isbn,
 				 String titulo,
@@ -25,7 +25,7 @@ public class Libro {
 		this.cantDiasMaxPrestamo = cantDiasMaxPrestamo;
 		this.autor = autor;
 	}
-	
+
 	public int getIdLibro() {
 		return idLibro;
 	}
@@ -68,5 +68,5 @@ public class Libro {
 	public void setAutor(Autor autor) {
 		this.autor = autor;
 	}
-	
+
 }

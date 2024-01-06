@@ -7,7 +7,7 @@ public class Cuotas {
 	private java.sql.Date fechaHasta;
 	private Socio socio;
 	private String estado;
-	
+
 	public int getIdCuota() {
 		return idCuota;
 	}

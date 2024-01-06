@@ -11,10 +11,10 @@ public class Socio {
 	private String contrasenia;
 	private String usuario;
 	private boolean isAdmin;
-	
-	
-	public Socio() {};
-	
+
+
+	public Socio() {}
+
 	public Socio(int idSocio,
 				String apellido,
 				String nombre,
@@ -34,7 +34,7 @@ public class Socio {
 		this.usuario = usuario;
 		this.isAdmin = isAdmin;
 	}
-	
+
 	public Socio(int idSocio,
 			String apellido,
 			String nombre,
@@ -50,7 +50,7 @@ public class Socio {
 	this.estadoSocio = estadosocio;
 	this.usuario = usuario;
 }
-	
+
 	public int getIdSocio() {
 		return idSocio;
 	}

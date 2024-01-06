@@ -1,12 +1,13 @@
 package Logic;
 
 import java.util.LinkedList;
+
 import Data.DataValorCuotas;
 import Entities.ValorCuotas;
 
 public class ValorCuotasLogic {
 	private DataValorCuotas dataValorCuotas;
-	
+
 	public ValorCuotasLogic(){
 		dataValorCuotas = new DataValorCuotas();
 	}
@@ -25,7 +26,7 @@ public class ValorCuotasLogic {
 	public void remove(ValorCuotas valorCuota) {
 		dataValorCuotas.remove(valorCuota);
 	}
-	
+
 	public double getValorActual() {
 		return dataValorCuotas.getValorActual();
 	}

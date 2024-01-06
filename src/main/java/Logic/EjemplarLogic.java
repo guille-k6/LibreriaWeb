@@ -8,7 +8,7 @@ import Entities.Libro;
 
 public class EjemplarLogic {
 	private DataEjemplar dataEjemplar;
-	
+
 	public EjemplarLogic() {
 		dataEjemplar = new DataEjemplar();
 	}
@@ -26,7 +26,7 @@ public class EjemplarLogic {
 	}
 	public void remove(Ejemplar ejemplar) {
 		dataEjemplar.remove(ejemplar);
-	}	
+	}
 	public LinkedList<Ejemplar> getAllEjemplaresByLibro(Libro libro){
 		// Dado un libro devuelve los ejemplares de ese libro
 		LinkedList<Ejemplar> listaLibros = dataEjemplar.getAll();
@@ -34,7 +34,7 @@ public class EjemplarLogic {
 		 for (Ejemplar ejemplar : listaLibros) {
 	            if (ejemplar.getLibro().getIdLibro() == libro.getIdLibro()) {
 	                listaFiltrada.add(ejemplar);
-	            }		
+	            }
 		 }
 		 return listaFiltrada;
 	}

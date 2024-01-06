@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 
-import Entities.*;
+import Entities.Ejemplar;
+import Entities.Libro;
 import Logic.LibroLogic;
 
 public class DataEjemplar {
@@ -15,7 +16,7 @@ public class DataEjemplar {
 		Statement stmt=null;
 		ResultSet rs=null;
 		LinkedList<Ejemplar> ejemplares= new LinkedList<>();
-		
+
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			rs= stmt.executeQuery("select * from ejemplar");
@@ -24,7 +25,7 @@ public class DataEjemplar {
 					Ejemplar e=new Ejemplar();
 					e.setIdEjemplar(rs.getInt("idejemplar"));
 					e.setDisponible(rs.getBoolean("disponible"));
-					
+
 					// Busco el objeto libro para el ejemplar
 					int idLibro = rs.getInt("idLibro");
 					LibroLogic liblog = new LibroLogic();
@@ -32,15 +33,15 @@ public class DataEjemplar {
 					elLibro.setIdLibro(idLibro);
 					elLibro = liblog.getOneById(elLibro);
 					// Le agrego el libro
-					e.setLibro(elLibro);	
+					e.setLibro(elLibro);
 					// A�ado el ejemplar con libro incluido a la LinkedList.
 					ejemplares.add(e);
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 		} finally {
 			try {
 				if(rs!=null) {rs.close();}
@@ -52,7 +53,7 @@ public class DataEjemplar {
 		}
 		return ejemplares;
 	} // fin metodo GetAll
-	
+
 	public Ejemplar getById(Ejemplar ejemplarToSearch) {
 		Ejemplar e=null;
 		PreparedStatement stmt=null;
@@ -67,7 +68,7 @@ public class DataEjemplar {
 				e=new Ejemplar();
 				e.setIdEjemplar(rs.getInt("idejemplar"));
 				e.setDisponible(rs.getBoolean("disponible"));
-						
+
 				// Busco el objeto libro para el ejemplar
 				int idLibro = rs.getInt("idLibro");
 				LibroLogic liblog = new LibroLogic();
@@ -75,7 +76,7 @@ public class DataEjemplar {
 				elLibro.setIdLibro(idLibro);
 				elLibro = liblog.getOneById(elLibro);
 				// Le agrego el libro
-				e.setLibro(elLibro);	
+				e.setLibro(elLibro);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -88,7 +89,7 @@ public class DataEjemplar {
 				ex.printStackTrace();
 			}
 		}
-		
+
 		return e;
 	} // Fin Metodo GetById
 
@@ -100,19 +101,19 @@ public class DataEjemplar {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
 							"insert into ejemplar(idLibro,disponible) values(?,?)",
-							PreparedStatement.RETURN_GENERATED_KEYS
+							Statement.RETURN_GENERATED_KEYS
 							);
 
 			stmt.setInt(1, ejemplar.getLibro().getIdLibro());
 			stmt.setBoolean(2,true); // falta test
 			stmt.executeUpdate();
-			
+
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
                 ejemplar.setIdEjemplar(keyResultSet.getInt(1));
             }
 
-			
+
 		} catch (SQLException e) {
             e.printStackTrace();
 		} finally {
@@ -126,7 +127,7 @@ public class DataEjemplar {
 		}
 
 	} // FIN METODO ADD
-	
+
 	 // NO SE QUE TANTO SENTIDO TENGA UN UPDATE A EJEMPLAR PERO LO HAGO IGUAL
 	public void update(Ejemplar ejemplar) {
 		PreparedStatement stmt= null;
@@ -149,7 +150,7 @@ public class DataEjemplar {
             }
 		}
 	} // FIN METODO UPDATE
-	
+
 	public void remove(Ejemplar ejemplar) {
 		PreparedStatement stmt= null;
 		try {
@@ -169,6 +170,6 @@ public class DataEjemplar {
             }
 		}
 	}	// FIN METODO REMOVE
-	
-	
+
+
 }

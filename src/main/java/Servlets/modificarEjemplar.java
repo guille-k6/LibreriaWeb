@@ -1,18 +1,17 @@
 package Servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Entities.Autor;
-import Entities.Libro;
 import Entities.Ejemplar;
-import Logic.AutorLogic;
-import Logic.LibroLogic;
+import Entities.Libro;
 import Logic.EjemplarLogic;
+import Logic.LibroLogic;
 
 /**
  * Servlet implementation class modificarEjemplar
@@ -20,7 +19,7 @@ import Logic.EjemplarLogic;
 @WebServlet("/modificarEjemplar")
 public class modificarEjemplar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -32,6 +31,7 @@ public class modificarEjemplar extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -40,15 +40,16 @@ public class modificarEjemplar extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Traigo mi ID de autor y la opción elegida.
-		
+		// Traigo mi ID de autor y la opciï¿½n elegida.
+
 		String opc = request.getParameter("opcion");
 		String elId = request.getParameter("id");
 		int id = Integer.parseInt(elId);
 		Ejemplar ejemplar = new Ejemplar();
 		ejemplar.setIdEjemplar(id);
-		
+
 		EjemplarLogic ejelog = new EjemplarLogic();
 		LibroLogic liblog = new LibroLogic();
 		// Cargo la opcion y confirmo si lo quiere eliminar o no.
@@ -58,12 +59,12 @@ public class modificarEjemplar extends HttpServlet {
 			Libro libro = new Libro();
 			libro.setIdLibro(idLibro);
 			libro = liblog.getOneById(libro);
-			
+
 			// Lleno los datos del ejemplar a modificar con sus respectivos valores
 			ejemplar.setIdEjemplar(id);
 			ejemplar.setLibro(libro);
-			
-			
+
+
 			// Updateo el autor con sus nuevos datos (nombre y apellido).
 			ejelog.update(ejemplar);
 			String estado = "Modificacion existosa";

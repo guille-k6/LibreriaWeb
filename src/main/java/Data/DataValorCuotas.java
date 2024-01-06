@@ -15,7 +15,7 @@ public class DataValorCuotas {
 		Statement stmt=null;
 		ResultSet rs=null;
 		LinkedList<ValorCuotas> valoresCuotas= new LinkedList<>();
-		
+
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			rs= stmt.executeQuery("select * from valorcuotas");
@@ -24,14 +24,14 @@ public class DataValorCuotas {
 					ValorCuotas v=new ValorCuotas();
 					v.setFechaDesde(rs.getDate("fechaDesde"));
 					v.setValor(rs.getDouble("valorcuotascol"));
-					
+
 					valoresCuotas.add(v);
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 		} finally {
 			try {
 				if(rs!=null) {rs.close();}
@@ -43,7 +43,7 @@ public class DataValorCuotas {
 		}
 		return valoresCuotas;
 	} // fin metodo GetAll
-	
+
 	public ValorCuotas getById(ValorCuotas valorCuotasToSearch) {
 		ValorCuotas v=null;
 		PreparedStatement stmt=null;
@@ -70,7 +70,7 @@ public class DataValorCuotas {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return v;
 	} // Fin Metodo GetById
 
@@ -82,7 +82,7 @@ public class DataValorCuotas {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
 							"insert into valorescuotas(fechaDesde,valorcuotascol) values(?,?)",
-							PreparedStatement.RETURN_GENERATED_KEYS
+							Statement.RETURN_GENERATED_KEYS
 							);
 			stmt.setString(1, valorCuotas.getFechaDesde().toString());
 			stmt.setDouble(2, valorCuotas.getValor());
@@ -93,7 +93,7 @@ public class DataValorCuotas {
                 valorCuotas.setFechaDesde(keyResultSet.getDate(1));
             }
 
-			
+
 		} catch (SQLException e) {
             e.printStackTrace();
 		} finally {
@@ -107,7 +107,7 @@ public class DataValorCuotas {
 		}
 
 	} // FIN METODO ADD
-	
+
 	public void update(ValorCuotas valorCuotas) {
 		PreparedStatement stmt= null;
 		try {
@@ -116,7 +116,7 @@ public class DataValorCuotas {
 							"update valorcuotas set valorcuotascol=? where fechaDesde=?");
 			stmt.setDouble(1, valorCuotas.getValor());
 			stmt.setString(2, valorCuotas.getFechaDesde().toString());
-			
+
 			stmt.executeUpdate();
 		} catch (SQLException e) {
             e.printStackTrace();
@@ -129,7 +129,7 @@ public class DataValorCuotas {
             }
 		}
 	} // FIN METODO UPDATE
-	
+
 	public void remove(ValorCuotas valorCuotas) {
 		PreparedStatement stmt= null;
 		try {
@@ -149,7 +149,7 @@ public class DataValorCuotas {
             }
 		}
 	}	// FIN METODO REMOVE
-	
+
 	public double getValorActual() {
 		double valor = 0;
 		PreparedStatement stmt= null;
@@ -172,9 +172,9 @@ public class DataValorCuotas {
             } catch (SQLException e) {
             	e.printStackTrace();
             }}
-            
+
         return valor;
 		} // FIN METOVO getValorActual
-	
-	
+
+
 }

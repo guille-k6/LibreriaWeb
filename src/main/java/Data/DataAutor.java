@@ -5,15 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
-import Entities.*;
+
+import Entities.Autor;
 
 public class DataAutor {
-	
+
 	public LinkedList<Autor> getAll(){
 		Statement stmt=null;
 		ResultSet rs=null;
 		LinkedList<Autor> autores= new LinkedList<>();
-		
+
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			rs= stmt.executeQuery("select * from autor");
@@ -26,10 +27,10 @@ public class DataAutor {
 					autores.add(a);
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 		} finally {
 			try {
 				if(rs!=null) {rs.close();}
@@ -39,11 +40,11 @@ public class DataAutor {
 				e.printStackTrace();
 			}
 		}
-		
-		
+
+
 		return autores;
 	} // fin metodo GetAll
-	
+
 	public Autor getById(Autor autorToSearch) {
 		Autor a=null;
 		PreparedStatement stmt=null;
@@ -71,10 +72,10 @@ public class DataAutor {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return a;
 	} // Fin Metodo GetById
-	
+
 	public void add(Autor autor) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
@@ -82,18 +83,18 @@ public class DataAutor {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
 							"insert into autor(nombre, apellido) values(?,?)",
-							PreparedStatement.RETURN_GENERATED_KEYS
+							Statement.RETURN_GENERATED_KEYS
 							);
 			stmt.setString(1, autor.getNombre());
 			stmt.setString(2, autor.getApellido());
 			stmt.executeUpdate();
-			
+
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
                 autor.setIdAutor(keyResultSet.getInt(1));
             }
 
-			
+
 		} catch (SQLException e) {
             e.printStackTrace();
 		} finally {
@@ -107,7 +108,7 @@ public class DataAutor {
 		}
 
 	} // FIN METODO ADD
-	
+
 	public void update(Autor autor) {
 		PreparedStatement stmt= null;
 		try {
@@ -129,7 +130,7 @@ public class DataAutor {
             }
 		}
 	} // FIN METODO UPDATE
-	
+
 	public void remove(Autor autor) {
 		PreparedStatement stmt= null;
 		try {

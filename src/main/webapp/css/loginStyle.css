@@ -9,27 +9,41 @@ body{
 	background-color: #f9f9f9;
 }
 .loginTitle{
-	margin-top: 3rem;
-    font-size: xxx-large;
+	margin-top: 5rem;
+    font-size: xx-large;
 	font-family: 'Poppins', sans-serif;
 	font-style: normal;
 	font-weight: 500;
-	text-align: center;
 }
 
 .loginText{
-	margin-top: 3.5rem;
-    font-size: large;
+	margin-top: 1rem;
+    font-size: x-large;
 	font-family: 'Poppins', sans-serif;
 	font-style: normal;
 	font-weight: 400;
-	text-align: center;
 }
 .loginForm{
     padding: 16px;
     outline: 3px solid rgba(13, 110, 253, 1);
     border-radius: 8px;
     font-family: 'Poppins', sans-serif;
+	font-style: normal;
+	font-weight: 400;  
+}
+
+.botonLogin{
+	display: block;
+	width: 100%;
+}
+.login-anchor{
+	padding-top: 0.5rem;
+}
+
+.mensajeInfo{
+	color: #cc0000;
+	margin: 1rem 0rem;
+	font-family: 'Poppins', sans-serif;
 	font-style: normal;
 	font-weight: 400;  
 }
@@ -48,10 +62,8 @@ body {
 
 .inp {
   position: relative;
-  margin: auto;
   margin-bottom: 20px;
   width: 100%;
-  max-width: 280px;
   border-radius: 3px;
   overflow: hidden;
 }
@@ -122,17 +134,4 @@ body {
 .inp input:focus + .label + .focus-bg {
   transform: scaleX(1);
   transition: all 0.1s ease;
-}
-
-.botonLogin{
-	display: block;
-	width: 100%;
-}
-.registro{
-	display: block;
-	margin-top: 1rem;
-	color: blue;
-	font-size:normal;
-	text-align: left;
-	
 }

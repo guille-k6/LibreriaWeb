@@ -3,14 +3,14 @@ package Logic;
 import java.util.LinkedList;
 
 import Data.DataPrestamo;
+import Entities.LineaDePrestamo;
 import Entities.Prestamo;
 import Entities.Socio;
-import Entities.LineaDePrestamo;
 
 public class PrestamoLogic {
 	private DataPrestamo dataPrestamo;
 	private LineaDePrestamoLogic liLogic;
-	
+
 	public PrestamoLogic(){
 		dataPrestamo = new DataPrestamo();
 		liLogic = new LineaDePrestamoLogic();
@@ -18,7 +18,7 @@ public class PrestamoLogic {
 	public LinkedList<Prestamo> getAll(){
 		return dataPrestamo.getAll();
 	}
-	public Prestamo getOneById(Prestamo prestamo) {		
+	public Prestamo getOneById(Prestamo prestamo) {
 		return liLogic.getAllByPrestamo(dataPrestamo.getOneById(prestamo));
 	}
 	public void add(Prestamo prestamo) {
@@ -55,6 +55,6 @@ public class PrestamoLogic {
 		}
 		return librosPedidosDelSocio;
 	}
-	
+
 
 }

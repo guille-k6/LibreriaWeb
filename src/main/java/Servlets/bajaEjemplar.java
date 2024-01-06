@@ -1,6 +1,7 @@
 package Servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +17,7 @@ import Logic.EjemplarLogic;
 @WebServlet("/bajaEjemplar")
 public class bajaEjemplar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -28,6 +29,7 @@ public class bajaEjemplar extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -36,15 +38,16 @@ public class bajaEjemplar extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Traigo mi ID de Libro y la opción elegida.
-		
+		// Traigo mi ID de Libro y la opciï¿½n elegida.
+
 		String opc = request.getParameter("opcion");
 		String elId = request.getParameter("id");
 		int id = Integer.parseInt(elId);
 		Ejemplar ejemplar = new Ejemplar();
 		ejemplar.setIdEjemplar(id);
-		
+
 		EjemplarLogic ejelog = new EjemplarLogic();
 		// Cargo la opcion y confirmo si lo quiere eliminar o no.
 		if(opc.equals("eliminar")){
