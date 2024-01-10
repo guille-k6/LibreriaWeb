@@ -72,7 +72,7 @@
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
 					<div class="table-responsive">
-						<table class="table">
+						<table class="table table-light table-striped table-hover">
 							<thead>
 								<tr>
 									<th>ID</th>

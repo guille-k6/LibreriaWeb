@@ -1,8 +1,8 @@
 package Logic;
 
 import Data.DataSocio;
-import Data.PasswordEncrypter;
 import Entities.Socio;
+import utils.PasswordEncrypter;
 
 public class Login {
 	private DataSocio dataSocio = new DataSocio();

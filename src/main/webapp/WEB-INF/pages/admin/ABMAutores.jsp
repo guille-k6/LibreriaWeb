@@ -12,7 +12,7 @@
     <meta name=description content="Trabajo práctico Java. Sistema de gestión de una librería.">
     <meta name=keywords content="library">
     <!-- Bootstrap 5.2 CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
  	<!-- local styles -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
     
@@ -54,7 +54,7 @@
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
 					<div class="table-responsive">
-						<table class="table table-striped table-hover">
+						<table class="table table-light table-striped table-hover">
 							<thead>
 								<tr>
 									<th>ID</th>

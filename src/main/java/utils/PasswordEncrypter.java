@@ -1,4 +1,4 @@
-package Data;
+package utils;
 
 import java.security.MessageDigest;
 

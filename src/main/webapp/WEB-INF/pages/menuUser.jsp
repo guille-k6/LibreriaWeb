@@ -43,6 +43,7 @@
 	
 	<form action="menuUser" method="get">		
 		<button type="submit" name="opcion" value="verCuotasImpagas" class="opcionMenu">Ver cuotas impagas</button>
+		<button type="submit" name="opcion" value="alquilarLibro" class="opcionMenu">Alquilar un libro</button>
 	</form> 
 </div>
 

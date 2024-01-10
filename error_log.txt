@@ -1,0 +1,17 @@
+ene. 09, 2024 8:12:06 P. M. utils.ErrorLogger log
+SEVERE: error severo!!!
+ene. 09, 2024 8:17:21 P. M. utils.LoggerError log
+SEVERE: [Ljava.lang.StackTraceElement;@5acf9800
+/ by zero
+ene. 09, 2024 8:21:32 P. M. utils.LoggerError log
+SEVERE: [utils.Test.main(Test.java:86)]/ by zero
+
+
+ene. 09, 2024 8:30:04 P. M. utils.LoggerError log
+SEVERE: Stack: [utils.Test.main(Test.java:86)]Error: / by zero
+ene. 09, 2024 8:31:01 P. M. utils.LoggerError log
+SEVERE: Stack: [utils.Test.main(Test.java:86)] Error: / by zero
+
+ene. 09, 2024 8:31:02 P. M. utils.LoggerError log
+SEVERE: Stack: [utils.Test.main(Test.java:86)] Error: / by zero
+

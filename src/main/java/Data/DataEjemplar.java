@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import Entities.Ejemplar;
 import Entities.Libro;
 import Logic.LibroLogic;
+import utils.LoggerError;
 
 public class DataEjemplar {
 
@@ -34,13 +35,13 @@ public class DataEjemplar {
 					elLibro = liblog.getOneById(elLibro);
 					// Le agrego el libro
 					e.setLibro(elLibro);
-					// A�ado el ejemplar con libro incluido a la LinkedList.
+					// Añado el ejemplar con libro incluido a la LinkedList.
 					ejemplares.add(e);
 				}
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 
 		} finally {
 			try {
@@ -48,7 +49,7 @@ public class DataEjemplar {
 				if(stmt!=null) {stmt.close();}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 		return ejemplares;
@@ -115,20 +116,19 @@ public class DataEjemplar {
 
 
 		} catch (SQLException e) {
-            e.printStackTrace();
+            LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
             try {
                 if(keyResultSet!=null)keyResultSet.close();
                 if(stmt!=null)stmt.close();
                 DbConnector.getInstancia().releaseConn();
             } catch (SQLException e) {
-            	e.printStackTrace();
+            	LoggerError.log(e.getStackTrace(), e.getMessage());
             }
 		}
 
-	} // FIN METODO ADD
+	}
 
-	 // NO SE QUE TANTO SENTIDO TENGA UN UPDATE A EJEMPLAR PERO LO HAGO IGUAL
 	public void update(Ejemplar ejemplar) {
 		PreparedStatement stmt= null;
 		try {
@@ -140,13 +140,13 @@ public class DataEjemplar {
 			stmt.setInt(3, ejemplar.getIdEjemplar());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-            e.printStackTrace();
+            LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
             try {
                 if(stmt!=null)stmt.close();
                 DbConnector.getInstancia().releaseConn();
             } catch (SQLException e) {
-            	e.printStackTrace();
+            	LoggerError.log(e.getStackTrace(), e.getMessage());
             }
 		}
 	} // FIN METODO UPDATE
@@ -160,13 +160,13 @@ public class DataEjemplar {
 			stmt.setInt(1, ejemplar.getIdEjemplar());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-            e.printStackTrace();
+            LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
             try {
                 if(stmt!=null)stmt.close();
                 DbConnector.getInstancia().releaseConn();
             } catch (SQLException e) {
-            	e.printStackTrace();
+            	LoggerError.log(e.getStackTrace(), e.getMessage());
             }
 		}
 	}	// FIN METODO REMOVE

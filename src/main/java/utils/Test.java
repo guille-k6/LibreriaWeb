@@ -1,8 +1,6 @@
-package consoleTest;
+package utils;
 
 import com.mysql.cj.util.StringUtils;
-
-import Data.PasswordEncrypter;
 
 public class Test {
 
@@ -84,11 +82,11 @@ public class Test {
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}*/
-		String guille = " j";
-		System.out.println(StringUtils.isNullOrEmpty(guille.trim()));
-		System.out.println(guille);
-		
-		System.out.println(PasswordEncrypter.sha256("noadmin"));
+		try {
+			int a = 3 / 0;
+		} catch (Exception e) {
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+		}
 
 	}
 

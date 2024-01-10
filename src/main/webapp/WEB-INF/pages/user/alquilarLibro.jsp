@@ -12,18 +12,18 @@
     <!-- Bootstrap 5.2 CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
  	<!-- local styles -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    
-<title>Confirmar el cobro de las cuotas</title>
+ 	<link rel="stylesheet" type="text/css" href="css/style.css">
+ 	
+<title>Alquilar libro</title>
 
 	<%
-		//if(!c.getAdmin()){
-		//	response.sendRedirect("WEB-INF/pages/menuUser.jsp");
-		//}  	
+		Socio c = (Socio)session.getAttribute("usuario");	
+		if(c.getAdmin()){
+			response.sendRedirect("WEB-INF/pages/menuAdmin.jsp");
+			return;
+		}  	
 		
-		Socio c = (Socio)session.getAttribute("usuario");		
-		String[] lasCuotas = (String[])request.getAttribute("cuotasCobrar");	
-		
+		String[] lasCuotas = (String[])request.getAttribute("cuotasPagar");			
 		LinkedList<Cuotas> cuotasAMostrar = new LinkedList<Cuotas>();
 		CuotasLogic cuolog = new CuotasLogic();
 		ValorCuotasLogic valcuolog = new ValorCuotasLogic();
@@ -39,7 +39,11 @@
 		}
 		
 		for(Cuotas cuota : cuotasAMostrar){
-				costoTotal += costoPorCuota; // Ya no se tiene el estado pendiente o atrasado asi que no se le puede calcular el * 1.5
+			if(cuota.getEstado().equals("Pago atrasado")){
+				costoTotal += costoPorCuota*1.5;
+			}else if(cuota.getEstado().equals("Pendiente")){
+				costoTotal += costoPorCuota;
+			};
 		}
 
 	%>
@@ -56,15 +60,15 @@
 	</div>
 </form>
 
-
 <div class="container">
-	<p class="bienvenidoTitulo">Confirmar cobro de cuotas.</p>
-	<form action="ConfirmarCobroCuotas" method="post" class="w-50">							
+	<p class="bienvenidoTitulo">Alquilar libros.</p>
+
+	<form action="ConfirmarPagoCuotas" method="post" class="w-50">							
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
 					<div class="table-responsive">
-						<table class="table table-light table-striped table-hover">
+						<table class="table">
 							<thead>
 								<tr>
 									<th>Fecha desde</th>
@@ -83,8 +87,8 @@
 								<% }%>
 							</tbody>
 						</table>
-						<h3>El total a cobrar es de: <%=costoTotal %></h3>
-						<button type="submit" name="opcion" value="cobrar" class="btn btn-success mt-3">Cobrar</button>	
+						<h3>El total a pagar es de: <%=costoTotal %></h3>
+						<button type="submit" name="opcion" value="pagar" class="btn btn-success mt-3">Pagar</button>	
 						<button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>	
 					</div>
 				</div>
