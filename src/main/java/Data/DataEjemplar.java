@@ -6,8 +6,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 
+import Entities.Autor;
 import Entities.Ejemplar;
 import Entities.Libro;
+import Entities.EjemplarCantidad;
 import Logic.LibroLogic;
 import utils.LoggerError;
 
@@ -170,6 +172,50 @@ public class DataEjemplar {
             }
 		}
 	}	// FIN METODO REMOVE
+	
+	public LinkedList<EjemplarCantidad> getAmountOfLibros(){
+		Statement stmt=null;
+		ResultSet rs=null;
+		LinkedList<EjemplarCantidad> cantidadLibros= new LinkedList<>();
 
-
+		try {
+			stmt= DbConnector.getInstancia().getConn().createStatement();
+			rs= stmt.executeQuery("SELECT l.idlibro, l.isbn, l.titulo, l.editorial, l.fechaEdicion, l.cantDiasMaxPrestamo, a.idautor, a.nombre, a.apellido, count(l.idlibro) as cantidad "
+					+ "FROM Libro l "
+					+ "INNER JOIN Ejemplar e ON e.idLibro = l.idlibro "
+					+ "INNER JOIN Autor a ON a.idautor = l.idautor "
+					+ "WHERE e.disponible = 1 GROUP BY l.idLibro;");
+			if(rs!=null) {
+				while(rs.next()) {
+					Autor a = new Autor();
+					a.setApellido(rs.getString("apellido"));
+					a.setNombre(rs.getString("nombre"));
+					a.setIdAutor(rs.getInt("idautor"));
+					
+					Libro l=new Libro();
+					l.setIdLibro(rs.getInt("idlibro"));
+					l.setIsbn(rs.getString("isbn"));
+					l.setTitulo(rs.getString("titulo"));
+					l.setEditorial(rs.getString("editorial"));
+					l.setFechaEdicion(rs.getDate("fechaEdicion"));
+					l.setCantDiasMaxPrestamo(rs.getInt("cantDiasMaxPrestamo"));
+					l.setAutor(a);
+					
+					EjemplarCantidad ejemplarCantidad = new EjemplarCantidad(rs.getInt("cantidad"), l);
+					cantidadLibros.add(ejemplarCantidad);
+				}
+			}
+		} catch (SQLException e) {
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+			}catch(Exception e) {
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+			}
+			DbConnector.getInstancia().releaseConn();
+		}
+		return cantidadLibros;
+	}
 }

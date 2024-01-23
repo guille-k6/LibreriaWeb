@@ -1,8 +1,9 @@
 <%@page import="java.util.LinkedList"%>
-<%@ page import = "java.io.*,java.util.*" %>
+<%@page import="java.io.*,java.util.*"%>
 <%@page import="Entities.Socio"%>
+<%@page import="Entities.EjemplarCantidad"%>
 <%@page import="Entities.Libro, Data.DataLibro,Entities.Ejemplar,Logic.EjemplarLogic"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
@@ -25,10 +26,8 @@
 		}
 	 	String mensaje = (String)request.getAttribute("estado");
 	 	
-		LinkedList<Libro> libros = new LinkedList<Libro>();
-	    DataLibro liblog = new DataLibro();
 	    EjemplarLogic ejelog = new EjemplarLogic();
-	    libros = liblog.getAll();		
+	    LinkedList<EjemplarCantidad> lib = ejelog.getAmountOfLibros();		
 	%>
 </head>
 <body>
@@ -49,7 +48,7 @@
 	<%if(mensaje != null){ %>
 		<p class="mensajeInfo"><%=mensaje%></p>
 	<%} %>
-	<form action="ABMLibrosForm" method="get">	<!-- Cambiar form action -->			
+	<form action="prestamo" method="post">	<!-- Cambiar form action -->			
 				
 		<div class="container">
 			<div class="row">
@@ -62,28 +61,32 @@
 									<th>ISBN</th>
 									<th>Titulo</th>
 									<th>Editorial</th>
-									<th>Fecha de edición</th>
-									<th>Máximo tiempo de préstamo</th>
+									<th>Edición</th>
+									<th>Días prestamo</th>
 									<th>Autor</th>
-									<th>Ejemplares disponibles</th>
+									<th>Disponibilidad</th>
+									<th>Cantidad</th>
 								</tr>
 							</thead>
 							<tbody>
-								<% for (Libro lib : libros) {%>
+								<% for (EjemplarCantidad l : lib) {%>
 								<tr>
-									<td><%=lib.getIdLibro() %></td>
-									<td><%=lib.getIsbn() %></td>
-									<td><%=lib.getTitulo() %></td>
-									<td><%=lib.getEditorial() %></td>
-									<td><%=lib.getFechaEdicion().toString() %></td>
-									<td><%=lib.getCantDiasMaxPrestamo() %></td>
-									<td><%=lib.getAutor().getNombre() + " " + lib.getAutor().getApellido() %></td>
-									<td><%=ejelog.getAllEjemplaresByLibro(lib).size() %></td>
-									<td><button type="submit" name="pedir" <%= (ejelog.getAllEjemplaresByLibro(lib).size() == 0) ? "disabled" : "" %> value="<%=lib.getIdLibro()+"-"+alquila.getIdSocio()%>" class="btn btn-danger">Pedir</button></td>
+									<td><%=l.getLibro().getIdLibro() %></td>
+									<td><%=l.getLibro().getIsbn() %></td>
+									<td><%=l.getLibro().getTitulo() %></td>
+									<td><%=l.getLibro().getEditorial() %></td>
+									<td><%=l.getLibro().getFechaEdicion().toString() %></td>
+									<td><%=l.getLibro().getCantDiasMaxPrestamo() %></td>
+									<td><%=l.getLibro().getAutor().getNombre() + " " + l.getLibro().getAutor().getApellido() %></td>
+									<td><%=l.getCantidad() %></td>
+									<td><input type="number" name="cantidad" data-libro="<%l.getLibro().getIdLibro();%>"></td>
+									<td>
 								</tr>
+								<!--  <button type="submit"  name="pedir" <%= (l.getCantidad() == 0) ? "disabled" : "" %> value="<%=l.getLibro().getIdLibro()+"-"+alquila.getIdSocio()%>" class="btn btn-danger">Pedir</button></td> -->
 								<% }%>
 							</tbody>
 						</table>
+						<button type="submit" name="pedir">Pedir</button>
 					</div>
 				</div>
 			</div>
