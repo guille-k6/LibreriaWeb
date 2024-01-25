@@ -44,7 +44,7 @@
 </form>
 
 <div class="container">
-	<p class="bienvenidoTitulo">Ejemplares Disponibles</p>
+	<p class="bienvenidoTitulo">Libros disponibles</p>
 	<%if(mensaje != null){ %>
 		<p class="mensajeInfo"><%=mensaje%></p>
 	<%} %>
@@ -79,14 +79,18 @@
 									<td><%=l.getLibro().getCantDiasMaxPrestamo() %></td>
 									<td><%=l.getLibro().getAutor().getNombre() + " " + l.getLibro().getAutor().getApellido() %></td>
 									<td><%=l.getCantidad() %></td>
-									<td><input type="number" name="cantidad" data-libro="<%l.getLibro().getIdLibro();%>"></td>
+									<td>
+										<input type="hidden" name="libroId" value="<%=l.getLibro().getIdLibro()%>" />
+										<input type="number" name="cantidadLibros-<%=l.getLibro().getIdLibro()%>" min="0" max="<%=l.getCantidad() %>" value="0"/>
+									</td>
 									<td>
 								</tr>
-								<!--  <button type="submit"  name="pedir" <%= (l.getCantidad() == 0) ? "disabled" : "" %> value="<%=l.getLibro().getIdLibro()+"-"+alquila.getIdSocio()%>" class="btn btn-danger">Pedir</button></td> -->
 								<% }%>
 							</tbody>
 						</table>
-						<button type="submit" name="pedir">Pedir</button>
+						<div class="d-flex justify-content-end mx-3">
+							<button type="submit" name="pedir" class="btn btn-primary btn-md p-2">Realizar pedido</button>
+						</div>
 					</div>
 				</div>
 			</div>

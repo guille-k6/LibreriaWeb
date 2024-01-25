@@ -1,10 +1,6 @@
 package Logic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 import Data.DataEjemplar;
 import Entities.Ejemplar;
@@ -17,38 +13,41 @@ public class EjemplarLogic {
 	public EjemplarLogic() {
 		dataEjemplar = new DataEjemplar();
 	}
-	public LinkedList<Ejemplar> getAll(){
+
+	public LinkedList<Ejemplar> getAll() {
 		return dataEjemplar.getAll();
 	}
-	
+
 	public Ejemplar getOneById(Ejemplar ejemplar) {
 		return dataEjemplar.getById(ejemplar);
 	}
+
 	public void add(Ejemplar ejemplar) {
 		dataEjemplar.add(ejemplar);
 	}
+
 	public void update(Ejemplar ejemplar) {
 		dataEjemplar.update(ejemplar);
 	}
+
 	public void remove(Ejemplar ejemplar) {
 		dataEjemplar.remove(ejemplar);
 	}
-	public LinkedList<EjemplarCantidad> getAmountOfLibros(){
+
+	public LinkedList<EjemplarCantidad> getAmountOfLibros() {
 		return dataEjemplar.getAmountOfLibros();
 	}
-	public LinkedList<Ejemplar> getAllEjemplaresByLibro(Libro libro){
+
+	public LinkedList<Ejemplar> getAllEjemplaresByLibro(Libro libro) {
 		// Dado un libro devuelve los ejemplares de ese libro
 		LinkedList<Ejemplar> listaLibros = dataEjemplar.getAll();
 		LinkedList<Ejemplar> listaFiltrada = new LinkedList<>();
-		 for (Ejemplar ejemplar : listaLibros) {
-	            if (ejemplar.getLibro().getIdLibro() == libro.getIdLibro()) {
-	                listaFiltrada.add(ejemplar);
-	            }
-		 }
-		 return listaFiltrada;
+		for (Ejemplar ejemplar : listaLibros) {
+			if (ejemplar.getLibro().getIdLibro() == libro.getIdLibro()) {
+				listaFiltrada.add(ejemplar);
+			}
+		}
+		return listaFiltrada;
 	}
-	 public String[] dividirString(String entrada, char separador) {
-	        return entrada.split(String.valueOf(separador));
-	 }
 
 }
