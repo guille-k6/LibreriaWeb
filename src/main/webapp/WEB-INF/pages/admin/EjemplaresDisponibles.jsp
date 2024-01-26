@@ -20,9 +20,9 @@
 
 	<%
 		Socio c = (Socio)session.getAttribute("usuario");
-		Socio alquila = (Socio)request.getAttribute("socioPrestar");
+		Socio alquila = (Socio)request.getAttribute("socioDeudor");
 		if(!c.getAdmin()){
-			request.getRequestDispatcher("index.html").forward(request, response);		
+			request.getRequestDispatcher("index.jsp").forward(request, response);		
 		}
 	 	String mensaje = (String)request.getAttribute("estado");
 	 	
@@ -80,7 +80,7 @@
 									<td><%=l.getLibro().getAutor().getNombre() + " " + l.getLibro().getAutor().getApellido() %></td>
 									<td><%=l.getCantidad() %></td>
 									<td>
-										<input type="hidden" name="libroId" value="<%=l.getLibro().getIdLibro()%>" />
+										<!-- <input type="hidden" name="libroId" value="<%=l.getLibro().getIdLibro()%>" />   -->
 										<input type="number" name="cantidadLibros-<%=l.getLibro().getIdLibro()%>" min="0" max="<%=l.getCantidad() %>" value="0"/>
 									</td>
 									<td>
@@ -90,6 +90,7 @@
 						</table>
 						<div class="d-flex justify-content-end mx-3">
 							<button type="submit" name="pedir" class="btn btn-primary btn-md p-2">Realizar pedido</button>
+							<input type="hidden" name="socioDeudor" value="<%=alquila.getIdSocio()%>" />
 						</div>
 					</div>
 				</div>

@@ -20,20 +20,20 @@ import Logic.Login;
 public class login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
-    public login() {
-        super();
-    }
+	public login() {
+		super();
+	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		Socio socio = new Socio();
 		Login login = new Login();
 		String error = null;
@@ -41,24 +41,23 @@ public class login extends HttpServlet {
 		String password = request.getParameter("password");
 		socio.setUsuario(usuario);
 		socio.setContrasenia(password);
-		
-		if(StringUtils.isNullOrEmpty(usuario.trim()) || StringUtils.isNullOrEmpty(password.trim())) {
+
+		if (StringUtils.isNullOrEmpty(usuario.trim()) || StringUtils.isNullOrEmpty(password.trim())) {
 			error = "Debe completar usuario y contraseña.";
 			request.setAttribute("loginMessage", error);
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
-		
+
 		socio = login.validate(socio);
 
-		if(socio!=null) {
+		if (socio != null) {
 			request.getSession().setAttribute("usuario", socio);
-			if(socio.getAdmin()) {
+			if (socio.getAdmin()) {
 				request.getRequestDispatcher("WEB-INF/pages/menuAdmin.jsp").forward(request, response);
-			}
-			else{
+			} else {
 				request.getRequestDispatcher("WEB-INF/pages/menuUser.jsp").forward(request, response);
 			}
-		}else {
+		} else {
 			error = "Usuario y/o contraseña no válido.";
 			request.setAttribute("loginMessage", error);
 			request.getRequestDispatcher("/index.jsp").forward(request, response);

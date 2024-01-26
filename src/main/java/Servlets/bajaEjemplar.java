@@ -18,28 +18,32 @@ import Logic.EjemplarLogic;
 public class bajaEjemplar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public bajaEjemplar() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public bajaEjemplar() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// Traigo mi ID de Libro y la opci�n elegida.
 
 		String opc = request.getParameter("opcion");
@@ -50,14 +54,14 @@ public class bajaEjemplar extends HttpServlet {
 
 		EjemplarLogic ejelog = new EjemplarLogic();
 		// Cargo la opcion y confirmo si lo quiere eliminar o no.
-		if(opc.equals("eliminar")){
+		if (opc.equals("eliminar")) {
 
-				ejelog.remove(ejemplar);
-				String estado = "Baja existosa";
-				request.setAttribute("estado", estado);
-				request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
+			ejelog.remove(ejemplar);
+			String estado = "Baja existosa";
+			request.setAttribute("estado", estado);
+			request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
 
-		}else if(opc.equals("cancelar")) {
+		} else if (opc.equals("cancelar")) {
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
 		}
 	}
