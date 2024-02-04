@@ -80,7 +80,6 @@
 									<td><%=l.getLibro().getAutor().getNombre() + " " + l.getLibro().getAutor().getApellido() %></td>
 									<td><%=l.getCantidad() %></td>
 									<td>
-										<!-- <input type="hidden" name="libroId" value="<%=l.getLibro().getIdLibro()%>" />   -->
 										<input type="number" name="cantidadLibros-<%=l.getLibro().getIdLibro()%>" min="0" max="<%=l.getCantidad() %>" value="0"/>
 									</td>
 									<td>
