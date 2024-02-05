@@ -1,6 +1,7 @@
 package Logic;
 
 import java.util.LinkedList;
+import java.util.Optional;
 
 import Data.DataPrestamo;
 import Entities.LineaDePrestamo;
@@ -54,22 +55,30 @@ public class PrestamoLogic {
 	 *         el socio
 	 */
 	public int getCantidadLibrosPrestadosBySocio(Socio socio) {
-		LinkedList<Prestamo> prestamos = dataPrestamo.getAll();
-		LinkedList<Prestamo> prestamosDelSocio = new LinkedList<>();
-		int librosPedidosDelSocio = 0;
-		for (Prestamo p : prestamos) {
-			if (p.getSocio().getIdSocio() == socio.getIdSocio()) {
-				// Cargo el prestamo con sus lineas de prestamo.
-				prestamosDelSocio.add(p);
-			}
-		}
-		for (Prestamo p : prestamosDelSocio) {
-			for (LineaDePrestamo ldp : p.getLineasDePrestamo()) {
-				if (ldp.getFechaDevolucionReal() == null)
-					librosPedidosDelSocio++;
-			}
-		}
-		return librosPedidosDelSocio;
+		return dataPrestamo.getCantidadLibrosPrestadosBySocio(socio);
+	}
+
+	/**
+	 * Metodo que indica si un usuario puede efectuar un prestamo
+	 * 
+	 * @param socio socio que puede ser capaz de realizar un prestamo
+	 * @return Un opcional que si es Optional.empty() que el socio puede y sino el
+	 *         opcional tiene el mensaje de error por el cual el usuario no puede
+	 *         ejecutar un prestamo
+	 */
+	public static Optional<String> isUserCapableOfLoan(Socio socio) {
+		// TODO: Cuando creemos la entidad politicaprestamo deberiamos comparar por la
+		// maxima politicaprestamo actual
+//		if(getCantidadLibrosPrestadosBySocio(socio) < 10) {
+//			
+//		}
+//		if(getUserCuotaalDia(socio)) {
+//			
+//		}
+//		if(getUserSancionado(socio)) {
+//			
+//		}
+		return Optional.empty();
 	}
 
 }

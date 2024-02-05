@@ -88,8 +88,8 @@
 							<input type="hidden" name="socioId" value="<%=alquila.getIdSocio()%>"/>
 						</table>
 						<div class="d-flex justify-content-end mx-3">
-							<button type="submit" name="cancelar" class="btn btn-danger btn-md m-2">Cancelar</button>
-							<button type="submit" name="confirmar" class="btn btn-success btn-md m-2">Confirmar pedido</button>
+							<button type="submit" name="cancelar" value="cancelar" class="btn btn-danger btn-md m-2">Cancelar</button>
+							<button type="submit" name="aceptar" value="aceptar" class="btn btn-success btn-md m-2">Confirmar pedido</button>
 						</div>
 						</div>
 					</div>
