@@ -1,9 +1,12 @@
 package Logic;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import Data.DataEjemplar;
 import Entities.Ejemplar;
@@ -58,10 +61,11 @@ public class EjemplarLogic {
 	 * para ese libro disponibles
 	 * 
 	 * @param idLibroCantidad
-	 * @return true si la actualizacion fue exitosa, false si hubo un error
+	 * @return El set de id de ejemplares actualizacion fue exitosa, empty si hubo
+	 *         un error
 	 */
-	public boolean updateEjemplaresAvailables(Map<String, String> idLibroCantidad) {
-		ArrayList<Integer> idEjemplaresActualizar = new ArrayList<>();
+	public Optional<Set<Integer>> updateEjemplaresAvailables(Map<String, String> idLibroCantidad) {
+		Set<Integer> idEjemplaresActualizar = new HashSet<>();
 		for (String idLibroString : idLibroCantidad.keySet()) {
 			int idLibro = Integer.parseInt(idLibroString);
 			int cantidad = Integer.parseInt(idLibroCantidad.get(idLibroString));
@@ -72,18 +76,30 @@ public class EjemplarLogic {
 			if (idEjemplaresLibro.size() == cantidad) {
 				idEjemplaresActualizar.addAll(idEjemplaresLibro);
 			} else {
-				return false;
+				return Optional.empty();
 			}
 		}
-		return updateEjemplaresToAlquilados(idEjemplaresActualizar);
+		if (updateEjemplaresToAlquilados(idEjemplaresActualizar)) {
+			return Optional.of(idEjemplaresActualizar);
+		} else {
+			return Optional.empty();
+		}
 	}
 
 	public List<Integer> getIdsOfEjemplares(int idLibro, int cantidad) {
 		return dataEjemplar.getIdsOfEjemplares(idLibro, cantidad);
 	}
 
-	public boolean updateEjemplaresToAlquilados(List<Integer> idList) {
+	public boolean updateEjemplaresToAlquilados(Set<Integer> idList) {
 		return dataEjemplar.updateEjemplaresToAlquilados(idList);
+	}
+
+	public List<Ejemplar> fillEjemplaresById(Set<Integer> ejemplaresActualizados) {
+		List<Ejemplar> ejemplaresCompletos = new ArrayList<>();
+		for (int ejemplarId : ejemplaresActualizados) {
+			ejemplaresCompletos.add(getOneById(new Ejemplar(ejemplarId)));
+		}
+		return ejemplaresCompletos;
 	}
 
 }

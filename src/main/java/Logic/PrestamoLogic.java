@@ -1,7 +1,10 @@
 package Logic;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import Data.DataPrestamo;
 import Entities.LineaDePrestamo;
@@ -17,7 +20,7 @@ public class PrestamoLogic {
 		liLogic = new LineaDePrestamoLogic();
 	}
 
-	public LinkedList<Prestamo> getAll() {
+	public List<Prestamo> getAll() {
 		return dataPrestamo.getAll();
 	}
 
@@ -25,9 +28,10 @@ public class PrestamoLogic {
 		return liLogic.getAllByPrestamo(dataPrestamo.getOneById(prestamo));
 	}
 
-	public void add(Prestamo prestamo) {
-		dataPrestamo.add(prestamo);
-		liLogic.addAll(prestamo);
+	public Optional<Integer> add(Prestamo prestamo) {
+		Optional<Integer> idPrestamo = dataPrestamo.add(prestamo);
+		// liLogic.addAll(prestamo);
+		return idPrestamo;
 	}
 
 	public void update(Prestamo prestamo) {
@@ -43,6 +47,27 @@ public class PrestamoLogic {
 			liLogic.remove(lineaDePrestamo);
 		}
 		dataPrestamo.remove(prestamo);
+	}
+
+	public Optional<String> generatePrestamo(Socio socioDeudor, Map<String, String> librosCantidades) {
+		Optional<String> mensaje = null;
+		EjemplarLogic ejLogic = new EjemplarLogic();
+		// Seteo los ejemplares como no disponibles
+		Optional<Set<Integer>> ejemplaresActualizados = ejLogic.updateEjemplaresAvailables(librosCantidades);
+		if (ejemplaresActualizados.isPresent()) {
+			// Creo un prestamo
+			Prestamo prestamo = new Prestamo(socioDeudor);
+			Optional<Integer> idPrestamoCreado = add(prestamo);
+			if (idPrestamoCreado.isEmpty()) {
+				mensaje = Optional.of("No fue posible crear el prestamo");
+				return mensaje;
+			}
+			liLogic.createLineasDePrestamoByIdPrestamo(idPrestamoCreado.get(), ejemplaresActualizados.get());
+			mensaje = Optional.of("Prestamo generado con id = " + idPrestamoCreado);
+		} else {
+			mensaje = Optional.of("No hay suficientes ejemplares disponibles.");
+		}
+		return mensaje;
 	}
 
 	/**

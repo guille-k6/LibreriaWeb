@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
+import java.util.Optional;
 
 import Entities.Autor;
 import Entities.Ejemplar;
@@ -132,22 +133,21 @@ public class DataPrestamo {
 		return p;
 	} // Fin Metodo GetById
 
-	public void add(Prestamo prestamo) {
+	public Optional<Integer> add(Prestamo prestamo) {
 		PreparedStatement stmt = null;
 		ResultSet keyResultSet = null;
-		// SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+		Optional<Integer> generatedId = Optional.empty();
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement(
 					"INSERT INTO prestamo(fechaPrestamo, idSocio) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
-			stmt.setString(1, prestamo.getFechaPrestamo().toString()); // OJO ACA (MIRAR COMO MAPEA)
+			stmt.setDate(1, prestamo.getFechaPrestamo());
 			stmt.setInt(2, prestamo.getSocio().getIdSocio());
 			stmt.executeUpdate();
 
 			keyResultSet = stmt.getGeneratedKeys();
 			if (keyResultSet != null && keyResultSet.next()) {
-				prestamo.setIdPrestamo(keyResultSet.getInt(1));
+				generatedId = Optional.of(keyResultSet.getInt(1));
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -161,6 +161,8 @@ public class DataPrestamo {
 				e.printStackTrace();
 			}
 		}
+
+		return generatedId;
 
 	} // FIN METODO ADD
 

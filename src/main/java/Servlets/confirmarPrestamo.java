@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,8 +52,10 @@ public class confirmarPrestamo extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/pages//menuAdmin.jsp").forward(request, response);
 			return;
 		}
-		String mensaje;
 		EjemplarLogic ejLogic = new EjemplarLogic();
+		SocioLogic soclog = new SocioLogic();
+		PrestamoLogic plogic = new PrestamoLogic();
+		Optional<String> mensaje;
 		Map<String, String> librosCantidades = new HashMap<>();
 		Enumeration<String> parametros = request.getParameterNames();
 		while (parametros.hasMoreElements()) {
@@ -66,21 +69,13 @@ public class confirmarPrestamo extends HttpServlet {
 		// Debería validar que el socio pueda alquilar libros de acuerdo a mi politica
 		// de prestamo
 		String socioId = request.getParameter("socioId");
-		SocioLogic soclog = new SocioLogic();
 		Socio socioDeudor = soclog.getOneById(new Socio(Integer.parseInt(socioId)));
 		// Valido que el socio pueda efectuar un prestamo
 		if (PrestamoLogic.isUserCapableOfLoan(socioDeudor).isPresent()) {
-			mensaje = PrestamoLogic.isUserCapableOfLoan(socioDeudor).get();
+			mensaje = PrestamoLogic.isUserCapableOfLoan(socioDeudor);
 		}
 		if (PrestamoLogic.isUserCapableOfLoan(socioDeudor).isEmpty()) {
-			// Puede efectuar un prestamo
-			if (ejLogic.updateEjemplaresAvailables(librosCantidades)) {
-				// TODO: Crear un objeto prestamo..
-				int idPrestamo = 1;
-				mensaje = "Prestamo generado con id = " + idPrestamo;
-			} else {
-				mensaje = "No hay suficientes ejemplares disponibles.";
-			}
+			mensaje = plogic.generatePrestamo(socioDeudor, librosCantidades);
 		}
 
 	}

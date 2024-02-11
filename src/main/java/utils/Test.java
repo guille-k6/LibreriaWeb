@@ -1,8 +1,8 @@
 package utils;
 
-import java.util.ArrayList;
-
-import Data.DataEjemplar;
+import Entities.Prestamo;
+import Entities.Socio;
+import Logic.PrestamoLogic;
 
 public class Test {
 
@@ -71,16 +71,16 @@ public class Test {
 		 * System.out.println("Se inserto una linea de prestamo...."); }catch(Exception
 		 * e) { System.out.println(e.getMessage()); }
 		 */
-		try {
-			DataEjemplar de = new DataEjemplar();
-			ArrayList<Integer> listorti = new ArrayList<Integer>();
-			listorti.add(4);
-			listorti.add(6);
-
-			System.out.println(de.updateEjemplaresToAlquilados(listorti));
-		} catch (Exception e) {
-			LoggerError.log(e.getStackTrace(), e.getMessage());
-		}
+//		try {
+//			DataEjemplar de = new DataEjemplar();
+//			ArrayList<Integer> listorti = new ArrayList<Integer>();
+//			listorti.add(4);
+//			listorti.add(6);
+//
+//			System.out.println(de.updateEjemplaresToAlquilados(listorti));
+//		} catch (Exception e) {
+//			LoggerError.log(e.getStackTrace(), e.getMessage());
+//		}
 
 //		ArrayList<Integer> asd = new ArrayList<>();
 //		asd.add(1);
@@ -89,6 +89,9 @@ public class Test {
 //		String asd2 = asd.toString().replace('[', '(');
 //		String asd3 = asd2.toString().replace(']', ')');
 //		System.out.println(asd3);
+
+		PrestamoLogic pl = new PrestamoLogic();
+		pl.add(new Prestamo(new Socio(2)));
 
 	}
 

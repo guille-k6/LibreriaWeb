@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import Entities.Autor;
 import Entities.Ejemplar;
@@ -270,7 +271,7 @@ public class DataEjemplar {
 		return idEjemplares;
 	}
 
-	public boolean updateEjemplaresToAlquilados(List<Integer> ejemplaresIdList) {
+	public boolean updateEjemplaresToAlquilados(Set<Integer> ejemplaresIdList) {
 		PreparedStatement stmt = null;
 		ResultSet keyResultSet = null;
 		StringBuffer sb = new StringBuffer();
@@ -284,8 +285,11 @@ public class DataEjemplar {
 				}
 			}
 			stmt = conn.prepareStatement("UPDATE ejemplar SET disponible = 0 WHERE idejemplar IN (" + sb + ")");
-			for (int i = 0; i < ejemplaresIdList.size(); i++) {
-				stmt.setInt(i + 1, ejemplaresIdList.get(i));
+
+			int index = 1;
+			for (int idEjemplar : ejemplaresIdList) {
+				stmt.setInt(index, idEjemplar);
+				index++;
 			}
 			stmt.executeUpdate();
 		} catch (SQLException e) {

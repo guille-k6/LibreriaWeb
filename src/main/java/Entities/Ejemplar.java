@@ -5,7 +5,13 @@ public class Ejemplar {
 	private Libro libro;
 	private boolean isDisponible;
 
-	public Ejemplar() {}
+	public Ejemplar() {
+	}
+
+	public Ejemplar(int idEjemplar) {
+		this.idEjemplar = idEjemplar;
+	}
+
 	public Ejemplar(int idEjemplar, boolean isDisponible, Libro libro) {
 		this.idEjemplar = idEjemplar;
 		this.isDisponible = isDisponible;
@@ -15,18 +21,23 @@ public class Ejemplar {
 	public boolean isDisponible() {
 		return isDisponible;
 	}
+
 	public void setDisponible(boolean isDisponible) {
 		this.isDisponible = isDisponible;
 	}
+
 	public int getIdEjemplar() {
 		return idEjemplar;
 	}
+
 	public void setIdEjemplar(int idEjemplar) {
 		this.idEjemplar = idEjemplar;
 	}
+
 	public Libro getLibro() {
 		return libro;
 	}
+
 	public void setLibro(Libro libro) {
 		this.libro = libro;
 	}
