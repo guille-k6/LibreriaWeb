@@ -94,9 +94,18 @@ public class EjemplarLogic {
 		return dataEjemplar.updateEjemplaresToAlquilados(idList);
 	}
 
+	/**
+	 * Recibe un set de ids de ejemplares y retorna una lista de ejemplares con
+	 * todos los datos
+	 * 
+	 * @param ejemplaresActualizados set ids de ejemplares
+	 * @return lista de ejemplares con todos los datos cargados
+	 */
 	public List<Ejemplar> fillEjemplaresById(Set<Integer> ejemplaresActualizados) {
 		List<Ejemplar> ejemplaresCompletos = new ArrayList<>();
 		for (int ejemplarId : ejemplaresActualizados) {
+			// TODO: Implementar un método que busque todos los ejemplares
+			// y no tirar una query dentro de un for
 			ejemplaresCompletos.add(getOneById(new Ejemplar(ejemplarId)));
 		}
 		return ejemplaresCompletos;

@@ -26,6 +26,11 @@ public class LineaDePrestamoLogic {
 		return dataLineaDePrestamo.getById(lineaToSearch);
 	}
 
+	/**
+	 * Inserta lineas de prestamo en batch
+	 * 
+	 * @param lineasDePrestamo
+	 */
 	public void addAll(List<LineaDePrestamo> lineasDePrestamo) {
 		dataLineaDePrestamo.addAll(lineasDePrestamo);
 	}
@@ -42,6 +47,11 @@ public class LineaDePrestamoLogic {
 		dataLineaDePrestamo.remove(linea);
 	}
 
+	/**
+	 * @param idPrestamoCreado       id del prestamo que se creo
+	 * @param ejemplaresActualizados los ejemplares que estaran en cada una de las
+	 *                               lineas de prestsamo para ese prestamo
+	 */
 	public void createLineasDePrestamoByIdPrestamo(int idPrestamoCreado, Set<Integer> ejemplaresActualizados) {
 		EjemplarLogic ejLogic = new EjemplarLogic();
 		List<Ejemplar> ejemplaresCargados = ejLogic.fillEjemplaresById(ejemplaresActualizados);

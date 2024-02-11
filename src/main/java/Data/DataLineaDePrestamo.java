@@ -108,19 +108,17 @@ public class DataLineaDePrestamo {
 		}
 
 		return l;
-	} // Fin Metodo GetById
+	}
 
+	/**
+	 * Inserta lineas de prestamo en batch
+	 * 
+	 * @param lineasDePrestamo lista de lineasdePrestamo que seran insertadas
+	 */
 	public void addAll(List<LineaDePrestamo> lineasDePrestamo) {
 		PreparedStatement stmt = null;
 		ResultSet keyResultSet = null;
-		StringBuilder cantidadLineas = new StringBuilder();
-		int index = 0;
 		try {
-			/*
-			 * for (LineaDePrestamo lineaDePrestamo : lineasDePrestamo) { if (index ==
-			 * (lineasDePrestamo.size() - 1)) { cantidadLineas.append(" ? "); } else {
-			 * cantidadLineas.append("?, "); } index++; }
-			 */
 			stmt = DbConnector.getInstancia().getConn().prepareStatement(
 					"INSERT INTO lineadeprestamo(fechaDevolucionTeorica, idPrestamo, idEjemplar) VALUES(?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
