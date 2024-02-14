@@ -8,20 +8,23 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name=description content="Trabajo práctico Java. Sistema de gestión de una librería.">
+    <meta name=description content="Trabajo prï¿½ctico Java. Sistema de gestiï¿½n de una librerï¿½a.">
     <meta name=keywords content="library">
     <!-- Bootstrap 5.2 CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
  	<!-- local styles -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
     
-<title>Menú principal</title>
+<title>Alta Politica de Prestamo</title>
 
 	<%
  	  	Socio c = (Socio)session.getAttribute("usuario");
 		if(!c.getAdmin()){
-			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
+			request.getRequestDispatcher("index.html").forward(request, response);		
 		}
+
+		LinkedList<String> errores = (LinkedList<String>)request.getAttribute("listaErrores");
+		
 	%>
 </head>
 <body>
@@ -36,19 +39,25 @@
 	</div>
 </form>
 
-
 <div class="container">
-	<p class="bienvenidoTitulo">Bienvenido, <%= c.getNombre() %> admin</p>
-	<form action="menuAdmin" method="get">		
-		<h3>MENU PRINCIPAL</h3>		
-		<button type="submit" name="opcion" value="abmAutores" class="opcionMenu">ABM Autores</button>
-	       <button type="submit" name="opcion" value="abmLibros" class="opcionMenu">ABM Libros</button>
-	       <button type="submit" name="opcion" value="abmPoliticaPrestamos" class="opcionMenu">ABM Politica Prestamos</button>
-	       <button type="submit" name="opcion" value="abmEjemplares" class="opcionMenu">ABM Ejemplares</button>
-	       <button type="submit" name="opcion" value="cobrarCuotas" class="opcionMenu">Cobrar Cuotas</button>
-	       <button type="submit" name="opcion" value="buscarSocio" class="opcionMenu">Buscar Socio</button>
+	<p class="bienvenidoTitulo">Alta de una Politica de Prestamo.</p>
+	<%if(!(errores == null)){
+	for (String error : errores) {%>
+	<p class="errorMensaje"><%=error %></p>
+	<%}};%>
+	
+	<form action="altaPoliticaPrestamo" method="post" class="w-50">	
+		<label for="fechaDesde">Fecha Desde:</label> <br>
+		<input type="date" name="fechaDesde" value="2024-02-06" min="1900-01-01" max="2025-01-01"><br><br>
+		
+		<label for="getCantMaxLibrosPend">Cantidad Maxima de Libros Pendientes:</label> <br>
+		<input type="text" class="form-control" name="cantMaxLibrosPend"> <br>
+		
+		
+		<button type="submit" name="opcion" value="crearPoliticaPrestamo" class="btn btn-success mt-3">Crear</button>
+        <button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>
 	</form> 
 </div>
-
 </body>
+<script src="js/eliminarErrores.js"></script>
 </html>
