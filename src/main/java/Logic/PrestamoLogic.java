@@ -63,9 +63,9 @@ public class PrestamoLogic {
 				return mensaje;
 			}
 			liLogic.createLineasDePrestamoByIdPrestamo(idPrestamoCreado.get(), ejemplaresActualizados.get());
-			mensaje = Optional.of("Prestamo generado con id = " + idPrestamoCreado);
+			mensaje = Optional.of("Prestamo generado con id = " + idPrestamoCreado.get());
 		} else {
-			mensaje = Optional.of("No hay suficientes ejemplares disponibles.");
+			mensaje = Optional.of("No hay suficientes ejemplares disponibles");
 		}
 		return mensaje;
 	}

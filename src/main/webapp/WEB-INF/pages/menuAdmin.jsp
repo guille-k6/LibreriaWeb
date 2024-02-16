@@ -14,6 +14,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
  	<!-- local styles -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/toastCss.css">
     
 <title>Menú principal</title>
 
@@ -22,6 +23,7 @@
 		if(!c.getAdmin()){
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 		}
+		String message = (String)request.getAttribute("message");
 	%>
 </head>
 <body>
@@ -40,7 +42,14 @@
 <div class="container">
 	<p class="bienvenidoTitulo">Bienvenido, <%= c.getNombre() %> admin</p>
 	<form action="menuAdmin" method="get">		
-		<h3>MENU PRINCIPAL</h3>		
+		<h3>MENU PRINCIPAL</h3>
+		<%if(message != null){ %>
+		<div id="toast">
+			<div id="img"></div>
+			<div id="desc"><%=message%></div>
+		</div>	
+		<%} %>
+		
 		<button type="submit" name="opcion" value="abmAutores" class="opcionMenu">ABM Autores</button>
 	       <button type="submit" name="opcion" value="abmLibros" class="opcionMenu">ABM Libros</button>
 	       <button type="submit" name="opcion" value="abmEjemplares" class="opcionMenu">ABM Ejemplares</button>
@@ -50,4 +59,6 @@
 </div>
 
 </body>
+<script src="js/toast.js"></script>
+<%message = null; %>
 </html>

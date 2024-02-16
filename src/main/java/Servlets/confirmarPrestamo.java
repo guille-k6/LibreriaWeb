@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Entities.Socio;
-import Logic.EjemplarLogic;
 import Logic.PrestamoLogic;
 import Logic.SocioLogic;
 
@@ -49,10 +48,9 @@ public class confirmarPrestamo extends HttpServlet {
 			throws ServletException, IOException {
 
 		if (request.getParameter("cancelar") != null) {
-			request.getRequestDispatcher("WEB-INF/pages//menuAdmin.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/pages/menuAdmin.jsp").forward(request, response);
 			return;
 		}
-		EjemplarLogic ejLogic = new EjemplarLogic();
 		SocioLogic soclog = new SocioLogic();
 		PrestamoLogic plogic = new PrestamoLogic();
 		Optional<String> mensaje;
@@ -71,11 +69,17 @@ public class confirmarPrestamo extends HttpServlet {
 		String socioId = request.getParameter("socioId");
 		Socio socioDeudor = soclog.getOneById(new Socio(Integer.parseInt(socioId)));
 		// Valido que el socio pueda efectuar un prestamo
-		if (PrestamoLogic.isUserCapableOfLoan(socioDeudor).isPresent()) {
-			mensaje = PrestamoLogic.isUserCapableOfLoan(socioDeudor);
+		Optional<String> mensajePrestamo = PrestamoLogic.isUserCapableOfLoan(socioDeudor);
+		if (mensajePrestamo.isPresent()) {
+			request.setAttribute("message", mensajePrestamo.get());
+			request.getRequestDispatcher("WEB-INF/pages/menuAdmin.jsp").forward(request, response);
+			return;
 		}
-		if (PrestamoLogic.isUserCapableOfLoan(socioDeudor).isEmpty()) {
+		if (mensajePrestamo.isEmpty()) {
 			mensaje = plogic.generatePrestamo(socioDeudor, librosCantidades);
+			request.setAttribute("message", mensaje.get());
+			request.getRequestDispatcher("WEB-INF/pages/menuAdmin.jsp").forward(request, response);
+			return;
 		}
 
 	}
