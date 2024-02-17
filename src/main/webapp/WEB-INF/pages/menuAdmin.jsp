@@ -56,6 +56,7 @@
 	       <button type="submit" name="opcion" value="abmEjemplares" class="opcionMenu">ABM Ejemplares</button>
 	       <button type="submit" name="opcion" value="cobrarCuotas" class="opcionMenu">Cobrar Cuotas</button>
 	       <button type="submit" name="opcion" value="buscarSocio" class="opcionMenu">Buscar Socio</button>
+	       <button type="submit" name="opcion" value="verPrestamos" class="opcionMenu">Ver prestamos</button>
 	</form> 
 </div>
 

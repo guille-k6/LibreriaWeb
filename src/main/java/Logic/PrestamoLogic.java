@@ -24,6 +24,12 @@ public class PrestamoLogic {
 		return dataPrestamo.getAll();
 	}
 
+	/**
+	 * Busca un prestamo y luego todas sus lineas de prestamo
+	 * 
+	 * @param prestamo
+	 * @return un prestamo con todas sus lineas de prestamo
+	 */
 	public Prestamo getOneById(Prestamo prestamo) {
 		return liLogic.getAllByPrestamo(dataPrestamo.getOneById(prestamo));
 	}

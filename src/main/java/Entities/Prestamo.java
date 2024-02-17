@@ -12,6 +12,10 @@ public class Prestamo {
 	public Prestamo() {
 	}
 
+	public Prestamo(int idPrestamo) {
+		this.idPrestamo = idPrestamo;
+	}
+
 	public Prestamo(Socio socio) {
 		this.socio = socio;
 		this.fechaPrestamo = new Date(System.currentTimeMillis());

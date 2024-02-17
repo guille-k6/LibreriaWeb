@@ -7,7 +7,7 @@
     <meta name=description content="Trabajo prï¿½ctico Java. Sistema de gestiï¿½n de una librerï¿½a.">
     <meta name=keywords content="library">
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/loginStyle.css">
 
     <title>Libreria</title>
@@ -17,13 +17,7 @@
     %>
   </head>
   <body>
-
-
-
-
-	<div class="container">
-		
-		
+	<div class="container">	
 		<div class="row justify-content-center">
 			<div class="col-lg-4 col-xl-4">
 				<h1 class="loginTitle pb-4">Sistema de autogesti&oacute;n bibliotecario.</h1>
@@ -49,8 +43,6 @@
 			<%} %>		
 			</div>
 		</div>
-
 	</div>
-
   </body>
 </html>

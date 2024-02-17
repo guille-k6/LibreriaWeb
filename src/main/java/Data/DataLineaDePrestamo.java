@@ -14,12 +14,17 @@ import Logic.EjemplarLogic;
 
 public class DataLineaDePrestamo {
 
+	/**
+	 * Dado un prestamo, le completa sus lineas de prestamo
+	 * 
+	 * @param prestamo
+	 * @return un prestamo con sus lineas de prestamo completas
+	 */
 	public Prestamo getAllByPrestamo(Prestamo prestamo) {
-		LineaDePrestamo l = null;
+		// TODO: Mejorar la forma en la que se busca el ejemplar
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		LinkedList<LineaDePrestamo> prestamos = new LinkedList<>();
-
+		LinkedList<LineaDePrestamo> lineasDePrestamo = new LinkedList<>();
 		try {
 			stmt = DbConnector.getInstancia().getConn()
 					.prepareStatement("select * from lineadeprestamo where idprestamo=?");
@@ -27,12 +32,11 @@ public class DataLineaDePrestamo {
 			rs = stmt.executeQuery();
 			if (rs != null) {
 				while (rs.next()) {
-					l = new LineaDePrestamo();
+					LineaDePrestamo l = new LineaDePrestamo();
 					l.setIdLineaPrestamo(rs.getInt("idlineadeprestamo"));
 					l.setFechaDevolucionTeorica(rs.getDate("fechaDevolucionTeorica"));
-					l.setFechaDevolucionTeorica(rs.getDate("fechaDevolucionReal"));
+					l.setFechaDevolucionReal(rs.getDate("fechaDevolucionReal"));
 					l.setEstadoLinea(rs.getString("estadoLinea"));
-
 					// Busco el objeto ejemplar para la linea
 					int idEjemplar = rs.getInt("idEjemplar");
 					EjemplarLogic ejelog = new EjemplarLogic();
@@ -41,16 +45,14 @@ public class DataLineaDePrestamo {
 					elEjemplar = ejelog.getOneById(elEjemplar);
 					// Le agrego el ejemplar
 					l.setEjemplar(elEjemplar);
-
 					// Aniado la linea con el ejemplar incluido a la LinkedList.
-					prestamos.add(l);
+					lineasDePrestamo.add(l);
 				}
-				prestamo.setLineasDePrestamo(prestamos);
+				prestamo.setLineasDePrestamo(lineasDePrestamo);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		} finally {
 			try {
 				if (rs != null) {
@@ -65,7 +67,7 @@ public class DataLineaDePrestamo {
 			}
 		}
 		return prestamo;
-	} // fin metodo GetAll
+	}
 
 	public LineaDePrestamo getById(LineaDePrestamo lineaToSearch) {
 		LineaDePrestamo l = null;
