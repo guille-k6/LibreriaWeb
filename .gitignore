@@ -2,3 +2,4 @@ src/main/java/Data/DbConnector.java
 build/
 .settings/
 .metadata/
+.classpath
