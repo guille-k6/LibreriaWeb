@@ -38,9 +38,10 @@
 
 <div class="container">
 	<p class="bienvenidoTitulo">Prestamo ID: <%=prestamo.getIdPrestamo()%></p>
-	<form action="devolverUnEjemplar" method="get">							
+	<form action="devolverUnEjemplar" method="post">							
 		<div class="container">
 			<div class="row">
+				<input type="hidden" name="prestamoId" value="<%=prestamo.getIdPrestamo()%>">
 				<p><%= prestamo.getSocio().getNombre() + " " + prestamo.getSocio().getApellido() %></p>
 				<p><%= prestamo.getFechaPrestamo() %></p>
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -62,7 +63,16 @@
 									<td><%=ldp.getEjemplar().getIdEjemplar()%></td>
 									<td><%=ldp.getFechaDevolucionTeorica()%></td>
 									<td><%=ldp.getFechaDevolucionReal() == null ? "Pendiente" : ldp.getFechaDevolucionReal()%></td>
-									<td><button type="submit" name="devolver" value="<%=ldp.getIdLineaPrestamo()%>" class="btn btn-primary">Devolver</button></td>
+									<td><button 
+											type="submit" 
+											name="idLineaDePrestamo" 
+											value="<%=ldp.getIdLineaPrestamo()%>" 
+											class="btn btn-primary"
+											<%= (ldp.getFechaDevolucionReal() != null) ? "disabled" : "" %>
+											>
+											Devolver
+										</button>
+									</td>
 								</tr>
 								<% }%>
 							</tbody>

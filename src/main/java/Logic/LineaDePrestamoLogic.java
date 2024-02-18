@@ -39,8 +39,8 @@ public class LineaDePrestamoLogic {
 		dataLineaDePrestamo.addOne(prestamo, linea);
 	}
 
-	public void update(LineaDePrestamo linea, Prestamo pres) {
-		dataLineaDePrestamo.update(linea, pres);
+	public void update(LineaDePrestamo linea) {
+		dataLineaDePrestamo.update(linea);
 	}
 
 	public void remove(LineaDePrestamo linea) {

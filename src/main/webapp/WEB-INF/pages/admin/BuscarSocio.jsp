@@ -24,13 +24,8 @@
 			request.getRequestDispatcher("index.html").forward(request, response);		
 		}
 	 	String mensaje = (String)request.getAttribute("estado");	 	
-		LinkedList<Socio> socios = new LinkedList<Socio>();
-		
-		socios = (LinkedList<Socio>)request.getAttribute("sociosApellido");
-		if(socios==null || socios.isEmpty()){
-		    SocioLogic soclog = new SocioLogic();
-		    socios = soclog.getAll();		
-		}
+	 	SocioLogic socioLogic = new SocioLogic();
+		List<Socio> socios = socioLogic.getAll();
 	%>
 </head>
 <body>
@@ -46,24 +41,7 @@
 </form>
 
 <div class="container">
-		<p class="loginTitle">Busque un socio por su apellido.</p>
-		<div class="row justify-content-center">
-			<div class="col-lg-3 col-xl-3 ">
-				<form class="BusquedaSocioForm" action="BusquedaSocioForm" method="post">
-					<label for="inp" class="inp">
-					  <input type="text" name="apellido" id="inp" placeholder="&nbsp;">
-					  <span class="label">Apellido</span>
-					  <span class="focus-bg"></span>
-					</label>					
-				  <button type="submit" class="btn btn-primary botonLogin">Buscar</button>
-				</form>		
-			</div>	
-		</div>
-
-	</div>
-
-<div class="container">
-	<p class="bienvenidoTitulo">Elija un socio</p>
+	<h1 class="loginTitle">Busque un socio por su apellido.</h1>
 	<%if(mensaje != null){ %>
 		<p class="mensajeInfo"><%=mensaje%></p>
 	<%} %>	

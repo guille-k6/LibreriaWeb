@@ -11,6 +11,10 @@ public class LineaDePrestamo {
 	public LineaDePrestamo() {
 	}
 
+	public LineaDePrestamo(int idLineaDePrestamo) {
+		this.idLineaPrestamo = idLineaDePrestamo;
+	}
+
 	public LineaDePrestamo(int idLineaPrestamo, java.sql.Date fechaDevolucionTeorica, java.sql.Date fechaDevolucionReal,
 			String estadoLinea, Ejemplar ejemplar) {
 		this.idLineaPrestamo = idLineaPrestamo;

@@ -53,8 +53,7 @@ public class BusquedaSocioForm extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		SocioLogic soclog = new SocioLogic();
-		Socio socio = new Socio();
-		socio = (Socio) request.getSession().getAttribute("usuario");
+		Socio socio = (Socio) request.getSession().getAttribute("usuario");
 		String apellido = request.getParameter("apellido");
 		Socio socioABuscar = new Socio();
 		socioABuscar.setApellido(apellido);

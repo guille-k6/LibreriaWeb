@@ -11,6 +11,7 @@ import Entities.Ejemplar;
 import Entities.LineaDePrestamo;
 import Entities.Prestamo;
 import Logic.EjemplarLogic;
+import utils.LoggerError;
 
 public class DataLineaDePrestamo {
 
@@ -52,7 +53,7 @@ public class DataLineaDePrestamo {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (rs != null) {
@@ -63,7 +64,7 @@ public class DataLineaDePrestamo {
 				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 		return prestamo;
@@ -82,7 +83,7 @@ public class DataLineaDePrestamo {
 				l = new LineaDePrestamo();
 				l.setIdLineaPrestamo(rs.getInt("idlineadeprestamo"));
 				l.setFechaDevolucionTeorica(rs.getDate("fechaDevolucionTeorica"));
-				l.setFechaDevolucionTeorica(rs.getDate("fechaDevolucionReal"));
+				l.setFechaDevolucionReal(rs.getDate("fechaDevolucionReal"));
 				l.setEstadoLinea(rs.getString("estadoLinea"));
 				// Busco el objeto ejemplar para la linea
 				int idEjemplar = rs.getInt("idEjemplar");
@@ -94,7 +95,7 @@ public class DataLineaDePrestamo {
 				l.setEjemplar(elEjemplar);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (rs != null) {
@@ -105,7 +106,7 @@ public class DataLineaDePrestamo {
 				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 
@@ -134,7 +135,7 @@ public class DataLineaDePrestamo {
 			stmt.executeBatch();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (keyResultSet != null)
@@ -143,7 +144,7 @@ public class DataLineaDePrestamo {
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 	}
@@ -170,7 +171,7 @@ public class DataLineaDePrestamo {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (keyResultSet != null)
@@ -179,33 +180,32 @@ public class DataLineaDePrestamo {
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 
 	} // FIN METODO ADD ONE
 
-	public void update(LineaDePrestamo linea, Prestamo pres) {
+	public void update(LineaDePrestamo linea) {
 		PreparedStatement stmt = null;
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement(
-					"update lineadeprestamo set fechaDevolucionTeorica=?, fechaDevolucionReal=?, estadoLinea=?, idPrestamo=?, idEjemplar=? where idlineadeprestamo=?");
+					"update lineadeprestamo set fechaDevolucionTeorica=?, fechaDevolucionReal=?, estadoLinea=?, idEjemplar=? where idlineadeprestamo=?");
 			stmt.setString(1, linea.getFechaDevolucionTeorica().toString());
 			stmt.setString(2, linea.getFechaDevolucionReal().toString());
 			stmt.setString(3, linea.getEstadoLinea());
-			stmt.setInt(4, pres.getIdPrestamo());
-			stmt.setInt(5, linea.getEjemplar().getIdEjemplar());
-			stmt.setInt(6, linea.getIdLineaPrestamo());
+			stmt.setInt(4, linea.getEjemplar().getIdEjemplar());
+			stmt.setInt(5, linea.getIdLineaPrestamo());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (stmt != null)
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 	} // FIN METODO UPDATE
@@ -218,14 +218,14 @@ public class DataLineaDePrestamo {
 			stmt.setInt(1, linea.getIdLineaPrestamo());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (stmt != null)
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 	} // FIN METODO REMOVE
