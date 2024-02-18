@@ -1,4 +1,4 @@
 src/main/java/Data/DbConnector.java
-build/*
-.settings
-.classpath
+build/
+.settings/
+.metadata/
