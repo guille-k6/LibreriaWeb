@@ -7,16 +7,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name=description content="Trabajo práctico Java. Sistema de gestión de una librería.">
-    <meta name=keywords content="library">
-    <!-- Bootstrap 5.2 CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
- 	<!-- local styles -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    
-<title>Autores</title>
+	<%@ include file="../HeadTags.jsp" %>
+	<title>Autores</title>
 
 	<%
 		Socio c = (Socio)session.getAttribute("usuario");
@@ -32,16 +24,7 @@
 </head>
 <body>
 
-<form action="headerForm" method="post">
-	<div class="contenedorNavBar">
-		<div class="d-flex flex-row justify-content-start align-items-stretch">
-			<div class="navBarItem navBarItem-Main">JAVAUTNFRRO2022</div>
-			<div class="navBarItem"><button type="submit" name="opcion" value="menu" class="botonMenu">Menu</button></div>
-			<div class="navBarItem ms-auto opcionLogout">Usuario: <%=c.getUsuario() %> <button class="btn btn-danger" type="submit" name="opcion" value="logout">Logout</button></div>
-		</div>
-	</div>
-</form>
-
+<%@ include file="../NavigationBar.jsp" %>
 
 <div class="container">
 	<p class="bienvenidoTitulo">ABM Autores.</p>
