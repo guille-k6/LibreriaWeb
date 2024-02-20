@@ -26,13 +26,25 @@
 
 <%@ include file="../NavigationBar.jsp" %>
 
-<div class="container">
-	<p class="bienvenidoTitulo">ABM Autores.</p>
-	<%if(mensaje != null){ %>
-		<p class="mensajeInfo"><%=mensaje%></p>
-	<%} %>	
-	<form action="ABMAutoresForm" method="get">					
-		<button type="submit" name="opcion" value="alta" class="btn btn-success mb-3">Añadir un autor</button>			
+<div class="container pt-3">
+
+	<form action="headerForm" method="post">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="opcion" value="menu" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Autores</li>
+		  </ol>
+		</nav>
+	</form>
+	
+	<form action="ABMAutoresForm" method="get">	
+		<div class="w-100 d-flex justify-content-between align-items-center mx-3">
+			<p class="welcome-title">Administrar autores.</p>
+			<button type="submit" name="opcion" value="alta" class="btn btn-success boton-nuevo">Añadir un autor</button>			
+		</div>				
+		<%if(mensaje != null){ %>
+			<p class="mensajeInfo"><%=mensaje%></p>
+		<%} %>	
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -53,8 +65,8 @@
 									<td><%=aut.getIdAutor() %></td>
 									<td><%=aut.getNombre() %></td>
 									<td><%=aut.getApellido() %></td>
-									<td><button type="submit" name="editar" value="<%= aut.getIdAutor()%>" class="btn btn-primary">Editar</button></td>
-									<td><button type="submit" name="eliminar" value="<%=aut.getIdAutor()%>" class="btn btn-danger">Eliminar</button></td>
+									<td><button type="submit" name="editar" value="<%= aut.getIdAutor()%>" class="boton-editar"><i class="tiny material-icons">edit</i></button></td>
+									<td><button type="submit" name="eliminar" value="<%=aut.getIdAutor()%>" class="boton-eliminar"><i class="tiny material-icons">delete</i></button></td>
 								</tr>
 								<% }%>
 							</tbody>

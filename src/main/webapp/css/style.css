@@ -57,27 +57,45 @@
 	color: #FF8C00;
     margin-left: 3rem;
 }
-.bienvenidoTitulo{
-	font-size: 3em;
+.welcome-title{
+	margin-top: 0.5rem;
+	font-size: 2em;
+	color: rgb(10, 10, 10);
 }
-
+.welcome-second-title{
+	font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+    color: rgb(59 59 59);
+    font-weight: bold;
+}
+.menu-section-container{
+	gap:32px;
+}
+.section-column{
+	margin: 0px 6px;
+    display: flex;
+    flex-direction: column;
+}
+.menu-title{
+	font-size: 1.2rem;
+	font-weight: 500;
+	color: rgb(59 59 59);
+	margin-bottom: 3px;
+	border-bottom: 2px solid #FF8C00;
+}
 .opcionMenu{
-	background-color: #FF8C00;
-	padding: 1em;
-	border-radius: 8px;
-	margin: 0.3em;
+	width: max-content;
+	background-color: rgba(0, 0, 0, 0);
 	border: none;
-	color: white;
-	font-weight: bold;
-	width: 10em;
+	outline: none;
+	padding: 0px 2px;
+	margin: 4px 4px;
+	font-size: 1.1rem;
+	color: #005db1;
 }
-
 .opcionMenu:hover{
-	background-color: #1b1b1b;
-	color: #f3f3f3;
-	transition: all 250ms ease-in-out;
+	text-decoration: underline;
 }
-
 .mensajeInfo{
 	width: 50%;
 	margin:auto;
@@ -113,4 +131,40 @@
 	padding: 4px;
 	font-weight: 500;
 	    color: #343434;
+}
+.boton-editar{
+	display: flex;
+    font-size: 1rem;
+    color: #1786fe;
+    padding: 1px 10px;
+    border: 1px solid #0069dbb5;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0);
+}
+.boton-editar:hover{
+	background-color:rgba(23, 134, 254, 0.2);
+}
+.boton-eliminar{
+	display: flex;
+    font-size: 1rem;
+    color: rgba(220, 53, 69, 1);
+    padding: 1px 10px;
+    border: 1px solid rgba(220,53,69,0.7);
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0);	
+}
+.boton-eliminar:hover{
+	background-color: rgba(220, 53, 69, 0.2);
+}
+.boton-nuevo{
+	margin-right: 2rem;
+}
+.button-emula-anchor{
+	background-color: rgba(0, 0, 0, 0);
+	outline: none;
+	border: none;
+	padding: 0px;
+	margin: 0px;
+	text-decoration: underline;
+	color: rgb(83 153 255);
 }
