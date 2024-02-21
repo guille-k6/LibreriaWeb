@@ -40,11 +40,8 @@
 	<form action="ABMAutoresForm" method="get">	
 		<div class="w-100 d-flex justify-content-between align-items-center mx-3">
 			<p class="welcome-title">Administrar autores.</p>
-			<button type="submit" name="opcion" value="alta" class="btn btn-success boton-nuevo">Añadir un autor</button>			
+			<button type="submit" name="opcion" value="alta" class="btn btn-success boton-nuevo">Añadir autor</button>			
 		</div>				
-		<%if(mensaje != null){ %>
-			<p class="mensajeInfo"><%=mensaje%></p>
-		<%} %>	
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -76,8 +73,10 @@
 			</div>
 		</div>
 	</form> 
+<%if(mensaje != null){ %>
+	<p hidden class="mensajeInfo"><%=mensaje%></p>
+<%} %>	
 </div>
 
 </body>
-<script src="js/eliminarMensajes.js"></script>
 </html>

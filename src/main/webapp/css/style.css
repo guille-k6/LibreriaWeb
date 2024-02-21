@@ -168,3 +168,7 @@
 	text-decoration: underline;
 	color: rgb(83 153 255);
 }
+
+.toast-container{
+	backgorund-color: red;
+}

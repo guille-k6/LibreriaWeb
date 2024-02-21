@@ -26,13 +26,22 @@
 
 <%@ include file="../NavigationBar.jsp" %>
 
-<div class="container">
-	<p class="bienvenidoTitulo">ABM Ejemplares.</p>
-	<%if(mensaje != null){ %>
-		<p class="mensajeInfo"><%=mensaje%></p>
-	<%} %>	
+<div class="container pt-3">
+
+	<form action="headerForm" method="post">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="opcion" value="menu" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Ejemplares</li>
+		  </ol>
+		</nav>
+	</form>
+	
 	<form action="ABMEjemplaresForm" method="get">					
-		<button type="submit" name="opcion" value="alta" class="btn btn-success mb-3">Añadir un ejemplar</button>			
+		<div class="w-100 d-flex justify-content-between align-items-center mx-3">
+			<p class="welcome-title">Administrar ejemplares.</p>
+			<button type="submit" name="opcion" value="alta" class="btn btn-success boton-nuevo">Añadir ejemplar</button>			
+		</div>		
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -53,8 +62,8 @@
 									<td><%=eje.getIdEjemplar() %></td>
 									<td><%=eje.getLibro().getTitulo() %></td>
 									<td><%=eje.getLibro().getAutor().getApellido() + " " + eje.getLibro().getAutor().getNombre() %></td>
-									<td><button type="submit" name="editar" value="<%= eje.getIdEjemplar()%>" class="btn btn-primary">Editar</button></td>
-									<td><button type="submit" name="eliminar" value="<%=eje.getIdEjemplar()%>" class="btn btn-danger">Eliminar</button></td>
+									<td><button type="submit" name="editar" value="<%=eje.getIdEjemplar()%>" class="boton-editar"><i class="tiny material-icons">edit</i></button></td>
+									<td><button type="submit" name="eliminar" value="<%=eje.getIdEjemplar()%>" class="boton-eliminar"><i class="tiny material-icons">delete</i></button></td>
 								</tr>
 								<% }%>
 							</tbody>
@@ -64,6 +73,9 @@
 			</div>
 		</div>
 	</form> 
+	<%if(mensaje != null){ %>
+		<p class="mensajeInfo"><%=mensaje%></p>
+	<%} %>	
 </div>
 </body>
 <script src="js/eliminarMensajes.js"></script>

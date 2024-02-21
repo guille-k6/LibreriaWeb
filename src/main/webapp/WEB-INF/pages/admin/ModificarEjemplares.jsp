@@ -11,7 +11,7 @@
 	<%
   		Socio c = (Socio)session.getAttribute("usuario");
 		if(!c.getAdmin()){
-			request.getRequestDispatcher("index.html").forward(request, response);		
+			request.getRequestDispatcher("index.jsp").forward(request, response);		
 		}
 		Ejemplar ejemplar = (Ejemplar)request.getAttribute("ejemplarModificar");
 		LibroLogic liblog = new LibroLogic();
@@ -24,23 +24,36 @@
 <%@ include file="../NavigationBar.jsp" %>
 
 <div class="container">
-	<h2>Bienvenido, <%= c.getNombre() %> admin</h2>
-	<h3>Modificar ejemplar</h3>
-	<form action="modificarEjemplar" method="post" class="w-50">
+	<form action="breadcrumb" method="get">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="menuAdmin.jsp" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item" aria-current="page"><button type="submit" name="page" value="admin/ABMEjemplares.jsp" class="button-emula-anchor">Ejemplares</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Modificar</li>
+		  </ol>
+		</nav>
+	</form>
 	
-		<label for="id">Id del ejemplar:</label> <br>
-		<input type="text" class="form-control" name="id" value="<%=ejemplar.getIdEjemplar()%>" readonly> <br>
+	<p class="welcome-title mt-3">Modificar un autor</p>
+	
+	<form action="modificarEjemplar" method="post" class="w-50 mt-3">
+	
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">&emsp; ID &emsp;</span>
+		  <input type="text" name="id" value="<%=ejemplar.getIdEjemplar()%>" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
+		</div>
 		
-		<label for="idLibro">Titulo:</label> <br>
-		<select name="idLibro" id="cars">
+	    <div class="input-group mb-3">
+		  <label class="input-group-text" for="inputGroupSelect01">&ensp;Libro&ensp;</label>
+		  <select name="idLibro" class="form-select" id="inputGroupSelect01">
 			<% for (Libro lib : libros){ %>
-	    	<option value="<%=lib.getIdLibro()%>" <%if(lib.getIdLibro() == ejemplar.getLibro().getIdLibro() ){%> selected <% } %>> <%=lib.getTitulo()%>  <%=lib.getAutor().getApellido() + " " + lib.getAutor().getNombre()%> </option>
+	    	<option value="<%=lib.getIdLibro()%>"> <%=lib.getTitulo() + " (" + lib.getAutor().getNombre() + " " + lib.getAutor().getApellido() + ")"%> </option>
 	    	<%} %>
-	    </select>
-	    <br>
+		  </select>
+		</div>
 				
-		<button type="submit" name="opcion" value="editar" class="btn btn-success mt-3">Modificar libro</button>
-        <button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>
+		<button type="submit" name="opcion" value="editar" class="btn btn-primary mt-2 px-4">Modificar</button>
+        <button type="submit" name="opcion" value="cancelar" class="btn btn-outline-secondary mt-2">Cancelar</button>
 	</form> 
 </div>
 

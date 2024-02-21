@@ -11,7 +11,7 @@
 	<%
 	  	Socio c = (Socio)session.getAttribute("usuario");
 		if(!c.getAdmin()){
-			request.getRequestDispatcher("index.html").forward(request, response);		
+			request.getRequestDispatcher("index.jsp").forward(request, response);		
 		}
 		LibroLogic liblog = new LibroLogic();
 		LinkedList<Libro> libros = new LinkedList<Libro>();
@@ -23,19 +23,31 @@
 <%@ include file="../NavigationBar.jsp" %>
 
 <div class="container">
-	<p class="bienvenidoTitulo">Alta de un ejemplar.</p>
-	<form action="altaEjemplar" method="post" class="w-50">	
 
-		<label for="titulo">Libro:</label> <br>
-		<select name="titulo" class="custom-select">
+	<form action="breadcrumb" method="get">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="menuAdmin.jsp" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item" aria-current="page"><button type="submit" name="page" value="admin/ABMEjemplares.jsp" class="button-emula-anchor">Ejemplares</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Alta</li>
+		  </ol>
+		</nav>
+	</form>
+
+	<p class="welcome-title mt-3">Dar de alta un ejemplar</p>
+	<form action="altaEjemplar" method="post" class="w-50 mt-3">	
+	    
+	    <div class="input-group mb-3">
+		  <label class="input-group-text" for="inputGroupSelect01">Libro</label>
+		  <select name="titulo" class="form-select" id="inputGroupSelect01">
 			<% for (Libro lib : libros){ %>
-	    	<option value="<%=lib.getIdLibro()%>"> <%=lib.getTitulo() + ". " + lib.getAutor().getNombre() + " " + lib.getAutor().getApellido()%> </option>
+	    	<option value="<%=lib.getIdLibro()%>"> <%=lib.getTitulo() + " (" + lib.getAutor().getNombre() + " " + lib.getAutor().getApellido() + ")"%> </option>
 	    	<%} %>
-	    </select>
-	    <br>
+		  </select>
+		</div>
 		
-		<button type="submit" name="opcion" value="crearEjemplar" class="btn btn-success mt-3">Crear</button>
-        <button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>
+		<button type="submit" name="opcion" value="crearEjemplar" class="btn btn-primary mt-2 px-4">Crear</button>
+        <button type="submit" name="opcion" value="cancelar" class="btn btn-outline-secondary mt-2">Cancelar</button>
 	</form> 
 </div>
 </body>
