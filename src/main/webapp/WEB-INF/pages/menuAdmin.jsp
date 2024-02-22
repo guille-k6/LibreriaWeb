@@ -7,7 +7,7 @@
 <html>
 <head>
 	<%@ include file="HeadTags.jsp" %>
-	<title>Menú principal</title>
+	<title>MenÃº principal</title>
 	<%
  	  	Socio c = (Socio)session.getAttribute("usuario");
 		if(!c.getAdmin()){
@@ -19,8 +19,8 @@
 <body>
 <%@ include file="NavigationBar.jsp" %>
 <div class="container">
-	<p class="welcome-title">Bienvenido de nuevo, <%= c.getNombre() + " " + c.getApellido()%>.</p>
-	<h3 class="welcome-second-title">Gestioná tu biblioteca</h3>
+	<p class="welcome-title mb-3">Bienvenido de nuevo, <%= c.getNombre() + " " + c.getApellido()%>.</p>
+	<h3 class="welcome-second-title mt-3">Gestiona tu biblioteca</h3>
 	<form action="menuAdmin" method="get">		
 		<div class="d-flex mt-3 menu-section-container">
 			<div class="col-md-4">
@@ -29,7 +29,7 @@
 				    <button type="submit" name="opcion" value="abmAutores" class="opcionMenu">> Administrar autores</button>
 				    <button type="submit" name="opcion" value="abmLibros" class="opcionMenu">> Administrar libros</button>
 				    <button type="submit" name="opcion" value="abmEjemplares" class="opcionMenu">> Administrar ejemplares</button>			
-				    <button type="submit" name="opcion" value="abmPoliticaPrestamos" class="opcionMenu">> Administrar política de prestamo</button>
+				    <button type="submit" name="opcion" value="abmPoliticaPrestamos" class="opcionMenu">> Administrar polÃ­tica de prestamo</button>
 				</div>
 			</div>
 			<div class="col-md-4">
@@ -57,6 +57,5 @@
 <%} %>
 
 </body>
-<script src="js/toast.js"></script>
 <%message = null; %>
 </html>

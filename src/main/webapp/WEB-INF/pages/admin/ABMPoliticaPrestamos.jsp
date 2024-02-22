@@ -8,30 +8,40 @@
 <html>
 <head>
 	<%@ include file="../HeadTags.jsp" %>
-	<title>PoliticaPrestamos</title>
+	<title>Politica de prestamo</title>
+	
 	<%
 		Socio c = (Socio)session.getAttribute("usuario");
 		if(!c.getAdmin()){
 			request.getRequestDispatcher("index.html").forward(request, response);		
 		}
 	 	String mensaje = (String)request.getAttribute("estado");
-	 	
-		LinkedList<PoliticaPrestamo> PoliticaPrestamos = new LinkedList<PoliticaPrestamo>();
 	    DataPoliticaPrestamo pollog = new DataPoliticaPrestamo();
-	    PoliticaPrestamos = pollog.getAll();		
+	    List<PoliticaPrestamo> PoliticaPrestamos = pollog.getAll();		
 	%>
 </head>
 <body>
 
 <%@ include file="../NavigationBar.jsp" %>
 
-<div class="container">
-	<p class="bienvenidoTitulo">ABM PoliticaPrestamos.</p>
+<div class="container pt-3">
+
+	<form action="headerForm" method="post">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="opcion" value="menu" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Política de prestamo</li>
+		  </ol>
+		</nav>
+	</form>
 	<%if(mensaje != null){ %>
 		<p class="mensajeInfo"><%=mensaje%></p>
 	<%} %>	
 	<form action="ABMPoliticaPrestamosForm" method="get">					
-		<button type="submit" name="opcion" value="alta" class="btn btn-success mb-3">AÃ±adir una Politica Prestamo</button>			
+		<div class="w-100 d-flex justify-content-between align-items-center mx-3">
+			<p class="welcome-title">Administrar políticas de prestamo.</p>
+			<button type="submit" name="opcion" value="alta" class="btn btn-success boton-nuevo">Añadir política de prestamo</button>			
+		</div>	
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -41,7 +51,9 @@
 								<tr>
 									<th>ID</th>
 									<th>Fecha Desde</th>
-									<th>Cantidad Max Libros Pendientes</th>
+									<th>Máximos libros pendientes</th>
+									<th>Editar</th>
+									<th>Eliminar</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -50,8 +62,8 @@
 									<td><%=pol.getIdPoliticaPrestamo() %></td>
 									<td><%=pol.getFechaDesde().toString() %></td>
 									<td><%=pol.getCantMaxLibrosPend() %></td>
-									<td><button type="submit" name="editar" value="<%= pol.getIdPoliticaPrestamo()%>" class="btn btn-primary">Editar</button></td>
-									<td><button type="submit" name="eliminar" value="<%=pol.getIdPoliticaPrestamo()%>" class="btn btn-danger">Eliminar</button></td>
+									<td><button type="submit" name="editar" value="<%= pol.getIdPoliticaPrestamo()%>" class="boton-editar"><i class="tiny material-icons">edit</i></button></td>
+									<td><button type="submit" name="eliminar" value="<%=pol.getIdPoliticaPrestamo()%>" class="boton-eliminar"><i class="tiny material-icons">delete</i></button></td>
 								</tr>
 								<% }%>
 							</tbody>

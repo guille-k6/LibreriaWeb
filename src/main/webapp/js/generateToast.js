@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', ()=>{
 	const mensajes = document.querySelectorAll('.mensajeInfo');
 	
-	console.log(mensajes);
-	
 	let innerHtmlNode = `<div class="d-flex"><i class="small material-icons home-icon">info</i> &ensp;`;
 	
 	if(mensajes.length > 0){

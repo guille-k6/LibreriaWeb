@@ -1,8 +1,7 @@
 package utils;
 
-import Entities.Prestamo;
-import Entities.Socio;
-import Logic.PrestamoLogic;
+import java.sql.Date;
+import java.time.LocalDate;
 
 public class Test {
 
@@ -90,8 +89,13 @@ public class Test {
 //		String asd3 = asd2.toString().replace(']', ')');
 //		System.out.println(asd3);
 
-		PrestamoLogic pl = new PrestamoLogic();
-		pl.add(new Prestamo(new Socio(2)));
+//		PrestamoLogic pl = new PrestamoLogic();
+//		pl.add(new Prestamo(new Socio(2)));
+
+		LocalDate.now();
+		Date hoy = new Date(System.currentTimeMillis());
+		System.out.println(hoy);
+		System.out.println(LocalDate.now());
 
 	}
 

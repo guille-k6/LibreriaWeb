@@ -11,7 +11,7 @@
 	<%
 	  	Socio c = (Socio)session.getAttribute("usuario");
 		if(!c.getAdmin()){
-			request.getRequestDispatcher("index.html").forward(request, response);		
+			request.getRequestDispatcher("index.jsp").forward(request, response);		
 		}
 		PoliticaPrestamo PoliticaPrestamo = (PoliticaPrestamo)request.getAttribute("PoliticaPrestamoBaja");
 	%>
@@ -21,20 +21,36 @@
 <%@ include file="../NavigationBar.jsp" %>
 
 <div class="container">
-	<p class="bienvenidoTitulo">Baja de una Politica Prestamo.</p>
-	<form action="bajaPoliticaPrestamo" method="post" class="w-50">
+	<form action="breadcrumb" method="get">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="menuAdmin.jsp" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item" aria-current="page"><button type="submit" name="page" value="/admin/ABMPoliticaPrestamos.jsp" class="button-emula-anchor">Políticas de préstamo</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Baja</li>
+		  </ol>
+		</nav>
+	</form>
 	
-		<label for="id">Id de la Politica de Prestamo:</label> <br>
-		<input type="text" class="form-control" name="id" value="<%=PoliticaPrestamo.getIdPoliticaPrestamo()%>" readonly> <br>
+	<p class="welcome-title mt-3">Dar de baja un autor</p>
+	<form action="bajaPoliticaPrestamo" method="post" class="w-50 mt-3">
+	
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">&emsp; ID &emsp;</span>
+		  <input type="text" name="id" value="<%=PoliticaPrestamo.getIdPoliticaPrestamo()%>" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
+		</div>
 		
-		<label for="fechaDesde">Fecha Desde:</label> <br>
-		<input type="text" class="form-control" name="fechaDesde" value="<%=PoliticaPrestamo.getFechaDesde().toString()%>" readonly> <br>
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Fecha desde</span>
+		  <input type="text" name="fechaDesde" value="<%=PoliticaPrestamo.getFechaDesde().toString()%>" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
+		</div>
 		
-		<label for="cantMaxLibrosPend">Cant Max Libros Pendientes:</label> <br>
-		<input type="text" class="form-control" name="cantMaxLibrosPend" value="<%=PoliticaPrestamo.getCantMaxLibrosPend()%>" readonly> <br>		
+	 	<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Máximos libros pendientes</span>
+		  <input type="number" name="fechaDesde" value="<%=PoliticaPrestamo.getCantMaxLibrosPend()%>" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
+		</div>	
 				
-		<button type="submit" name="opcion" value="eliminar" class="btn btn-success mt-3">Eliminar Politica Prestamo</button>
-        <button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>
+		<button type="submit" name="opcion" value="eliminar" class="btn btn-primary mt-2 px-4">Eliminar</button>
+        <button type="submit" name="opcion" value="cancelar" class="btn btn-outline-secondary mt-2">Cancelar</button>
 	</form> 
 </div>
 

@@ -24,38 +24,59 @@
 <%@ include file="../NavigationBar.jsp" %>
 
 <div class="container">
-	<p class="bienvenidoTitulo">Alta de un libro.</p>
+
+	<form action="breadcrumb" method="get">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="menuAdmin.jsp" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item" aria-current="page"><button type="submit" name="page" value="admin/ABMLibros.jsp" class="button-emula-anchor">Libros</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Alta</li>
+		  </ol>
+		</nav>
+	</form>
+	
+	<p class="welcome-title mt-3">Dar de alta un libro</p>
 	<%if(!(errores == null)){
 	for (String error : errores) {%>
 	<p class="errorMensaje"><%=error %></p>
 	<%}};%>
-	<form action="altaLibro" method="post" class="w-50">	
-		<label for="nombre">ISBN:</label> <br>
-		<input type="text" class="form-control" name="isbn"> <br>
+	<form action="altaLibro" method="post" class="w-50 mt-3">	
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">ISBN</span>
+		  <input type="text" name="isbn" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+		</div>
 		
-		<label for="nombre">Titulo:</label> <br>
-		<input type="text" class="form-control" name="titulo"> <br>
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+		  <input type="text" name="titulo" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+		</div>
 		
-		<label for="nombre">Editorial:</label> <br>
-		<input type="text" class="form-control" name="editorial"> <br>
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Editorial</span>
+		  <input type="text" name="editorial" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+		</div>
 		
-		<label for="nombre">Fecha de edición:</label> <br>
-		<input type="date" name="fechaEdicion" value="2022-11-23" min="1900-01-01" max="2023-01-01"><br><br>
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Fecha edición</span>
+		  <input type="date" name="fechaEdicion" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+		</div>
 		
-		<label for="apellido">Máximo tiempo de préstamo (días):</label> <br>
-		<input type="text" class="form-control" name="maxDias"> <br>
-		
-		<label for="autor">Autor:</label> <br>
-		<select name="autor" id="cars">
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Máximo tiempo de préstamo (días)</span>
+		  <input type="number" name="maxDias" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+		</div>
+	    
+	    <div class="input-group mb-3">
+		  <label class="input-group-text" for="inputGroupSelect01">Autor</label>
+		  <select name="autor" class="form-select" id="inputGroupSelect01">
 			<% for (Autor aut : autores){ %>
-	    	<option value="<%=aut.getIdAutor()%>"> <%=aut.getNombre()%>  <%=aut.getApellido()%> </option>
+	    		<option value="<%=aut.getIdAutor()%>"> <%=aut.getNombre()%>  <%=aut.getApellido()%> </option>
 	    	<%} %>
-	    </select>
-	    <br>
-			
-		
-		<button type="submit" name="opcion" value="crearLibro" class="btn btn-success mt-3">Crear</button>
-        <button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>
+		  </select>
+		</div>
+				
+		<button type="submit" name="opcion" value="crearLibro" class="btn btn-primary mt-2 px-4">Crear</button>
+        <button type="submit" name="opcion" value="cancelar" class="btn btn-outline-secondary mt-2">Cancelar</button>
 	</form> 
 </div>
 

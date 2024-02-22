@@ -9,6 +9,7 @@
 <head>
 	<%@ include file="../HeadTags.jsp" %>
 	<title>Libros</title>
+	
 	<%
 		Socio c = (Socio)session.getAttribute("usuario");
 		if(!c.getAdmin()){
@@ -25,13 +26,22 @@
 
 <%@ include file="../NavigationBar.jsp" %>
 
-<div class="container">
-	<p class="bienvenidoTitulo">ABM Libros.</p>
-	<%if(mensaje != null){ %>
-		<p class="mensajeInfo"><%=mensaje%></p>
-	<%} %>
+<div class="container pt-3">
+
+	<form action="headerForm" method="post">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="opcion" value="menu" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Libros</li>
+		  </ol>
+		</nav>
+	</form>
+	
 	<form action="ABMLibrosForm" method="get">					
-		<button type="submit" name="opcion" value="alta" class="btn btn-success mb-3">Añadir un libro</button>			
+		<div class="w-100 d-flex justify-content-between align-items-center mx-3">
+			<p class="welcome-title">Administrar libros.</p>
+			<button type="submit" name="opcion" value="alta" class="btn btn-success boton-nuevo">Añadir libro</button>			
+		</div>	
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -44,8 +54,10 @@
 									<th>Titulo</th>
 									<th>Editorial</th>
 									<th>Fecha de edición</th>
-									<th>Máximo tiempo de préstamo</th>
+									<th>Máx. prestamo</th>
 									<th>Autor</th>
+									<th>Editar</th>
+									<th>Eliminar</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -56,10 +68,10 @@
 									<td><%=lib.getTitulo() %></td>
 									<td><%=lib.getEditorial() %></td>
 									<td><%=lib.getFechaEdicion().toString() %></td>
-									<td><%=lib.getCantDiasMaxPrestamo() %></td>
+									<td><%=lib.getCantDiasMaxPrestamo() %> días</td>
 									<td><%=lib.getAutor().getNombre() + " " + lib.getAutor().getApellido() %></td>
-									<td><button type="submit" name="editar" value="<%= lib.getIdLibro()%>" class="btn btn-primary">Editar</button></td>
-									<td><button type="submit" name="eliminar" value="<%=lib.getIdLibro()%>" class="btn btn-danger">Eliminar</button></td>
+									<td><button type="submit" name="editar" value="<%= lib.getIdLibro()%>" class="boton-editar"><i class="tiny material-icons">edit</i></button></td>
+									<td><button type="submit" name="eliminar" value="<%=lib.getIdLibro()%>" class="boton-eliminar"><i class="tiny material-icons">delete</i></button></td>
 								</tr>
 								<% }%>
 							</tbody>
@@ -69,6 +81,9 @@
 			</div>
 		</div>
 	</form> 
+	<%if(mensaje != null){ %>
+		<p hidden class="mensajeInfo"><%=mensaje%></p>
+	<%} %>
 </div>
 </body>
 <script src="js/eliminarMensajes.js"></script>

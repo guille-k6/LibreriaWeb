@@ -11,7 +11,7 @@
 	<%
 	  	Socio c = (Socio)session.getAttribute("usuario");
 		if(!c.getAdmin()){
-			request.getRequestDispatcher("index.html").forward(request, response);		
+			request.getRequestDispatcher("index.jsp").forward(request, response);		
 		}
 		Libro libro = (Libro)request.getAttribute("libroBaja");
 	%>
@@ -21,32 +21,56 @@
 <%@ include file="../NavigationBar.jsp" %>
 
 <div class="container">
-	<p class="bienvenidoTitulo">Baja de un libro.</p>
-	<form action="bajaLibro" method="post" class="w-50">
+	<form action="breadcrumb" method="get">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="menuAdmin.jsp" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item" aria-current="page"><button type="submit" name="page" value="admin/ABMLibros.jsp" class="button-emula-anchor">Libros</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Baja</li>
+		  </ol>
+		</nav>
+	</form>
 	
-		<label for="id">Id del libro:</label> <br>
-		<input type="text" class="form-control" name="id" value="<%=libro.getIdLibro()%>" readonly> <br>
+	<p class="welcome-title mt-3">Dar de baja un libro</p>
+	<form action="bajaLibro" method="post" class="w-50 mt-3">
+	
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">ID</span>
+		  <input type="text" name="id" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=libro.getIdLibro()%>" readonly>
+		</div>	
+	
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">ISBN</span>
+		  <input type="text" name="isbn" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=libro.getIsbn()%>" readonly value="<%=libro.getIdLibro()%>" readonly>
+		</div>
 		
-		<label for="nombre">ISBN del libro:</label> <br>
-		<input type="text" class="form-control" name="isbn" value="<%=libro.getIsbn()%>" readonly> <br>
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+		  <input type="text" name="titulo" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=libro.getTitulo()%>" readonly>
+		</div>
 		
-		<label for="apellido">Título del libro:</label> <br>
-		<input type="text" class="form-control" name="titulo" value="<%=libro.getTitulo()%>" readonly> <br>		
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Editorial</span>
+		  <input type="text" name="editorial" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=libro.getEditorial()%>" readonly>
+		</div>
 		
-		<label for="apellido">Editorial del libro:</label> <br>
-		<input type="text" class="form-control" name="editorial" value="<%=libro.getEditorial()%>" readonly> <br>	
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Fecha edición</span>
+		  <input type="date" name="fechaEdicion" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=libro.getFechaEdicion().toString()%>" readonly>
+		</div>
 		
-		<label for="apellido">Fecha de edición del libro:</label> <br>
-		<input type="text" class="form-control" name="fechaEdicion" value="<%=libro.getFechaEdicion().toString()%>" readonly> <br>
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Máximo tiempo de préstamo (días)</span>
+		  <input type="number" name="maxDias" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=libro.getCantDiasMaxPrestamo()%>" readonly>
+		</div>	
 		
-		<label for="apellido">Días máximos permitidos para prestar del libro:</label> <br>
-		<input type="text" class="form-control" name="maxDias" value="<%=libro.getCantDiasMaxPrestamo()%>" readonly> <br>
-		
-		<label for="apellido">Autor del libro:</label> <br>
-		<input type="text" class="form-control" name="editorial" value="<%=libro.getAutor().getNombre()%> <%=libro.getAutor().getApellido()%>" readonly>
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Autor</span>
+		  <input type="text" name="autor" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=libro.getAutor().getNombre()%> <%=libro.getAutor().getApellido()%>" readonly>
+		</div>
 				
-		<button type="submit" name="opcion" value="eliminar" class="btn btn-success mt-3">Eliminar libro</button>
-        <button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>
+		<button type="submit" name="opcion" value="eliminar" class="btn btn-primary mt-2 px-4">Eliminar</button>
+        <button type="submit" name="opcion" value="cancelar" class="btn btn-outline-secondary mt-2">Cancelar</button>
 	</form> 
 </div>
 

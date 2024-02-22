@@ -67,12 +67,12 @@
     font-size: 1.4rem;
     color: rgb(59 59 59);
     font-weight: bold;
+    padding-top: 2rem;
 }
 .menu-section-container{
 	gap:32px;
 }
 .section-column{
-	margin: 0px 6px;
     display: flex;
     flex-direction: column;
 }
