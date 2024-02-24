@@ -98,17 +98,11 @@ public class PrestamoLogic {
 	 *         ejecutar un prestamo
 	 */
 	public static Optional<String> isUserCapableOfLoan(Socio socio) {
-		// TODO: Cuando creemos la entidad politicaprestamo deberiamos comparar por la
-		// maxima politicaprestamo actual
-//		if(getCantidadLibrosPrestadosBySocio(socio) < 10) {
-//			
-//		}
-//		if(getUserCuotaalDia(socio)) {
-//			
-//		}
-//		if(getUserSancionado(socio)) {
-//			
-//		}
+        SocioLogic sLogic = new SocioLogic();
+        int cantidadLibrosPrestados = sLogic.getPossibleAmountOfBooks(socio);
+		if (cantidadLibrosPrestados <= 0) {
+			return Optional.of("El socio no puede pedir prestado mas libros");
+		}
 		return Optional.empty();
 	}
 

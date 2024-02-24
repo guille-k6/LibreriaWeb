@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 import Data.DataSocio;
 import Entities.Socio;
+import Logic.PoliticaPrestamoLogic;
+import Entities.PoliticaPrestamo;
 
 public class SocioLogic {
 
@@ -36,6 +38,26 @@ public class SocioLogic {
 			}
 		}
 		return sociosFiltrados;
+	}
+
+	/**
+	 * Devuelve la cantidad de libros que un socio tiene prestados
+	 * @param socio
+	 * @return Cantidad de libros que un socio tiene prestados actualmente
+	 */
+	public int getCantidadLibrosPrestadosBySocio(Socio socio) {
+		return dataSocio.getCantidadLibrosPrestadosBySocio(socio);
+	}
+	
+	/** 
+	 * Devuelve la cantidad de libros que un socio puede pedir prestados
+	 * @param socio
+	 * @return Cantidad de libros que un socio puede pedir prestados actualmente
+	 */
+	public int getPossibleAmountOfBooks(Socio socio) {
+		PoliticaPrestamoLogic ppl = new PoliticaPrestamoLogic();
+		PoliticaPrestamo pp = ppl.getLast();
+		return pp.getCantMaxLibrosPend() - this.getCantidadLibrosPrestadosBySocio(socio);
 	}
 	/*
 	public Socio getByUser(Socio socio){

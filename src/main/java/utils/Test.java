@@ -3,6 +3,9 @@ package utils;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import Entities.Socio;
+import Logic.PrestamoLogic;
+
 public class Test {
 
 	public static void main(String[] args) {
@@ -92,10 +95,10 @@ public class Test {
 //		PrestamoLogic pl = new PrestamoLogic();
 //		pl.add(new Prestamo(new Socio(2)));
 
-		LocalDate.now();
-		Date hoy = new Date(System.currentTimeMillis());
-		System.out.println(hoy);
-		System.out.println(LocalDate.now());
+		PrestamoLogic pl = new PrestamoLogic();
+		Socio s = new Socio();
+		s.setIdSocio(1);
+		System.out.println(pl.isUserCapableOfLoan(s));
 
 	}
 
