@@ -225,6 +225,39 @@ public class DataSocio {
 
 		return returnedSocio;
 	}
+	
+	/**
+	 * Indica la cantidad de libros que tiene fecha de devolucion nula para un socio.
+	 * @param socio
+	 * @return Cantidad de libros que un socio tiene prestados actualmente.
+	 */
+	public int getCantidadLibrosPrestadosBySocio(Socio socio) {
+        int cantidad=0;
+        PreparedStatement stmt=null;
+        ResultSet rs=null;
+        try {
+            stmt=DbConnector.getInstancia().getConn().prepareStatement(
+                    "SELECT count(*) as cantidad FROM socio s inner join prestamo p on s.idsocio= p.idSocio inner join lineadeprestamo ldp on ldp.idPrestamo = p.idprestamo where ldp.fechaDevolucionReal is null and s.idsocio = ?;"
+                    );
+            stmt.setInt(1, socio.getIdSocio());
+            rs=stmt.executeQuery();
+            if(rs!=null && rs.next()) {
+                cantidad=rs.getInt("cantidad");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if(rs!=null) {rs.close();}
+                if(stmt!=null) {stmt.close();}
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return cantidad;
+    } // FIN METODO GETCANTIDADLIBROSPRESTADOSBYSOCIO
 
 	public List<Socio> getAllSociosThatMatch(String matching) {
 		PreparedStatement stmt = null;

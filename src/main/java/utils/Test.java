@@ -1,9 +1,7 @@
 package utils;
 
-import java.util.List;
-
-import Data.DataSocio;
 import Entities.Socio;
+import Logic.PrestamoLogic;
 
 public class Test {
 
@@ -94,14 +92,10 @@ public class Test {
 //		PrestamoLogic pl = new PrestamoLogic();
 //		pl.add(new Prestamo(new Socio(2)));
 
-//		LocalDate.now();
-//		Date hoy = new Date(System.currentTimeMillis());
-//		System.out.println(hoy);
-//		System.out.println(LocalDate.now());
-
-		DataSocio ds = new DataSocio();
-		List<Socio> socios = ds.getAllSociosThatMatch("juan");
-		System.out.println(socios);
+		PrestamoLogic pl = new PrestamoLogic();
+		Socio s = new Socio();
+		s.setIdSocio(1);
+		System.out.println(pl.isUserCapableOfLoan(s));
 
 	}
 

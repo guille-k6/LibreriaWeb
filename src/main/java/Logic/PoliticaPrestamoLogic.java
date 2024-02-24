@@ -26,5 +26,8 @@ public class PoliticaPrestamoLogic {
 	public void remove(PoliticaPrestamo PoliticaPrestamo) {
 		dataPoliticaPrestamo.remove(PoliticaPrestamo);
 	}
+	public PoliticaPrestamo getLast() {
+		return dataPoliticaPrestamo.getLast();
+	}
 
 }

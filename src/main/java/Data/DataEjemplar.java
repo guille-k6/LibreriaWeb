@@ -249,8 +249,10 @@ public class DataEjemplar {
 			stmt.setInt(1, idLibro);
 			stmt.setInt(2, cantidad);
 			rs = stmt.executeQuery();
-			if (rs != null && rs.next()) {
-				idEjemplares.add(rs.getInt("idejemplar"));
+			if (rs != null) {
+				while (rs.next()) {
+					idEjemplares.add(rs.getInt("idejemplar"));
+				}
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
