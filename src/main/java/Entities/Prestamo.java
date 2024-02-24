@@ -6,6 +6,8 @@ import java.util.LinkedList;
 public class Prestamo {
 	private int idPrestamo;
 	private java.sql.Date fechaPrestamo;
+	private String estado; // Pendiente - Finalizado
+
 	private LinkedList<LineaDePrestamo> lineasDePrestamo;
 	private Socio socio;
 
@@ -51,6 +53,14 @@ public class Prestamo {
 
 	public void setSocio(Socio socio) {
 		this.socio = socio;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 }

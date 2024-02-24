@@ -1,6 +1,7 @@
 package utils;
 
-import Entities.Socio;
+import java.util.List;
+
 import Logic.PrestamoLogic;
 
 public class Test {
@@ -92,10 +93,12 @@ public class Test {
 //		PrestamoLogic pl = new PrestamoLogic();
 //		pl.add(new Prestamo(new Socio(2)));
 
-		PrestamoLogic pl = new PrestamoLogic();
-		Socio s = new Socio();
-		s.setIdSocio(1);
-		System.out.println(pl.isUserCapableOfLoan(s));
+//		PrestamoLogic pl = new PrestamoLogic();
+//		Socio s = new Socio();
+//		s.setIdSocio(1);
+//		System.out.println(pl.isUserCapableOfLoan(s));
+		PrestamoLogic plog = new PrestamoLogic();
+		List<Entities.Prestamo> prestamos = plog.getAll();
 
 	}
 

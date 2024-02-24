@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import Entities.Autor;
@@ -17,7 +18,7 @@ import Logic.SocioLogic;
 
 public class DataPrestamo {
 
-	public LinkedList<Prestamo> getAll() {
+	public List<Prestamo> getAll() {
 		Statement stmt = null;
 		ResultSet rs = null;
 		LinkedList<Prestamo> prestamos = new LinkedList<>();
@@ -38,6 +39,7 @@ public class DataPrestamo {
 					idAnterior = currentId;
 					lineasDePrestamo.clear();
 					p = new Prestamo();
+					p.setEstado("Finalizado");
 					p.setIdPrestamo(currentId);
 					p.setFechaPrestamo(rs.getDate("fechaPrestamo"));
 					p.setSocio(new Socio(rs.getInt("idsocio"), rs.getString("apellido"), rs.getString("nombre"),
@@ -52,6 +54,9 @@ public class DataPrestamo {
 				LineaDePrestamo ldp = new LineaDePrestamo(rs.getInt("idlineadeprestamo"),
 						rs.getDate("fechaDevolucionTeorica"), rs.getDate("fechaDevolucionReal"),
 						rs.getString("estadoLinea"), ejemplar);
+				if (rs.getDate("fechaDevolucionReal") == null) {
+					p.setEstado("Pendiente");
+				}
 				lineasDePrestamo.add(ldp);
 			}
 			if (p != null) {

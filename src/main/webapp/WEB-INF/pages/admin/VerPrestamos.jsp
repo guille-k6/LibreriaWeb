@@ -23,10 +23,15 @@
 <%@ include file="../NavigationBar.jsp" %>
 
 <div class="container">
-	<p class="bienvenidoTitulo">Prestamos activos</p>
-	<%if(mensaje != null){ %>
-		<p class="mensajeInfo"><%=mensaje%></p>
-	<%} %>
+	<form action="headerForm" method="post">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="opcion" value="menu" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Prestamos</li>
+		  </ol>
+		</nav>
+	</form>
+	<p class="welcome-title mx-3">Administrar prestamos</p>
 	<form action="verUnPrestamo" method="get">							
 		<div class="container">
 			<div class="row">
@@ -38,6 +43,7 @@
 									<th>ID</th>
 									<th>Fecha</th>
 									<th>Socio</th>
+									<th>Estado</th>
 									<th>Ver</th>
 								</tr>
 							</thead>
@@ -47,6 +53,7 @@
 									<td><%=p.getIdPrestamo() %></td>
 									<td><%=p.getFechaPrestamo()%></td>
 									<td><%=p.getSocio().getNombre() + " " + p.getSocio().getApellido()%></td>
+									<td><%=p.getEstado()%></td>
 									<td><button type="submit" name="ver" value="<%=p.getIdPrestamo()%>" class="btn btn-primary">Detalle</button></td>
 								</tr>
 								<% }%>
@@ -57,6 +64,9 @@
 			</div>
 		</div>
 	</form> 
+	<%if(mensaje != null){ %>
+		<p class="mensajeInfo"><%=mensaje%></p>
+	<%} %>
 </div>
 </body>
 <script src="js/eliminarMensajes.js"></script>
