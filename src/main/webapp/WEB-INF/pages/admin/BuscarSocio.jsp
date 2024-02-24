@@ -7,15 +7,24 @@
 <html>
 <head>
 	<%@ include file="../HeadTags.jsp" %>
-	<title>Busque un socio</title>
+	<title>Elegir socio</title>
 	<%
 		Socio c = (Socio)session.getAttribute("usuario");
 		if(!c.getAdmin()){
 			request.getRequestDispatcher("index.html").forward(request, response);		
 		}
-	 	String mensaje = (String)request.getAttribute("estado");	 	
+	 	String mensaje = (String)request.getAttribute("mensaje");	 	
 	 	SocioLogic socioLogic = new SocioLogic();
-		List<Socio> socios = socioLogic.getAll();
+	 	String ultimaBusqueda = (String)request.getAttribute("ultimaBusqueda");
+	 	if(ultimaBusqueda == null){
+	 		ultimaBusqueda = "";
+	 	}
+	 	List<Socio> sociosBuscados = (List<Socio>)request.getAttribute("socios");
+	 	if(sociosBuscados == null || sociosBuscados.size() == 0){
+	 		sociosBuscados = socioLogic.getAll();	 		
+	 	}
+	 	
+
 	%>
 </head>
 <body>
@@ -23,11 +32,27 @@
 <%@ include file="../NavigationBar.jsp" %>
 
 <div class="container">
-	<h1 class="loginTitle">Busque un socio por su apellido.</h1>
-	<%if(mensaje != null){ %>
-		<p class="mensajeInfo"><%=mensaje%></p>
-	<%} %>	
-	<form action="BusquedaSocioForm" method="get">								
+	<form action="breadcrumb" method="get">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="menuAdmin.jsp" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Elegir socio</li>
+		  </ol>
+		</nav>
+	</form>
+
+	<div class="w-100 d-flex justify-content-between align-items-center mx-3">
+		<p class="welcome-title">Elija socio a prestar</p>
+		<form action="buscarSocio" method="get" class="d-flex" style="gap: 4px">
+			<div class="input-group mb-3">
+				<span class="input-group-text" id="inputGroup-sizing-default">Socio</span>
+				<input type="text" name="nombreSocio" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=ultimaBusqueda%>">
+				<button type="submit" class="btn btn-outline-danger" name="borrar" value="borrar" type="button" id="button-addon2">X</button>
+			</div>
+			<button type="submit" name="opcion" value="alta" class="btn btn-primary boton-nuevo" style="margin-bottom: 16px">Buscar</button>			
+		</form>
+	</div>	
+	<form action="BusquedaSocioForm" method="get" class="mt-3">								
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -39,18 +64,17 @@
 									<th>Nombre</th>
 									<th>Apellido</th>
 									<th>Telefono</th>
-									<th>Estado</th>
+									<th>Prestar</th>
 								</tr>
 							</thead>
 							<tbody>
-								<% for (Socio soc : socios) {%>
+								<% for (Socio soc : sociosBuscados) {%>
 								<tr>
 									<td><%=soc.getIdSocio() %></td>
 									<td><%=soc.getNombre() %></td>
 									<td><%=soc.getApellido() %></td>
 									<td><%=soc.getTelefono() %></td>
-									<td><%=soc.getEstadoSocio() %></td>
-									<td><button type="submit" name="elegir" <%= (soc.getEstadoSocio().equals("Sancionado")) ? "disabled" : "" %> value="<%=soc.getIdSocio()%>" class="btn btn-primary">Elegir</button></td>
+									<td><button type="submit" name="idSocio" value="<%=soc.getIdSocio()%>" class="btn btn-primary py-1">Elegir</button></td>
 								</tr>
 								<% }%>
 							</tbody>
@@ -59,7 +83,10 @@
 				</div>
 			</div>
 		</div>
-	</form> 
+	</form>
+	<%if(mensaje != null){ %>
+		<p hidden class="mensajeInfo"><%=mensaje%></p>
+	<%} %>	 
 </div>
 
 </body>

@@ -25,28 +25,15 @@ import Logic.SocioLogic;
 public class Prestamo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public Prestamo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Map<String, String> librosCantidades = new HashMap<>();
@@ -72,6 +59,12 @@ public class Prestamo extends HttpServlet {
 		String idSocioDeudor = (String) request.getParameter("socioDeudor");
 		SocioLogic soclog = new SocioLogic();
 		Socio socioDeudor = soclog.getOneById(new Socio(Integer.parseInt(idSocioDeudor)));
+		// Si entra por este if significa que no selecciono ningun libro
+		if (ejemplaresCantidadSeleccionados.size() == 0) {
+			request.setAttribute("socioDeudor", socioDeudor);
+			request.setAttribute("mensaje", "Debe seleccionar al menos un libro");
+			request.getRequestDispatcher("WEB-INF/pages/admin/EjemplaresDisponibles.jsp").forward(request, response);
+		}
 		request.setAttribute("socioDeudor", socioDeudor);
 		request.setAttribute("librosCantidad", ejemplaresCantidadSeleccionados);
 		request.getRequestDispatcher("WEB-INF/pages/admin/ConfirmarPrestamoSocio.jsp").forward(request, response);

@@ -11,10 +11,10 @@
 	<title>Confirmar prestamo</title>
 	<%
 		Socio c = (Socio)session.getAttribute("usuario");
-		Socio alquila = (Socio)request.getAttribute("socioDeudor");
 		if(!c.getAdmin()){
 			request.getRequestDispatcher("index.jsp").forward(request, response);		
 		}
+		Socio alquila = (Socio)request.getAttribute("socioDeudor");
 	 	String mensaje = (String)request.getAttribute("estado");	
 	    LinkedList<EjemplarCantidad> lib = (LinkedList<EjemplarCantidad>)request.getAttribute("librosCantidad");
 	    LocalDate currentDate = LocalDate.now();
@@ -25,22 +25,31 @@
 <%@ include file="../NavigationBar.jsp" %>
 
 	<div class="container">
-		<p class="bienvenidoTitulo">Confirmar pedido</p>
-		<%if(mensaje != null){ %>
-			<p class="mensajeInfo"><%=mensaje%></p>
-		<%} %>	
+		<form action="breadcrumb" method="get">
+			<nav aria-label="breadcrumb">
+			  <ol class="breadcrumb">
+			    <li class="breadcrumb-item"><button type="submit" name="page" value="menuAdmin.jsp" class="button-emula-anchor">Home</button></li>
+			    <li class="breadcrumb-item"><button type="submit" name="page" value="admin/BuscarSocio.jsp" class="button-emula-anchor">Elegir socio</button></li>
+			    <li class="breadcrumb-item active" aria-current="page">Confirmar</li>
+			  </ol>
+			</nav>
+		</form>
 		<form action="confirmarPrestamo" method="post">								
 			<div class="container">
 				<div class="row">
+					<div class="welcome-title mt-2">Confirmar prestamo</div>
 					<div class="col-lg-12, col-sm-12, col-12">
-						<div class="d-flex justify-content-between p-3">
-							<div>
-								<p class="fecha"><span class="badge">Fecha:</span> <%=currentDate %></p>
+						<div class="d-flex py-3" style="gap:16px">
+							<div class="input-group mb-3 w-25">
+							  <span class="input-group-text fw-semibold">Fecha</span>
+							  <div aria-label="First name" class="form-control"><%=currentDate%></div>
 							</div>
-							<div>
-								<p class="fecha"><span class="badge">Socio:</span><%=alquila.getNombre() + " " + alquila.getApellido() %></p>
+							<div class="input-group mb-3 w-25">
+							  <span class="input-group-text fw-semibold">Socio</span>
+							  <div aria-label="First name" class="form-control"><%=alquila.getNombre() + " " + alquila.getApellido()%></div>
 							</div>
 						</div>
+						<div class="libros-pedidos-title">Libros pedidos</div>
 						<div class="table-responsive">
 							<table class="table table-light table-striped table-hover">
 							<thead>
@@ -73,14 +82,17 @@
 							<input type="hidden" name="socioId" value="<%=alquila.getIdSocio()%>"/>
 						</table>
 						<div class="d-flex justify-content-end mx-3">
-							<button type="submit" name="cancelar" value="cancelar" class="btn btn-danger btn-md m-2">Cancelar</button>
-							<button type="submit" name="aceptar" value="aceptar" class="btn btn-success btn-md m-2">Confirmar pedido</button>
+							<button type="submit" name="cancelar" value="cancelar" class="btn btn-outline-secondary btn-md m-2">Cancelar</button>
+							<button type="submit" name="aceptar" value="aceptar" class="btn btn-primary btn-md m-2">Confirmar</button>
 						</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</form> 
+	<%if(mensaje != null){ %>
+		<p hidden class="mensajeInfo"><%=mensaje%></p>
+	<%} %>	
 	</div>
 </body>
 </html>

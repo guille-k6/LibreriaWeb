@@ -2,6 +2,7 @@ package Servlets;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Entities.Socio;
+import Logic.PrestamoLogic;
 import Logic.SocioLogic;
 
 /**
@@ -34,14 +36,23 @@ public class BusquedaSocioForm extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Busco el socio al que le voy a efectuar un prestamo
-		String idSocio = request.getParameter("elegir");
+		PrestamoLogic prestamoLogic = new PrestamoLogic();
+		String idSocio = request.getParameter("idSocio");
 		if (idSocio != null) {
 			SocioLogic soclog = new SocioLogic();
 			Socio socioDeudor = new Socio();
 			socioDeudor.setIdSocio(Integer.parseInt(idSocio));
 			socioDeudor = soclog.getOneById(socioDeudor);
-			request.setAttribute("socioDeudor", socioDeudor);
-			request.getRequestDispatcher("WEB-INF/pages/admin/EjemplaresDisponibles.jsp").forward(request, response);
+			Optional<String> capableOfLoan = PrestamoLogic.isUserCapableOfLoan(socioDeudor);
+			if (capableOfLoan.isEmpty()) {
+				request.setAttribute("socioDeudor", socioDeudor);
+				request.getRequestDispatcher("WEB-INF/pages/admin/EjemplaresDisponibles.jsp").forward(request,
+						response);
+			} else { // El socio no puede realizar un prestamo
+				request.setAttribute("mensaje", capableOfLoan.get());
+				request.getRequestDispatcher("WEB-INF/pages/admin/BuscarSocio.jsp").forward(request, response);
+			}
+
 		}
 	}
 

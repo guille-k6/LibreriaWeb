@@ -55,7 +55,8 @@
 }
 .logout-icon{
 	color: #FF8C00;
-    margin-left: 3rem;
+    margin-left: 1rem;
+    margin-right: 2rem;
 }
 .welcome-title{
 	margin-top: 0.5rem;
@@ -168,7 +169,11 @@
 	text-decoration: underline;
 	color: rgb(83 153 255);
 }
-
-.toast-container{
-	backgorund-color: red;
+.libros-pedidos-title{
+	width: max-content;
+	margin-top: 4px;
+	font-size: 1.5rem;
+	color: rgb(10, 10, 10);
+	border-bottom: 2px solid rgba(23, 134, 254, 1);
+	padding: 0px 2px;
 }

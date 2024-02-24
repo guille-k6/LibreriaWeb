@@ -7,13 +7,13 @@
 <html>
 <head>
 	<%@ include file="HeadTags.jsp" %>
-	<title>Menú principal</title>
+	<title>Menu principal</title>
 	<%
  	  	Socio c = (Socio)session.getAttribute("usuario");
 		if(!c.getAdmin()){
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 		}
-		String message = (String)request.getAttribute("message");
+		String mensaje = (String)request.getAttribute("mensaje");
 	%>
 </head>
 <body>
@@ -29,7 +29,7 @@
 				    <button type="submit" name="opcion" value="abmAutores" class="opcionMenu">> Administrar autores</button>
 				    <button type="submit" name="opcion" value="abmLibros" class="opcionMenu">> Administrar libros</button>
 				    <button type="submit" name="opcion" value="abmEjemplares" class="opcionMenu">> Administrar ejemplares</button>			
-				    <button type="submit" name="opcion" value="abmPoliticaPrestamos" class="opcionMenu">> Administrar política de prestamo</button>
+				    <button type="submit" name="opcion" value="abmPoliticaPrestamos" class="opcionMenu">> Administrar politica de prestamo</button>
 				</div>
 			</div>
 			<div class="col-md-4">
@@ -41,21 +41,18 @@
 			<div class="col-md-4">
 				<p class="menu-title">Administrar prestamos</p>
 				<div class="section-column">
-		    	    <button type="submit" name="opcion" value="buscarSocio" class="opcionMenu">> Buscar Socio</button>
-   					<button type="submit" name="opcion" value="verPrestamos" class="opcionMenu">> Ver prestamos</button>
+		    	    <button type="submit" name="opcion" value="buscarSocio" class="opcionMenu">> Efectuar prestamo</button>
+   					<button type="submit" name="opcion" value="verPrestamos" class="opcionMenu">> Adminitrar prestamos</button>
 				</div>
 			</div>
 		</div>
 	</form> 
+	<%if(mensaje != null){ %>
+		<p hidden class="mensajeInfo"><%=mensaje%></p>
+	<%} %>	
 </div>
 
-<%if(message != null){ %>
-<div id="toast">
-	<div id="img"></div>
-	<div id="desc"><%=message%></div>
-</div>	
-<%} %>
 
 </body>
-<%message = null; %>
+<%mensaje = null; %>
 </html>

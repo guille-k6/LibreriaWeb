@@ -9,14 +9,14 @@
 <html>
 <head>
 	<%@ include file="../HeadTags.jsp" %>
-	<title>Libros</title>
+	<title>Prestamo - Elegir libros</title>
 	<%
 		Socio c = (Socio)session.getAttribute("usuario");
-		Socio alquila = (Socio)request.getAttribute("socioDeudor");
 		if(!c.getAdmin()){
 			request.getRequestDispatcher("index.jsp").forward(request, response);		
 		}
-	 	String mensaje = (String)request.getAttribute("estado");
+		Socio alquila = (Socio)request.getAttribute("socioDeudor");
+	 	String mensaje = (String)request.getAttribute("mensaje");
 	    EjemplarLogic ejelog = new EjemplarLogic();
 	    LinkedList<EjemplarCantidad> lib = ejelog.getAmountOfLibros();		
 	%>
@@ -26,12 +26,25 @@
 <%@ include file="../NavigationBar.jsp" %>
 
 <div class="container">
-	<p class="bienvenidoTitulo">Libros disponibles</p>
-	<%if(mensaje != null){ %>
-		<p class="mensajeInfo"><%=mensaje%></p>
-	<%} %>
-	<form action="prestamo" method="post">	<!-- Cambiar form action -->			
-				
+	<form action="breadcrumb" method="get">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="menuAdmin.jsp" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="admin/BuscarSocio.jsp" class="button-emula-anchor">Elegir socio</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Elegir libros</li>
+		  </ol>
+		</nav>
+	</form>
+	
+	<form action="prestamo" method="post">
+		<div class="w-100 d-flex justify-content-between align-items-center mx-3">
+				<p class="welcome-title">Libros disponibles</p>
+				<div class="d-flex justify-content-end mx-5">
+					<button type="submit" name="pedir" class="btn btn-primary btn-md p-2">Realizar pedido</button>
+					<input type="hidden" name="socioDeudor" value="<%=alquila.getIdSocio()%>" />
+				</div>			
+		</div>	
+					
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -64,19 +77,17 @@
 									<td>
 										<input type="number" name="cantidadLibros-<%=l.getLibro().getIdLibro()%>" min="0" max="<%=l.getCantidad() %>" value="0"/>
 									</td>
-									<td>
 								</tr>
 								<% }%>
 							</tbody>
 						</table>
-						<div class="d-flex justify-content-end mx-3">
-							<button type="submit" name="pedir" class="btn btn-primary btn-md p-2">Realizar pedido</button>
-							<input type="hidden" name="socioDeudor" value="<%=alquila.getIdSocio()%>" />
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	<%if(mensaje != null){ %>
+		<p hidden class="mensajeInfo"><%=mensaje%></p>
+	<%} %>	
 	</form> 
 </div>
 </body>

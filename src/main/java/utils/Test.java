@@ -1,7 +1,9 @@
 package utils;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.List;
+
+import Data.DataSocio;
+import Entities.Socio;
 
 public class Test {
 
@@ -92,10 +94,14 @@ public class Test {
 //		PrestamoLogic pl = new PrestamoLogic();
 //		pl.add(new Prestamo(new Socio(2)));
 
-		LocalDate.now();
-		Date hoy = new Date(System.currentTimeMillis());
-		System.out.println(hoy);
-		System.out.println(LocalDate.now());
+//		LocalDate.now();
+//		Date hoy = new Date(System.currentTimeMillis());
+//		System.out.println(hoy);
+//		System.out.println(LocalDate.now());
+
+		DataSocio ds = new DataSocio();
+		List<Socio> socios = ds.getAllSociosThatMatch("juan");
+		System.out.println(socios);
 
 	}
 

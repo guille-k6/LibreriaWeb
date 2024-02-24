@@ -40,10 +40,6 @@ public class confirmarPrestamo extends HttpServlet {
 		// response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -77,7 +73,7 @@ public class confirmarPrestamo extends HttpServlet {
 		}
 		if (mensajePrestamo.isEmpty()) {
 			mensaje = plogic.generatePrestamo(socioDeudor, librosCantidades);
-			request.setAttribute("message", mensaje.get());
+			request.setAttribute("mensaje", mensaje.get());
 			request.getRequestDispatcher("WEB-INF/pages/menuAdmin.jsp").forward(request, response);
 			return;
 		}

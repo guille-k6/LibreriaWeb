@@ -4,23 +4,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import Entities.Socio;
 
 public class DataSocio {
 
-	public LinkedList<Socio> getAll(){
-		Statement stmt=null;
-		ResultSet rs=null;
-		LinkedList<Socio> socios= new LinkedList<>();
+	public LinkedList<Socio> getAll() {
+		Statement stmt = null;
+		ResultSet rs = null;
+		LinkedList<Socio> socios = new LinkedList<>();
 
 		try {
-			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select * from socio");
-			if(rs!=null) {
-				while(rs.next()) {
-					Socio s=new Socio();
+			stmt = DbConnector.getInstancia().getConn().createStatement();
+			rs = stmt.executeQuery("select * from socio");
+			if (rs != null) {
+				while (rs.next()) {
+					Socio s = new Socio();
 					s.setIdSocio(rs.getInt("idsocio"));
 					s.setNombre(rs.getString("nombre"));
 					s.setApellido(rs.getString("apellido"));
@@ -40,30 +42,30 @@ public class DataSocio {
 
 		} finally {
 			try {
-				if(rs!=null) {rs.close();}
-				if(stmt!=null) {stmt.close();}
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-
-
 		return socios;
-	} // fin metodo GetAll
+	}
 
 	public Socio getById(Socio socioToSearch) {
-		Socio s=null;
-		PreparedStatement stmt=null;
-		ResultSet rs=null;
+		Socio s = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		try {
-			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select * from socio where idsocio=?"
-					);
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("select * from socio where idsocio=?");
 			stmt.setInt(1, socioToSearch.getIdSocio());
-			rs=stmt.executeQuery();
-			if(rs!=null && rs.next()) {
-				s=new Socio();
+			rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+				s = new Socio();
 				s.setIdSocio(rs.getInt("idsocio"));
 				s.setNombre(rs.getString("nombre"));
 				s.setApellido(rs.getString("apellido"));
@@ -78,10 +80,14 @@ public class DataSocio {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			// Logger e.getMessage();
-		}finally {
+		} finally {
 			try {
-				if(rs!=null) {rs.close();}
-				if(stmt!=null) {stmt.close();}
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -92,14 +98,12 @@ public class DataSocio {
 	} // Fin Metodo GetById
 
 	public void add(Socio socio) {
-		PreparedStatement stmt= null;
-		ResultSet keyResultSet=null;
+		PreparedStatement stmt = null;
+		ResultSet keyResultSet = null;
 		try {
-			stmt=DbConnector.getInstancia().getConn().
-					prepareStatement(
-							"insert into socio(nombre, apellido, email, domicilio, telefono, estadoSocio, contrasenia, isAdmin, usuario) values(?,?,?,?,?,?,?,?,?)",
-							Statement.RETURN_GENERATED_KEYS
-							);
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+					"insert into socio(nombre, apellido, email, domicilio, telefono, estadoSocio, contrasenia, isAdmin, usuario) values(?,?,?,?,?,?,?,?,?)",
+					Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, socio.getNombre());
 			stmt.setString(2, socio.getApellido());
 			stmt.setString(3, socio.getEmail());
@@ -111,32 +115,32 @@ public class DataSocio {
 			stmt.setString(9, socio.getUsuario());
 			stmt.executeUpdate();
 
-			keyResultSet=stmt.getGeneratedKeys();
-            if(keyResultSet!=null && keyResultSet.next()){
-                socio.setIdSocio(keyResultSet.getInt(1));
-            }
-
+			keyResultSet = stmt.getGeneratedKeys();
+			if (keyResultSet != null && keyResultSet.next()) {
+				socio.setIdSocio(keyResultSet.getInt(1));
+			}
 
 		} catch (SQLException e) {
-            e.printStackTrace();
+			e.printStackTrace();
 		} finally {
-            try {
-                if(keyResultSet!=null)keyResultSet.close();
-                if(stmt!=null)stmt.close();
-                DbConnector.getInstancia().releaseConn();
-            } catch (SQLException e) {
-            	e.printStackTrace();
-            }
+			try {
+				if (keyResultSet != null)
+					keyResultSet.close();
+				if (stmt != null)
+					stmt.close();
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 	} // FIN METODO ADD
 
 	public void update(Socio socio) {
-		PreparedStatement stmt= null;
+		PreparedStatement stmt = null;
 		try {
-			stmt=DbConnector.getInstancia().getConn().
-					prepareStatement(
-							"update socio set nombre=?, apellido=?, email=?, domicilio=?, telefono=?, estadoSocio=?, contrasenia=?, isAdmin=?, usuario=? where idsocio=?");
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+					"update socio set nombre=?, apellido=?, email=?, domicilio=?, telefono=?, estadoSocio=?, contrasenia=?, isAdmin=?, usuario=? where idsocio=?");
 			stmt.setString(1, socio.getNombre());
 			stmt.setString(2, socio.getApellido());
 			stmt.setString(3, socio.getEmail());
@@ -149,50 +153,49 @@ public class DataSocio {
 			stmt.setInt(10, socio.getIdSocio());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-            e.printStackTrace();
+			e.printStackTrace();
 		} finally {
-            try {
-                if(stmt!=null)stmt.close();
-                DbConnector.getInstancia().releaseConn();
-            } catch (SQLException e) {
-            	e.printStackTrace();
-            }
+			try {
+				if (stmt != null)
+					stmt.close();
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	} // FIN METODO UPDATE
 
 	public void remove(Socio socio) {
-		PreparedStatement stmt= null;
+		PreparedStatement stmt = null;
 		try {
-			stmt=DbConnector.getInstancia().getConn().
-					prepareStatement(
-							"delete from socio where idsocio=?");
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("delete from socio where idsocio=?");
 			stmt.setInt(1, socio.getIdSocio());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-            e.printStackTrace();
+			e.printStackTrace();
 		} finally {
-            try {
-                if(stmt!=null)stmt.close();
-                DbConnector.getInstancia().releaseConn();
-            } catch (SQLException e) {
-            	e.printStackTrace();
-            }
+			try {
+				if (stmt != null)
+					stmt.close();
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-	}	// FIN METODO REMOVE
+	} // FIN METODO REMOVE
 
 	public Socio getByUser(Socio socio) {
 		Socio returnedSocio = null;
-		PreparedStatement stmt=null;
-		ResultSet rs=null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		try {
-			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select idsocio, apellido, nombre, email, domicilio, telefono, estadoSocio, contrasenia, isAdmin, usuario from socio where usuario=? and contrasenia=?"
-					);
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+					"select idsocio, apellido, nombre, email, domicilio, telefono, estadoSocio, contrasenia, isAdmin, usuario from socio where usuario=? and contrasenia=?");
 			stmt.setString(1, socio.getUsuario());
 			stmt.setString(2, socio.getContrasenia());
-			rs=stmt.executeQuery();
-			if(rs!=null && rs.next()) {
-				returnedSocio=new Socio();
+			rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+				returnedSocio = new Socio();
 				returnedSocio.setIdSocio(rs.getInt("idsocio"));
 				returnedSocio.setNombre(rs.getString("nombre"));
 				returnedSocio.setApellido(rs.getString("apellido"));
@@ -206,10 +209,14 @@ public class DataSocio {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			try {
-				if(rs!=null) {rs.close();}
-				if(stmt!=null) {stmt.close();}
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -217,6 +224,51 @@ public class DataSocio {
 		}
 
 		return returnedSocio;
+	}
+
+	public List<Socio> getAllSociosThatMatch(String matching) {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Socio> socios = new ArrayList<>();
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+					"SELECT * FROM socio WHERE nombre LIKE ? OR apellido LIKE ? OR CONCAT(nombre, ' ', apellido) LIKE ?;");
+			String likeMatcher = "%" + matching + "%";
+			stmt.setString(1, likeMatcher);
+			stmt.setString(2, likeMatcher);
+			stmt.setString(3, likeMatcher);
+			rs = stmt.executeQuery();
+			if (rs != null) {
+				while (rs.next()) {
+					Socio s = new Socio();
+					s.setIdSocio(rs.getInt("idsocio"));
+					s.setNombre(rs.getString("nombre"));
+					s.setApellido(rs.getString("apellido"));
+					s.setEmail(rs.getString("email"));
+					s.setDomicilio(rs.getString("domicilio"));
+					s.setTelefono(rs.getString("telefono"));
+					s.setUsuario(rs.getString("usuario"));
+					socios.add(s);
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return socios;
 	}
 
 }
