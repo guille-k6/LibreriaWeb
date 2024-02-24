@@ -4,7 +4,6 @@ public class LineaDePrestamo {
 	private int idLineaPrestamo;
 	private java.sql.Date fechaDevolucionTeorica;
 	private java.sql.Date fechaDevolucionReal;
-	private String estadoLinea;
 	private Ejemplar ejemplar;
 	private int idPrestamo;
 
@@ -20,7 +19,6 @@ public class LineaDePrestamo {
 		this.idLineaPrestamo = idLineaPrestamo;
 		this.fechaDevolucionReal = fechaDevolucionReal;
 		this.fechaDevolucionTeorica = fechaDevolucionTeorica;
-		this.estadoLinea = estadoLinea;
 		this.ejemplar = ejemplar;
 	}
 
@@ -46,14 +44,6 @@ public class LineaDePrestamo {
 
 	public void setFechaDevolucionReal(java.sql.Date fechaDevolucionReal) {
 		this.fechaDevolucionReal = fechaDevolucionReal;
-	}
-
-	public String getEstadoLinea() {
-		return estadoLinea;
-	}
-
-	public void setEstadoLinea(String estadoLinea) {
-		this.estadoLinea = estadoLinea;
 	}
 
 	public Ejemplar getEjemplar() {

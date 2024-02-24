@@ -7,7 +7,6 @@ public class Socio {
 	private String email;
 	private String domicilio;
 	private String telefono;
-	private String estadoSocio;
 	private String contrasenia;
 	private String usuario;
 	private boolean isAdmin;
@@ -20,24 +19,22 @@ public class Socio {
 	}
 
 	public Socio(int idSocio, String apellido, String nombre, String email, String domicilio, String telefono,
-			String estadosocio, String contrasenia, String usuario, boolean isAdmin) {
+			String contrasenia, String usuario, boolean isAdmin) {
 		this.apellido = apellido;
 		this.nombre = nombre;
 		this.domicilio = domicilio;
 		this.telefono = telefono;
-		this.estadoSocio = estadosocio;
 		this.contrasenia = contrasenia;
 		this.usuario = usuario;
 		this.isAdmin = isAdmin;
 	}
 
 	public Socio(int idSocio, String apellido, String nombre, String email, String domicilio, String telefono,
-			String estadosocio, String usuario) {
+			String usuario) {
 		this.apellido = apellido;
 		this.nombre = nombre;
 		this.domicilio = domicilio;
 		this.telefono = telefono;
-		this.estadoSocio = estadosocio;
 		this.usuario = usuario;
 	}
 
@@ -103,14 +100,6 @@ public class Socio {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
-	}
-
-	public String getEstadoSocio() {
-		return estadoSocio;
-	}
-
-	public void setEstadoSocio(String estadoSocio) {
-		this.estadoSocio = estadoSocio;
 	}
 
 	public boolean getAdmin() {

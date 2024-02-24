@@ -21,14 +21,32 @@
 <%@ include file="../NavigationBar.jsp" %>
 
 <div class="container">
-	<p class="bienvenidoTitulo">Prestamo ID: <%=prestamo.getIdPrestamo()%></p>
+	<form action="breadcrumb" method="get">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="menuAdmin.jsp" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="admin/VerPrestamos.jsp" class="button-emula-anchor">Prestamos</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Prestamo <%=prestamo.getIdPrestamo() %></li>
+		  </ol>
+		</nav>
+	</form>
 	<form action="devolverUnEjemplar" method="post">							
 		<div class="container">
+			<div class="welcome-title mt-4">Detalles del prestamo N°<%=prestamo.getIdPrestamo() %></div>
+			<div class="d-flex pt-3" style="gap:16px">
+				<div class="input-group mb-3 w-25">
+				  <span class="input-group-text fw-semibold">Fecha</span>
+				  <div aria-label="First name" class="form-control"><%=prestamo.getFechaPrestamo()%></div>
+				</div>
+				<div class="input-group mb-3 w-25">
+				  <span class="input-group-text fw-semibold">Socio</span>
+				  <div aria-label="First name" class="form-control"><%=prestamo.getSocio().getNombre() + " " + prestamo.getSocio().getApellido()%></div>
+				</div>
+			</div>
 			<div class="row">
 				<input type="hidden" name="prestamoId" value="<%=prestamo.getIdPrestamo()%>">
-				<p><%= prestamo.getSocio().getNombre() + " " + prestamo.getSocio().getApellido() %></p>
-				<p><%= prestamo.getFechaPrestamo() %></p>
 				<div class="col-lg-12, col-sm-12, col-12">
+					<div class="libros-pedidos-title mb-2">Libros pedidos</div>
 					<div class="table-responsive">
 						<table class="table table-light table-striped table-hover">
 							<thead>

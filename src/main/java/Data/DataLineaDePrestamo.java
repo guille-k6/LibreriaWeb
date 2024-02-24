@@ -37,7 +37,6 @@ public class DataLineaDePrestamo {
 					l.setIdLineaPrestamo(rs.getInt("idlineadeprestamo"));
 					l.setFechaDevolucionTeorica(rs.getDate("fechaDevolucionTeorica"));
 					l.setFechaDevolucionReal(rs.getDate("fechaDevolucionReal"));
-					l.setEstadoLinea(rs.getString("estadoLinea"));
 					// Busco el objeto ejemplar para la linea
 					int idEjemplar = rs.getInt("idEjemplar");
 					EjemplarLogic ejelog = new EjemplarLogic();
@@ -84,7 +83,6 @@ public class DataLineaDePrestamo {
 				l.setIdLineaPrestamo(rs.getInt("idlineadeprestamo"));
 				l.setFechaDevolucionTeorica(rs.getDate("fechaDevolucionTeorica"));
 				l.setFechaDevolucionReal(rs.getDate("fechaDevolucionReal"));
-				l.setEstadoLinea(rs.getString("estadoLinea"));
 				// Busco el objeto ejemplar para la linea
 				int idEjemplar = rs.getInt("idEjemplar");
 				EjemplarLogic ejelog = new EjemplarLogic();
@@ -156,13 +154,12 @@ public class DataLineaDePrestamo {
 		// SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement(
-					"insert into lineadeprestamo(fechaDevolucionTeorica, fechaDevolucionReal, estadoLinea, idPrestamo, idEjemplar) values(?,?,?,?,?)",
+					"insert into lineadeprestamo(fechaDevolucionTeorica, fechaDevolucionReal, idPrestamo, idEjemplar) values(?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 			stmt.setDate(1, l.getFechaDevolucionTeorica());
 			stmt.setDate(2, l.getFechaDevolucionReal());
-			stmt.setString(3, l.getEstadoLinea());
-			stmt.setInt(4, prestamo.getIdPrestamo());
-			stmt.setInt(5, l.getEjemplar().getIdEjemplar());
+			stmt.setInt(3, prestamo.getIdPrestamo());
+			stmt.setInt(4, l.getEjemplar().getIdEjemplar());
 			stmt.executeUpdate();
 
 			keyResultSet = stmt.getGeneratedKeys();
@@ -190,12 +187,11 @@ public class DataLineaDePrestamo {
 		PreparedStatement stmt = null;
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement(
-					"update lineadeprestamo set fechaDevolucionTeorica=?, fechaDevolucionReal=?, estadoLinea=?, idEjemplar=? where idlineadeprestamo=?");
+					"update lineadeprestamo set fechaDevolucionTeorica=?, fechaDevolucionReal=?, idEjemplar=? where idlineadeprestamo=?");
 			stmt.setString(1, linea.getFechaDevolucionTeorica().toString());
 			stmt.setString(2, linea.getFechaDevolucionReal().toString());
-			stmt.setString(3, linea.getEstadoLinea());
-			stmt.setInt(4, linea.getEjemplar().getIdEjemplar());
-			stmt.setInt(5, linea.getIdLineaPrestamo());
+			stmt.setInt(3, linea.getEjemplar().getIdEjemplar());
+			stmt.setInt(4, linea.getIdLineaPrestamo());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			LoggerError.log(e.getStackTrace(), e.getMessage());
