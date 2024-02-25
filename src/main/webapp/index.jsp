@@ -16,7 +16,7 @@
     	String mensaje = (String)request.getAttribute("loginMessage");
     %>
   </head>
-  <body>
+  <body style="display: flex; flex-direction: column; min-height: 100vh;">
 	<div class="container">	
 		<div class="row justify-content-center">
 			<div class="col-lg-4 col-xl-4">

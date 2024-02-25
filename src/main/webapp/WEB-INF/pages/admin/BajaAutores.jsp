@@ -16,7 +16,7 @@
 		Autor autor = (Autor)request.getAttribute("autorBaja");
 	%>
 </head>
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
 
 <%@ include file="../NavigationBar.jsp" %>
 

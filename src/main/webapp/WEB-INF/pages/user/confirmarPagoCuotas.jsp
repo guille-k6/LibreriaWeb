@@ -38,7 +38,7 @@
 		}
 	%>
 </head>
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
 
 <%@ include file="../NavigationBar.jsp" %>
 

@@ -3,22 +3,20 @@
 .body{
 	background-color: #f3f3f3;
 	font-family: "Manrope", sans-serif;
-	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;
-	display: flex;
+    min-height: 100vh;
+    display: flex;
     flex-direction: column;
-    min-height: 100vh; /* This ensures the body takes at least the full viewport height */
-    margin: 0;
 }
 .contenedorNavBar{
 	background-color: #1b1b1b;
 	padding: 0em 4rem;
 	color: #d0d0d0;
 	margin-bottom: 1rem;
-	box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.75);
-	-webkit-box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.75);
-	-moz-box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.5);
 }
 
 .navBarItem{
@@ -180,4 +178,15 @@
 	color: rgb(10, 10, 10);
 	border-bottom: 2px solid rgba(23, 134, 254, 1);
 	padding: 0px 2px;
+}
+footer{
+	margin-top:auto;
+	background-color: #1b1b1b;
+	color: #d0d0d0;
+	box-shadow: 0px -2px 6px 0px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px -2px 6px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px -2px 6px 0px rgba(0,0,0,0.5);
+}
+.utn-logo{
+	width: 30px;
 }
