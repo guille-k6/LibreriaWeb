@@ -19,7 +19,7 @@
 		LinkedList<String> errores = (LinkedList<String>)request.getAttribute("listaErrores");
 	%>
 </head>
-<body style="display: flex; flex-direction: column; min-height: 100vh;">
+<body style="display: flex; flex-direction: column; min-height: 100vh;"><main>
 
 <%@ include file="../NavigationBar.jsp" %>
 
@@ -80,6 +80,6 @@
 	</form> 
 </div>
 
-</body>
+</main><%@ include file="../FooterTags.jsp" %></body>
 <script src="js/eliminarErrores.js"></script>
 </html>

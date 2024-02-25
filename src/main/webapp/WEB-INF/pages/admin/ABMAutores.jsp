@@ -22,7 +22,7 @@
 	    autores = autlog.getAll();		
 	%>
 </head>
-<body style="display: flex; flex-direction: column; min-height: 100vh;">
+<body style="display: flex; flex-direction: column; min-height: 100vh;"><main>
 
 <%@ include file="../NavigationBar.jsp" %>
 
@@ -78,5 +78,5 @@
 <%} %>	
 </div>
 
-</body>
+</main><%@ include file="../FooterTags.jsp" %></body>
 </html>

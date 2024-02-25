@@ -18,7 +18,7 @@
 		libros = liblog.getAll();
 	%>
 </head>
-<body style="display: flex; flex-direction: column; min-height: 100vh;">
+<body style="display: flex; flex-direction: column; min-height: 100vh;"><main>
 
 <%@ include file="../NavigationBar.jsp" %>
 
@@ -50,6 +50,6 @@
         <button type="submit" name="opcion" value="cancelar" class="btn btn-outline-secondary mt-2">Cancelar</button>
 	</form> 
 </div>
-</body>
+</main><%@ include file="../FooterTags.jsp" %></body>
 <script src="js/eliminarErrores.js"></script>
 </html>

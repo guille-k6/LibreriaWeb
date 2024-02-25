@@ -16,8 +16,7 @@
 		String mensaje = (String)request.getAttribute("mensaje");
 	%>
 </head>
-<body style="display: flex; flex-direction: column; min-height: 100vh;">
-<main>
+<body style="display: flex; flex-direction: column; min-height: 100vh;"><main>
 <%@ include file="NavigationBar.jsp" %>
 <div class="container">
 	<p class="welcome-title mb-3">Bienvenido de nuevo, <%= c.getNombre() + " " + c.getApellido()%>.</p>
@@ -58,10 +57,6 @@
 		<p hidden class="mensajeInfo"><%=mensaje%></p>
 	<%} %>	
 </div>
-</main>
-<%@ include file="FooterTags.jsp" %>
-
-
-</body>
+</main><%@ include file="FooterTags.jsp" %></body>
 <%mensaje = null; %>
 </html>

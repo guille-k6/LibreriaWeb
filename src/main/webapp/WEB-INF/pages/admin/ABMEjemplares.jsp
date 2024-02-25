@@ -22,7 +22,7 @@
 	    ejemplares = ejelog.getAll();		
 	%>
 </head>
-<body style="display: flex; flex-direction: column; min-height: 100vh;">
+<body style="display: flex; flex-direction: column; min-height: 100vh;"><main>
 
 <%@ include file="../NavigationBar.jsp" %>
 
@@ -77,6 +77,6 @@
 		<p class="mensajeInfo"><%=mensaje%></p>
 	<%} %>	
 </div>
-</body>
+</main><%@ include file="../FooterTags.jsp" %></body>
 <script src="js/eliminarMensajes.js"></script>
 </html>
