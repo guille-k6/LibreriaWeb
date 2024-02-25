@@ -71,8 +71,6 @@ public class DataSocio {
 				s.setEmail(rs.getString("email"));
 				s.setDomicilio(rs.getString("domicilio"));
 				s.setTelefono(rs.getString("telefono"));
-				s.setContrasenia(rs.getString("contrasenia"));
-				s.setAdmin(rs.getBoolean("isAdmin"));
 				s.setUsuario(rs.getString("usuario"));
 			}
 		} catch (SQLException e) {

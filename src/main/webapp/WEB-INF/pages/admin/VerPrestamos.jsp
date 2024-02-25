@@ -54,7 +54,7 @@
 									<td><%=p.getFechaPrestamo()%></td>
 									<td><%=p.getSocio().getNombre() + " " + p.getSocio().getApellido()%></td>
 									<td><%=p.getEstado()%></td>
-									<td><button type="submit" name="ver" value="<%=p.getIdPrestamo()%>" class="btn btn-primary">Detalle</button></td>
+									<td><button type="submit" name="ver" value="<%=p.getIdPrestamo()%>" class="btn btn-primary py-1">Detalle</button></td>
 								</tr>
 								<% }%>
 							</tbody>

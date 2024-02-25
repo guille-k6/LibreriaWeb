@@ -1,7 +1,5 @@
 package utils;
 
-import java.util.List;
-
 import Logic.PrestamoLogic;
 
 public class Test {
@@ -90,15 +88,15 @@ public class Test {
 //		String asd3 = asd2.toString().replace(']', ')');
 //		System.out.println(asd3);
 
-//		PrestamoLogic pl = new PrestamoLogic();
+		PrestamoLogic pl = new PrestamoLogic();
+		var listaprestamos = pl.getAll();
+		System.out.println(listaprestamos);
 //		pl.add(new Prestamo(new Socio(2)));
 
 //		PrestamoLogic pl = new PrestamoLogic();
 //		Socio s = new Socio();
 //		s.setIdSocio(1);
 //		System.out.println(pl.isUserCapableOfLoan(s));
-		PrestamoLogic plog = new PrestamoLogic();
-		List<Entities.Prestamo> prestamos = plog.getAll();
 
 	}
 

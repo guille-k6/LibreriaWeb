@@ -23,21 +23,12 @@ import Logic.SocioLogic;
 public class confirmarPrestamo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public confirmarPrestamo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -62,8 +53,9 @@ public class confirmarPrestamo extends HttpServlet {
 		}
 		// Debería validar que el socio pueda alquilar libros de acuerdo a mi politica
 		// de prestamo
-		String socioId = request.getParameter("socioId");
-		Socio socioDeudor = soclog.getOneById(new Socio(Integer.parseInt(socioId)));
+		String socioIdString = request.getParameter("socioId");
+		int socioId = Integer.parseInt(socioIdString);
+		Socio socioDeudor = soclog.getOneById(new Socio(socioId));
 		// Valido que el socio pueda efectuar un prestamo
 		Optional<String> mensajePrestamo = PrestamoLogic.isUserCapableOfLoan(socioDeudor);
 		if (mensajePrestamo.isPresent()) {

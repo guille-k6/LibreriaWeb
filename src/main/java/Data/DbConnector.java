@@ -21,6 +21,8 @@ public class DbConnector {
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
+			System.out.println("Tuve un problema!!!");
+
 			e.printStackTrace();
 		}
 	}

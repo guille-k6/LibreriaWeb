@@ -6,6 +6,10 @@
 	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;
+	display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* This ensures the body takes at least the full viewport height */
+    margin: 0;
 }
 .contenedorNavBar{
 	background-color: #1b1b1b;

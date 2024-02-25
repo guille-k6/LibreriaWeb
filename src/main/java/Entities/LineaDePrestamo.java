@@ -15,7 +15,7 @@ public class LineaDePrestamo {
 	}
 
 	public LineaDePrestamo(int idLineaPrestamo, java.sql.Date fechaDevolucionTeorica, java.sql.Date fechaDevolucionReal,
-			String estadoLinea, Ejemplar ejemplar) {
+			Ejemplar ejemplar) {
 		this.idLineaPrestamo = idLineaPrestamo;
 		this.fechaDevolucionReal = fechaDevolucionReal;
 		this.fechaDevolucionTeorica = fechaDevolucionTeorica;
