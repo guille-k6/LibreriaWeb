@@ -32,7 +32,7 @@ public class LoggerError {
 			
 			fh.close();
 		} catch(Exception e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		}
 	}
 }

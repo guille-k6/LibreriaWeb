@@ -15,6 +15,7 @@ import Entities.LineaDePrestamo;
 import Entities.Prestamo;
 import Entities.Socio;
 import Logic.SocioLogic;
+import utils.LoggerError;
 
 public class DataPrestamo {
 
@@ -65,13 +66,15 @@ public class DataPrestamo {
 			return prestamos;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+			;
 		} finally {
 			if (stmt != null)
 				try {
 					stmt.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					LoggerError.log(e.getStackTrace(), e.getMessage());
+					;
 				}
 			DbConnector.getInstancia().releaseConn();
 		}
@@ -100,7 +103,8 @@ public class DataPrestamo {
 				p.setSocio(elSocio);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+			;
 		} finally {
 			try {
 				if (rs != null) {
@@ -111,7 +115,8 @@ public class DataPrestamo {
 				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+				;
 			}
 		}
 
@@ -134,7 +139,8 @@ public class DataPrestamo {
 				generatedId = Optional.of(keyResultSet.getInt(1));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+			;
 		} finally {
 			try {
 				if (keyResultSet != null)
@@ -143,7 +149,8 @@ public class DataPrestamo {
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+				;
 			}
 		}
 
@@ -161,14 +168,16 @@ public class DataPrestamo {
 			stmt.setInt(3, prestamo.getIdPrestamo());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+			;
 		} finally {
 			try {
 				if (stmt != null)
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+				;
 			}
 		}
 	} // FIN METODO UPDATE
@@ -180,14 +189,16 @@ public class DataPrestamo {
 			stmt.setInt(1, prestamo.getIdPrestamo());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+			;
 		} finally {
 			try {
 				if (stmt != null)
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+				;
 			}
 		}
 	}
@@ -207,14 +218,16 @@ public class DataPrestamo {
 				librosPrestados++;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+			;
 		} finally {
 			try {
 				if (stmt != null)
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+				;
 			}
 		}
 		return librosPrestados;

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import utils.LoggerError;
+
 public class DbConnector {
 
 	private static DbConnector instancia;
@@ -21,9 +23,7 @@ public class DbConnector {
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
-			System.out.println("Tuve un problema!!!");
-
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		}
 	}
 
@@ -41,7 +41,7 @@ public class DbConnector {
 				conectados = 0;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		}
 		conectados++;
 		return conn;
@@ -54,7 +54,7 @@ public class DbConnector {
 				conn.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		}
 	}
 }

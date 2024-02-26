@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 
 import Entities.PoliticaPrestamo;
+import utils.LoggerError;
 
 public class DataPoliticaPrestamo {
 
@@ -29,8 +30,7 @@ public class DataPoliticaPrestamo {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (rs != null) {
@@ -41,12 +41,12 @@ public class DataPoliticaPrestamo {
 				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 
 		return Politicas;
-	} // fin metodo GetAll
+	}
 
 	public PoliticaPrestamo getById(PoliticaPrestamo PoliticaPrestamoToSearch) {
 		PoliticaPrestamo p = null;
@@ -64,7 +64,7 @@ public class DataPoliticaPrestamo {
 				p.setCantMaxLibrosPend(rs.getInt("cantMaxLibrosPend"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (rs != null) {
@@ -75,7 +75,7 @@ public class DataPoliticaPrestamo {
 				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 
@@ -99,7 +99,7 @@ public class DataPoliticaPrestamo {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (keyResultSet != null)
@@ -108,7 +108,7 @@ public class DataPoliticaPrestamo {
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 
@@ -124,14 +124,14 @@ public class DataPoliticaPrestamo {
 			stmt.setInt(3, PoliticaPrestamo.getIdPoliticaPrestamo());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (stmt != null)
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 	} // FIN METODO UPDATE
@@ -144,14 +144,14 @@ public class DataPoliticaPrestamo {
 			stmt.setInt(1, PoliticaPrestamo.getIdPoliticaPrestamo());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (stmt != null)
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 	} // FIN METODO REMOVE
@@ -173,7 +173,7 @@ public class DataPoliticaPrestamo {
 				p.setCantMaxLibrosPend(rs.getInt("cantMaxLibrosPend"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (rs != null) {
@@ -184,7 +184,7 @@ public class DataPoliticaPrestamo {
 				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 

@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import Entities.Socio;
+import utils.LoggerError;
 
 public class DataSocio {
 
@@ -37,8 +38,7 @@ public class DataSocio {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (rs != null) {
@@ -49,7 +49,7 @@ public class DataSocio {
 				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 		return socios;
@@ -74,7 +74,7 @@ public class DataSocio {
 				s.setUsuario(rs.getString("usuario"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 			// Logger e.getMessage();
 		} finally {
 			try {
@@ -86,7 +86,7 @@ public class DataSocio {
 				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 
@@ -116,7 +116,7 @@ public class DataSocio {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (keyResultSet != null)
@@ -125,7 +125,7 @@ public class DataSocio {
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 
@@ -147,14 +147,14 @@ public class DataSocio {
 			stmt.setInt(9, socio.getIdSocio());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (stmt != null)
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 	} // FIN METODO UPDATE
@@ -166,14 +166,14 @@ public class DataSocio {
 			stmt.setInt(1, socio.getIdSocio());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (stmt != null)
 					stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 	} // FIN METODO REMOVE
@@ -201,7 +201,7 @@ public class DataSocio {
 				returnedSocio.setUsuario(rs.getString("usuario"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (rs != null) {
@@ -212,7 +212,7 @@ public class DataSocio {
 				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 
@@ -239,7 +239,7 @@ public class DataSocio {
 				cantidad = rs.getInt("cantidad");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
 			try {
 				if (rs != null) {
@@ -250,7 +250,7 @@ public class DataSocio {
 				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 
@@ -284,7 +284,7 @@ public class DataSocio {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 
 		} finally {
 			try {
@@ -296,7 +296,7 @@ public class DataSocio {
 				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 		return socios;

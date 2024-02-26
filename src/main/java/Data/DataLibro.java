@@ -9,20 +9,20 @@ import java.util.LinkedList;
 import Entities.Autor;
 import Entities.Libro;
 import Logic.AutorLogic;
+import utils.LoggerError;
 
 public class DataLibro {
 
-	public LinkedList<Libro> getAll(){
-		Statement stmt=null;
-		ResultSet rs=null;
-		LinkedList<Libro> libros= new LinkedList<>();
-
+	public LinkedList<Libro> getAll() {
+		Statement stmt = null;
+		ResultSet rs = null;
+		LinkedList<Libro> libros = new LinkedList<>();
 		try {
-			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select * from libro");
-			if(rs!=null) {
-				while(rs.next()) {
-					Libro l=new Libro();
+			stmt = DbConnector.getInstancia().getConn().createStatement();
+			rs = stmt.executeQuery("select * from libro");
+			if (rs != null) {
+				while (rs.next()) {
+					Libro l = new Libro();
 					l.setIdLibro(rs.getInt("idlibro"));
 					l.setIsbn(rs.getString("isbn"));
 					l.setTitulo(rs.getString("titulo"));
@@ -42,34 +42,35 @@ public class DataLibro {
 					libros.add(l);
 				}
 			}
-
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 
 		} finally {
 			try {
-				if(rs!=null) {rs.close();}
-				if(stmt!=null) {stmt.close();}
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 		return libros;
 	} // fin metodo GetAll
 
 	public Libro getById(Libro libroToSearch) {
-		Libro l=null;
-		PreparedStatement stmt=null;
-		ResultSet rs=null;
+		Libro l = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		try {
-			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select * from libro where idlibro=?"
-					);
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("select * from libro where idlibro=?");
 			stmt.setInt(1, libroToSearch.getIdLibro());
-			rs=stmt.executeQuery();
-			if(rs!=null && rs.next()) {
-				l=new Libro();
+			rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+				l = new Libro();
 				l.setIdLibro(rs.getInt("idlibro"));
 				l.setIsbn(rs.getString("isbn"));
 				l.setTitulo(rs.getString("titulo"));
@@ -86,14 +87,18 @@ public class DataLibro {
 				l.setAutor(elAutor);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+		} finally {
 			try {
-				if(rs!=null) {rs.close();}
-				if(stmt!=null) {stmt.close();}
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
 
@@ -101,15 +106,13 @@ public class DataLibro {
 	} // Fin Metodo GetById
 
 	public void add(Libro libro) {
-		PreparedStatement stmt= null;
-		ResultSet keyResultSet=null;
-		//SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+		PreparedStatement stmt = null;
+		ResultSet keyResultSet = null;
+		// SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			stmt=DbConnector.getInstancia().getConn().
-					prepareStatement(
-							"insert into libro(isbn, titulo, editorial, fechaEdicion, cantDiasMaxPrestamo, idAutor) values(?,?,?,?,?,?)",
-							Statement.RETURN_GENERATED_KEYS
-							);
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+					"insert into libro(isbn, titulo, editorial, fechaEdicion, cantDiasMaxPrestamo, idAutor) values(?,?,?,?,?,?)",
+					Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, libro.getIsbn());
 			stmt.setString(2, libro.getTitulo());
 			stmt.setString(3, libro.getEditorial());
@@ -118,32 +121,32 @@ public class DataLibro {
 			stmt.setInt(6, libro.getAutor().getIdAutor());
 			stmt.executeUpdate();
 
-			keyResultSet=stmt.getGeneratedKeys();
-            if(keyResultSet!=null && keyResultSet.next()){
-                libro.setIdLibro(keyResultSet.getInt(1));
-            }
-
+			keyResultSet = stmt.getGeneratedKeys();
+			if (keyResultSet != null && keyResultSet.next()) {
+				libro.setIdLibro(keyResultSet.getInt(1));
+			}
 
 		} catch (SQLException e) {
-            e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
-            try {
-                if(keyResultSet!=null)keyResultSet.close();
-                if(stmt!=null)stmt.close();
-                DbConnector.getInstancia().releaseConn();
-            } catch (SQLException e) {
-            	e.printStackTrace();
-            }
+			try {
+				if (keyResultSet != null)
+					keyResultSet.close();
+				if (stmt != null)
+					stmt.close();
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+			}
 		}
 
 	} // FIN METODO ADD
 
 	public void update(Libro libro) {
-		PreparedStatement stmt= null;
+		PreparedStatement stmt = null;
 		try {
-			stmt=DbConnector.getInstancia().getConn().
-					prepareStatement(
-							"update libro set isbn=?, titulo=?, editorial=?, fechaEdicion=?, cantDiasMaxPrestamo=?, idAutor=? where idlibro=?");
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+					"update libro set isbn=?, titulo=?, editorial=?, fechaEdicion=?, cantDiasMaxPrestamo=?, idAutor=? where idlibro=?");
 			stmt.setString(1, libro.getIsbn());
 			stmt.setString(2, libro.getTitulo());
 			stmt.setString(3, libro.getEditorial());
@@ -153,36 +156,35 @@ public class DataLibro {
 			stmt.setInt(7, libro.getIdLibro());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-            e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
-            try {
-                if(stmt!=null)stmt.close();
-                DbConnector.getInstancia().releaseConn();
-            } catch (SQLException e) {
-            	e.printStackTrace();
-            }
+			try {
+				if (stmt != null)
+					stmt.close();
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+			}
 		}
 	} // FIN METODO UPDATE
 
 	public void remove(Libro libro) {
-		PreparedStatement stmt= null;
+		PreparedStatement stmt = null;
 		try {
-			stmt=DbConnector.getInstancia().getConn().
-					prepareStatement(
-							"delete from libro where idlibro=?");
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("delete from libro where idlibro=?");
 			stmt.setInt(1, libro.getIdLibro());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-            e.printStackTrace();
+			LoggerError.log(e.getStackTrace(), e.getMessage());
 		} finally {
-            try {
-                if(stmt!=null)stmt.close();
-                DbConnector.getInstancia().releaseConn();
-            } catch (SQLException e) {
-            	e.printStackTrace();
-            }
+			try {
+				if (stmt != null)
+					stmt.close();
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+			}
 		}
-	}	// FIN METODO REMOVE
-
+	} // FIN METODO REMOVE
 
 }
