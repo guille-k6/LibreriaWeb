@@ -1,6 +1,6 @@
 package utils;
 
-import Logic.PrestamoLogic;
+import java.util.List;
 
 public class Test {
 
@@ -69,16 +69,14 @@ public class Test {
 		 * System.out.println("Se inserto una linea de prestamo...."); }catch(Exception
 		 * e) { System.out.println(e.getMessage()); }
 		 */
-//		try {
-//			DataEjemplar de = new DataEjemplar();
-//			ArrayList<Integer> listorti = new ArrayList<Integer>();
-//			listorti.add(4);
-//			listorti.add(6);
-//
-//			System.out.println(de.updateEjemplaresToAlquilados(listorti));
-//		} catch (Exception e) {
-//			LoggerError.log(e.getStackTrace(), e.getMessage());
-//		}
+		try {
+//			int b = 0;
+//			double result = 3 / b;
+			List<String> logsList = LoggerError.readLog();
+			System.out.println(logsList);
+		} catch (Exception e) {
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+		}
 
 //		ArrayList<Integer> asd = new ArrayList<>();
 //		asd.add(1);
@@ -88,9 +86,9 @@ public class Test {
 //		String asd3 = asd2.toString().replace(']', ')');
 //		System.out.println(asd3);
 
-		PrestamoLogic pl = new PrestamoLogic();
-		var listaprestamos = pl.getAll();
-		System.out.println(listaprestamos);
+//		PrestamoLogic pl = new PrestamoLogic();
+//		var listaprestamos = pl.getAll();
+//		System.out.println(listaprestamos);
 //		pl.add(new Prestamo(new Socio(2)));
 
 //		PrestamoLogic pl = new PrestamoLogic();

@@ -1,0 +1,6 @@
+feb. 25, 2024 11:34:46 P. M. utils.LoggerError log
+SEVERE:  Stack: [utils.Test.main(Test.java:72)] // Message: / by zero @
+feb. 25, 2024 11:34:48 P. M. utils.LoggerError log
+SEVERE:  Stack: [utils.Test.main(Test.java:72)] // Message: / by zero @
+feb. 25, 2024 11:34:49 P. M. utils.LoggerError log
+SEVERE:  Stack: [utils.Test.main(Test.java:72)] // Message: / by zero @
