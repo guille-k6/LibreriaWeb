@@ -190,3 +190,14 @@ footer{
 .utn-logo{
 	width: 30px;
 }
+.log-container{
+	padding: 12px;
+	background-color: #ebf3f8;
+	border-radius: 8px;
+	margin-bottom: 1rem;
+}
+.log-body{
+	font-family: "Lucida Console", "Courier New", monospace;
+	padding: 0px 8px;
+	line-height: normal;
+}

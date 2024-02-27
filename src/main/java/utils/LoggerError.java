@@ -40,8 +40,9 @@ public class LoggerError {
 		}
 	}
 
-	public static List<String> readLog() {
+	public static ArrayList<LibraryLog> readLog() {
 		List<String> logsList = new ArrayList<>();
+		ArrayList<LibraryLog> libraryLogs = new ArrayList<>();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(logFilePath));
 			StringBuffer content = new StringBuffer();
@@ -52,11 +53,16 @@ public class LoggerError {
 			}
 			String[] logs = content.toString().split(" @");
 			br.close();
-
 			logsList = Arrays.asList(logs);
+			for (String log : logsList) {
+				String[] fechaError = log.split("utils.LoggerError log");
+				String[] stackMensaje = fechaError[1].split(" // ");
+				LibraryLog lLog = new LibraryLog(fechaError[0], stackMensaje[0], stackMensaje[1]);
+				libraryLogs.add(lLog);
+			}
 		} catch (Exception e) {
 			LoggerError.log(e.getStackTrace(), e.getMessage());
 		}
-		return logsList;
+		return libraryLogs;
 	}
 }

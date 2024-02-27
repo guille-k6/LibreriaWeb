@@ -1,7 +1,5 @@
 package utils;
 
-import java.util.List;
-
 public class Test {
 
 	public static void main(String[] args) {
@@ -69,14 +67,14 @@ public class Test {
 		 * System.out.println("Se inserto una linea de prestamo...."); }catch(Exception
 		 * e) { System.out.println(e.getMessage()); }
 		 */
-		try {
-//			int b = 0;
-//			double result = 3 / b;
-			List<String> logsList = LoggerError.readLog();
-			System.out.println(logsList);
-		} catch (Exception e) {
-			LoggerError.log(e.getStackTrace(), e.getMessage());
-		}
+//		try {
+////			int b = 0;
+////			double result = 3 / b;
+//			// List<String> logsList = LoggerError.readLog();
+//			System.out.println(logsList);
+//		} catch (Exception e) {
+//			LoggerError.log(e.getStackTrace(), e.getMessage());
+//		}
 
 //		ArrayList<Integer> asd = new ArrayList<>();
 //		asd.add(1);

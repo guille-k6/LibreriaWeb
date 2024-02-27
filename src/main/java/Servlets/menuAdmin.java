@@ -53,6 +53,9 @@ public class menuAdmin extends HttpServlet {
 		case ("verPrestamos"):
 			request.getRequestDispatcher("WEB-INF/pages/admin/VerPrestamos.jsp").forward(request, response);
 			break;
+		case ("verErrores"):
+			request.getRequestDispatcher("WEB-INF/pages/admin/LogErrores.jsp").forward(request, response);
+			break;
 		}
 
 	}
