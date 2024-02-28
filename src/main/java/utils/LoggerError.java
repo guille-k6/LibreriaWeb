@@ -25,7 +25,6 @@ public class LoggerError {
 	 */
 	public static void log(StackTraceElement[] stackTrace, String message) {
 		Logger logger = Logger.getLogger("ErrorLogger");
-
 		try {
 			FileHandler fh = new FileHandler(logFilePath, true);
 			logger.addHandler(fh);
@@ -41,6 +40,7 @@ public class LoggerError {
 	}
 
 	public static ArrayList<LibraryLog> readLog() {
+		String dir = System.getProperty("user.dir"); // Me da el escritorio no se por que jkasjkas
 		List<String> logsList = new ArrayList<>();
 		ArrayList<LibraryLog> libraryLogs = new ArrayList<>();
 		try {

@@ -10,7 +10,7 @@
 	<%
 		Socio c = (Socio)session.getAttribute("usuario");
 		if(!c.getAdmin()){
-			request.getRequestDispatcher("index.html").forward(request, response);		
+			request.getRequestDispatcher("index.jsp").forward(request, response);		
 		}	
 		Socio socioACobrar = (Socio)request.getAttribute("socioACobrar");
 		CuotasLogic cuolog = new CuotasLogic();
@@ -25,12 +25,17 @@
 <%@ include file="../NavigationBar.jsp" %>
 
 <div class="container">
-	<p class="bienvenidoTitulo">Cobrar cuota a un socio.</p>
-	<%if(!(error == null)){%>
-	<p class="errorMensaje"><%=error %></p>
-	<%};%>
-
-	<form action="cobrarCuotasForm" method="post" class="w-50">							
+	<form action="breadcrumb" method="get">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="menuAdmin.jsp" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="admin/UsuariosAConfirmar.jsp" class="button-emula-anchor">Socio</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Elegir cuotas</li>
+		  </ol>
+		</nav>
+	</form>
+	<p class="welcome-title mx-3">Elegir cuotas a pagar</p>
+	<form action="cobrarCuotasForm" method="post" class="">							
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -42,7 +47,7 @@
 									<th>Fecha hasta</th>
 									<th>Precio</th>
 									<th>Estado</th>
-									<th>Cobrar?</th>									
+									<th>Cobrar</th>									
 								</tr>
 							</thead>
 							<tbody>
@@ -52,19 +57,24 @@
 									<td><%=cuo.getFechaHasta().toString() %></td>
 									<td><%=valorCuotas%></td>
 									<td><%=cuo.getEstado() %></td>
-									<td><input type="checkbox" name="idcheck" value="<%=cuo.getIdCuota() %>"></td>
-									<td><input type="checkbox" name="idcheckSocio" value="<%=cuo.getSocio().getIdSocio()%>" checked hidden></td>
+									<td><input class="form-check-input mt-0" type="checkbox" name="idcheck" value="<%=cuo.getIdCuota()%>"></td>
 								</tr>
 								<% }%>
 							</tbody>
+							
 						</table>
-								<button type="submit" name="opcion" value="cobrar" class="btn btn-success mt-3">Cobrar seleccionadas</button>	
-								<button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>	
+						<div class="d-flex justify-content-start">					
+							<button type="submit" name="opcion" value="cobrar" class="btn btn-primary btn-md m-2">Cobrar seleccionadas</button>	
+							<button type="submit" name="opcion" value="cancelar" class="btn btn-outline-secondary btn-md m-2">Cancelar</button>	
+							<input type="checkbox" name="idcheckSocio" value="<%=socioACobrar.getIdSocio()%>" checked hidden>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+	<%if(!(error == null)){%>
+	<p class="errorMensaje"><%=error %></p>
+	<%};%>
 	</form>  
 </div>
 

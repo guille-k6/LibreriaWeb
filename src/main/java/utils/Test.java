@@ -93,7 +93,8 @@ public class Test {
 //		Socio s = new Socio();
 //		s.setIdSocio(1);
 //		System.out.println(pl.isUserCapableOfLoan(s));
-
+		System.out.println(PasswordEncrypter.sha256("nado"));
+		int a = 1;
 	}
 
 }
