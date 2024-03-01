@@ -26,22 +26,21 @@ public class DataEjemplar {
 
 		try {
 			stmt = DbConnector.getInstancia().getConn().createStatement();
-			rs = stmt.executeQuery("select * from ejemplar");
+			rs = stmt.executeQuery(
+					"SELECT e.idejemplar, e.disponible, e.idLibro, e.idejemplar, l.titulo, l.idautor, a.nombre, a.apellido FROM ejemplar e INNER JOIN libro l ON e.idLibro = l.idlibro INNER JOIN autor a ON a.idautor = l.idAutor");
 			if (rs != null) {
 				while (rs.next()) {
+					Autor a = new Autor();
+					a.setNombre(rs.getString("a.nombre"));
+					a.setApellido(rs.getString("a.apellido"));
+					Libro l = new Libro();
+					l.setIdLibro(rs.getInt("e.idLibro"));
+					l.setTitulo(rs.getString("l.titulo"));
+					l.setAutor(a);
 					Ejemplar e = new Ejemplar();
-					e.setIdEjemplar(rs.getInt("idejemplar"));
-					e.setDisponible(rs.getBoolean("disponible"));
-
-					// Busco el objeto libro para el ejemplar
-					int idLibro = rs.getInt("idLibro");
-					LibroLogic liblog = new LibroLogic();
-					Libro elLibro = new Libro();
-					elLibro.setIdLibro(idLibro);
-					elLibro = liblog.getOneById(elLibro);
-					// Le agrego el libro
-					e.setLibro(elLibro);
-					// Añado el ejemplar con libro incluido a la LinkedList.
+					e.setIdEjemplar(rs.getInt("e.idejemplar"));
+					e.setDisponible(rs.getBoolean("e.disponible"));
+					e.setLibro(l);
 					ejemplares.add(e);
 				}
 			}
@@ -139,7 +138,7 @@ public class DataEjemplar {
 
 	}
 
-	public void update(Ejemplar ejemplar) {
+	public void update(Ejemplar ejemplar) throws Exception {
 		PreparedStatement stmt = null;
 		try {
 			stmt = DbConnector.getInstancia().getConn()
@@ -161,7 +160,7 @@ public class DataEjemplar {
 		}
 	} // FIN METODO UPDATE
 
-	public void remove(Ejemplar ejemplar) {
+	public void remove(Ejemplar ejemplar) throws Exception {
 		PreparedStatement stmt = null;
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement("delete from ejemplar where idejemplar=?");
@@ -169,6 +168,7 @@ public class DataEjemplar {
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			LoggerError.log(e.getStackTrace(), e.getMessage());
+			throw new Exception(e);
 		} finally {
 			try {
 				if (stmt != null)
@@ -176,6 +176,7 @@ public class DataEjemplar {
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
 				LoggerError.log(e.getStackTrace(), e.getMessage());
+				throw new Exception(e);
 			}
 		}
 	} // FIN METODO REMOVE
@@ -309,5 +310,54 @@ public class DataEjemplar {
 			}
 		}
 		return true;
+	}
+
+	public List<Ejemplar> getAllEjemplaresThatMatch(String matching) {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Ejemplar> ejemplares = new ArrayList<>();
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+					"SELECT e.idejemplar, e.disponible, e.idLibro, e.idejemplar, l.titulo, l.idautor, a.nombre, a.apellido FROM ejemplar e INNER JOIN libro l ON e.idLibro = l.idlibro INNER JOIN autor a ON a.idautor = l.idAutor WHERE l.titulo LIKE ? OR a.nombre LIKE ? OR a.apellido LIKE ? OR CONCAT(a.nombre, ' ', a.apellido) LIKE ?;");
+			String likeMatcher = "%" + matching + "%";
+			stmt.setString(1, likeMatcher);
+			stmt.setString(2, likeMatcher);
+			stmt.setString(3, likeMatcher);
+			stmt.setString(4, likeMatcher);
+			rs = stmt.executeQuery();
+			if (rs != null) {
+				while (rs.next()) {
+					Autor a = new Autor();
+					a.setNombre(rs.getString("a.nombre"));
+					a.setApellido(rs.getString("a.apellido"));
+					Libro l = new Libro();
+					l.setIdLibro(rs.getInt("e.idLibro"));
+					l.setTitulo(rs.getString("l.titulo"));
+					l.setAutor(a);
+					Ejemplar e = new Ejemplar();
+					e.setIdEjemplar(rs.getInt("e.idejemplar"));
+					e.setDisponible(rs.getBoolean("e.disponible"));
+					e.setLibro(l);
+					ejemplares.add(e);
+				}
+			}
+
+		} catch (SQLException e) {
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+			}
+		}
+		return ejemplares;
 	}
 }

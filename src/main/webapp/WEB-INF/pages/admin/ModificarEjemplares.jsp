@@ -34,7 +34,7 @@
 		</nav>
 	</form>
 	
-	<p class="welcome-title mt-3">Modificar un autor</p>
+	<p class="welcome-title mt-3">Modificar un ejemplar</p>
 	
 	<form action="modificarEjemplar" method="post" class="w-50 mt-3">
 	

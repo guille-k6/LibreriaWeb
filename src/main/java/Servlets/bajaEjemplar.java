@@ -18,49 +18,32 @@ import Logic.EjemplarLogic;
 public class bajaEjemplar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public bajaEjemplar() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Traigo mi ID de Libro y la opci�n elegida.
-
 		String opc = request.getParameter("opcion");
-		String elId = request.getParameter("id");
-		int id = Integer.parseInt(elId);
-		Ejemplar ejemplar = new Ejemplar();
-		ejemplar.setIdEjemplar(id);
-
-		EjemplarLogic ejelog = new EjemplarLogic();
-		// Cargo la opcion y confirmo si lo quiere eliminar o no.
 		if (opc.equals("eliminar")) {
-
-			ejelog.remove(ejemplar);
-			String estado = "Baja existosa";
-			request.setAttribute("estado", estado);
-			request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
-
+			String elId = request.getParameter("id");
+			int id = Integer.parseInt(elId);
+			Ejemplar ejemplar = new Ejemplar(id);
+			EjemplarLogic ejelog = new EjemplarLogic();
+			try {
+				ejelog.remove(ejemplar);
+				request.setAttribute("mensaje", "Baja exitosa");
+				request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
+			} catch (Exception e) {
+				request.setAttribute("mensaje", "No se pudo eliminar ejemplar con id: " + ejemplar.getIdEjemplar());
+				request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
+			}
 		} else if (opc.equals("cancelar")) {
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
 		}

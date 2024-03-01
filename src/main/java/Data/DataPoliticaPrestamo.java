@@ -18,7 +18,7 @@ public class DataPoliticaPrestamo {
 
 		try {
 			stmt = DbConnector.getInstancia().getConn().createStatement();
-			rs = stmt.executeQuery("select * from politicaprestamo");
+			rs = stmt.executeQuery("select * from politicaprestamo order by fechaDesde desc");
 			if (rs != null) {
 				while (rs.next()) {
 					PoliticaPrestamo p = new PoliticaPrestamo();

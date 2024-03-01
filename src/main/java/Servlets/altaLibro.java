@@ -1,9 +1,9 @@
 package Servlets;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,10 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import Entities.Autor;
 import Entities.Libro;
-import Entities.Socio;
-import Logic.AutorLogic;
 import Logic.LibroLogic;
-import utils.LoggerError;
 
 /**
  * Servlet implementation class altaLibro
@@ -25,18 +22,10 @@ import utils.LoggerError;
 public class altaLibro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public altaLibro() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -44,75 +33,52 @@ public class altaLibro extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Socio socio = new Socio();
-		socio = (Socio) request.getSession().getAttribute("usuario");
+		LibroLogic liblog = new LibroLogic();
 		String opc = request.getParameter("opcion");
-
-		switch (opc) {
-		case ("crearLibro"):
-			// Recupero los datos del libro del form.
+		if (opc.equals("crearLibro")) {
 			String isbn = request.getParameter("isbn");
 			String titulo = request.getParameter("titulo");
 			String editorial = request.getParameter("editorial");
 			String fechaEdicion = request.getParameter("fechaEdicion");
 			String maxDias = request.getParameter("maxDias");
 			String idAutor = request.getParameter("autor");
-			// Recupero el autor.
-			AutorLogic autlog = new AutorLogic();
-			Autor autor = new Autor();
-			autor.setIdAutor(Integer.parseInt(idAutor));
-			autor = autlog.getOneById(autor);
-			// Creo un libro con los datos del form.
-			LibroLogic liblog = new LibroLogic();
 			Libro libro = new Libro();
 			libro.setIsbn(isbn);
 			libro.setTitulo(titulo);
 			libro.setEditorial(editorial);
-			// Parseo la fecha de edicicon como Date
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			// se usa java.util.date porque el parse es exclusivo de este pero luego se
-			// transfarma de util.date a sql.date
-			java.util.Date parsed = null;
+			libro.setAutor(new Autor(Integer.parseInt(idAutor)));
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			try {
-				parsed = sdf.parse(fechaEdicion);
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				java.util.Date parsedDate = dateFormat.parse(fechaEdicion);
+				java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
+				libro.setFechaEdicion(sqlDate);
+			} catch (Exception e) {
+				request.setAttribute("listaErrores",
+						new LinkedList<String>(List.of("Fecha tiene un formato no valido")));
+				request.getRequestDispatcher("WEB-INF/pages/admin/AltaLibros.jsp").forward(request, response);
 			}
-			java.sql.Date data = new java.sql.Date(parsed.getTime());
-			libro.setFechaEdicion(data);
-			// Parse int no funciona con un string vacio y un int no puede ser nulo, por
-			// default es 0 asi que le asigno 0
-			// if(maxDias == "") {maxDias="0";}
-			// libro.setCantDiasMaxPrestamo(Integer.parseInt(maxDias));
-			libro.setAutor(autor);
+
 			LinkedList<String> errores = liblog.validar(libro, maxDias);
-			if (!errores.isEmpty()) { // HAY ERRORES
+			if (!errores.isEmpty()) { // Hay errores
 				request.setAttribute("listaErrores", errores);
 				request.getRequestDispatcher("WEB-INF/pages/admin/AltaLibros.jsp").forward(request, response);
 				return;
 			}
-
-			try {
-				libro.setCantDiasMaxPrestamo(Integer.parseInt(maxDias));
+			libro.setCantDiasMaxPrestamo(Integer.parseInt(maxDias));
+			try { // Si esta todo bien, ejecuto el update
 				liblog.add(libro);
-				String estado = "Alta existosa";
-				request.setAttribute("estado", estado);
+				request.setAttribute("mensaje", "Alta existosa");
+				request.getRequestDispatcher("WEB-INF/pages/admin/ABMLibros.jsp").forward(request, response);
 			} catch (Exception e) {
-				LoggerError.log(e.getStackTrace(), e.getMessage());
+				request.setAttribute("mensaje", "Error al dar de alta el Libro");
+				request.getRequestDispatcher("WEB-INF/pages/admin/ABMLibros.jsp").forward(request, response);
 			}
+		} else if (opc.equals("cancelar")) {
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMLibros.jsp").forward(request, response);
-			break;
-		case ("cancelar"):
-			request.getRequestDispatcher("WEB-INF/pages/admin/ABMLibros.jsp").forward(request, response);
-			break;
 		}
 	}
 

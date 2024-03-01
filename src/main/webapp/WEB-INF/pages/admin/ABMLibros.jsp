@@ -1,7 +1,7 @@
 <%@page import="java.util.LinkedList"%>
 <%@ page import = "java.io.*,java.util.*" %>
 <%@page import="Entities.Socio"%>
-<%@page import="Entities.Libro, Data.DataLibro"%>
+<%@page import="Entities.Libro, Data.DataLibro, Logic.LibroLogic"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -13,13 +13,18 @@
 	<%
 		Socio c = (Socio)session.getAttribute("usuario");
 		if(!c.getAdmin()){
-			request.getRequestDispatcher("index.html").forward(request, response);		
+			request.getRequestDispatcher("index.jsp").forward(request, response);		
 		}
-	 	String mensaje = (String)request.getAttribute("estado");
-	 	
-		LinkedList<Libro> libros = new LinkedList<Libro>();
-	    DataLibro liblog = new DataLibro();
-	    libros = liblog.getAll();		
+	 	String mensaje = (String)request.getAttribute("mensaje");
+	 	LibroLogic libroLogic = new LibroLogic();
+	 	String ultimaBusqueda = (String)request.getAttribute("ultimaBusqueda");
+	 	if(ultimaBusqueda == null){
+	 		ultimaBusqueda = "";
+	 	}
+	 	List<Libro> librosBuscados = (List<Libro>)request.getAttribute("libros");
+	 	if(librosBuscados == null || librosBuscados.size() == 0){
+	 		librosBuscados = libroLogic.getAll();	 		
+	 	}	
 	%>
 </head>
 <body style="display: flex; flex-direction: column; min-height: 100vh;"><main>
@@ -39,9 +44,20 @@
 	
 	<form action="ABMLibrosForm" method="get">					
 		<div class="w-100 d-flex justify-content-between align-items-center mx-3">
-			<p class="welcome-title">Administrar libros.</p>
-			<button type="submit" name="opcion" value="alta" class="btn btn-success boton-nuevo">Añadir libro</button>			
-		</div>	
+			<p class="welcome-title">Administrar libros</p>
+			<div class="d-flex align-items-center gap-1">
+				<div class="w-100 d-flex justify-content-between align-items-center">
+					<div class="d-flex " style="gap: 4px">
+						<div class="input-group">
+							<span class="input-group-text" id="inputGroup-sizing-default">Libro</span>
+							<input type="text" name="nombreLibro" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=ultimaBusqueda%>">
+							<button type="submit" name="opcion" value="buscar" class="btn btn-outline-primary px-1 py-1 d-flex align-items-center" type="button" id="button-addon2"><i class="material-icons tiny">search</i></button>
+						</div>		
+					</div>
+				</div>	
+				<button type="submit" name="opcion" value="alta" class="btn btn-success boton-nuevo">Nuevo</button>			
+			</div>
+		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12, col-sm-12, col-12">
@@ -61,7 +77,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<% for (Libro lib : libros) {%>
+								<% for (Libro lib : librosBuscados) {%>
 								<tr>
 									<td><%=lib.getIdLibro() %></td>
 									<td><%=lib.getIsbn() %></td>

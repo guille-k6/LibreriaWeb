@@ -32,16 +32,20 @@ public class EjemplarLogic {
 		dataEjemplar.add(ejemplar);
 	}
 
-	public void update(Ejemplar ejemplar) {
+	public void update(Ejemplar ejemplar) throws Exception {
 		dataEjemplar.update(ejemplar);
 	}
 
-	public void remove(Ejemplar ejemplar) {
+	public void remove(Ejemplar ejemplar) throws Exception {
 		dataEjemplar.remove(ejemplar);
 	}
 
 	public LinkedList<EjemplarCantidad> getAmountOfLibros() {
 		return dataEjemplar.getAmountOfLibros();
+	}
+
+	public List<Ejemplar> getAllEjemplaresThatMatch(String matching) {
+		return dataEjemplar.getAllEjemplaresThatMatch(matching);
 	}
 
 	public LinkedList<Ejemplar> getAllEjemplaresByLibro(Libro libro) {
