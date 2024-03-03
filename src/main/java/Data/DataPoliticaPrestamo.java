@@ -112,7 +112,7 @@ public class DataPoliticaPrestamo {
 			}
 		}
 
-	} // FIN METODO ADD
+	}
 
 	public void update(PoliticaPrestamo PoliticaPrestamo) {
 		PreparedStatement stmt = null;
@@ -134,7 +134,7 @@ public class DataPoliticaPrestamo {
 				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
-	} // FIN METODO UPDATE
+	}
 
 	public void remove(PoliticaPrestamo PoliticaPrestamo) {
 		PreparedStatement stmt = null;
@@ -154,7 +154,7 @@ public class DataPoliticaPrestamo {
 				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
-	} // FIN METODO REMOVE
+	}
 
 	// Metodo para obtener la ultima politica de prestamo con fecha desde mas
 	// reciente
@@ -189,6 +189,6 @@ public class DataPoliticaPrestamo {
 		}
 
 		return p;
-	} // Fin Metodo getLast
+	}
 
 }

@@ -13,49 +13,30 @@ import Entities.Autor;
 import Logic.AutorLogic;
 import utils.LoggerError;
 
-/**
- * Servlet implementation class modificarAutor
- */
 @WebServlet("/modificarAutor")
 public class modificarAutor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public modificarAutor() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Traigo mi ID de autor y la opci�n elegida.
-
+		Autor autor = new Autor();
+		AutorLogic autlog = new AutorLogic();
 		String opc = request.getParameter("opcion");
 		String elId = request.getParameter("id");
 		int id = Integer.parseInt(elId);
-		Autor autor = new Autor();
 		autor.setIdAutor(id);
 
-		AutorLogic autlog = new AutorLogic();
-		// Cargo la opcion y confirmo si lo quiere eliminar o no.
 		if (opc.equals("editar")) {
 			// Guardo el atributo autorModificar para que se carguen los datos en la recarga
 			Autor autorModificar = autlog.getOneById(autor);
@@ -74,9 +55,9 @@ public class modificarAutor extends HttpServlet {
 			// Updateo el autor con sus nuevos datos (nombre y apellido).
 			try {
 				autlog.update(autor);
-				String estado = "Modificacion existosa";
-				request.setAttribute("estado", estado);
+				request.setAttribute("estado", "Modificacion existosa");
 			} catch (Exception e) {
+				request.setAttribute("estado", "Error al modificar el autor: " + autor.getIdAutor());
 				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);

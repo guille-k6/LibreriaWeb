@@ -181,7 +181,7 @@ public class DataLineaDePrestamo {
 			}
 		}
 
-	} // FIN METODO ADD ONE
+	}
 
 	public void update(LineaDePrestamo linea) {
 		PreparedStatement stmt = null;
@@ -204,7 +204,7 @@ public class DataLineaDePrestamo {
 				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
-	} // FIN METODO UPDATE
+	}
 
 	public void remove(LineaDePrestamo linea) {
 		PreparedStatement stmt = null;

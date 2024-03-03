@@ -37,9 +37,13 @@ public class bajaAutor extends HttpServlet {
 
 		AutorLogic autlog = new AutorLogic();
 		if (opc.equals("eliminar")) {
-			autlog.remove(autor);
-			String estado = "Baja existosa";
-			request.setAttribute("estado", estado);
+			try {
+				autlog.remove(autor);
+				request.setAttribute("estado", "Baja existosa");
+			} catch (Exception e) {
+				request.setAttribute("estado", "Error al eliminar Autor: " + autor.getIdAutor());
+				e.printStackTrace();
+			}
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);
 		} else if (opc.equals("cancelar")) {
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMAutores.jsp").forward(request, response);

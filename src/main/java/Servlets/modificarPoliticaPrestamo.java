@@ -90,7 +90,7 @@ public class modificarPoliticaPrestamo extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/pages/admin/ModificarPoliticaPrestamos.jsp").forward(request,
 					response);
 		}
-		request.getRequestDispatcher("WEB-INF/pages/admin/ModificarPoliticaPrestamos.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/pages/admin/ABMPoliticaPrestamos.jsp").forward(request, response);
 	}
 
 }

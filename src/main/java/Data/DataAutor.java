@@ -31,8 +31,6 @@ public class DataAutor {
 
 		} catch (SQLException e) {
 			LoggerError.log(e.getStackTrace(), e.getMessage());
-			;
-
 		} finally {
 			try {
 				if (rs != null) {
@@ -44,12 +42,11 @@ public class DataAutor {
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
 				LoggerError.log(e.getStackTrace(), e.getMessage());
-				;
 			}
 		}
 
 		return autores;
-	} // fin metodo GetAll
+	}
 
 	public Autor getById(Autor autorToSearch) {
 		Autor a = null;
@@ -67,7 +64,6 @@ public class DataAutor {
 			}
 		} catch (SQLException e) {
 			LoggerError.log(e.getStackTrace(), e.getMessage());
-			;
 		} finally {
 			try {
 				if (rs != null) {
@@ -79,12 +75,11 @@ public class DataAutor {
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
 				LoggerError.log(e.getStackTrace(), e.getMessage());
-				;
 			}
 		}
 
 		return a;
-	} // Fin Metodo GetById
+	}
 
 	public void add(Autor autor) {
 		PreparedStatement stmt = null;
@@ -113,13 +108,12 @@ public class DataAutor {
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
 				LoggerError.log(e.getStackTrace(), e.getMessage());
-				;
 			}
 		}
 
-	} // FIN METODO ADD
+	}
 
-	public void update(Autor autor) {
+	public void update(Autor autor) throws Exception {
 		PreparedStatement stmt = null;
 		try {
 			stmt = DbConnector.getInstancia().getConn()
@@ -130,7 +124,7 @@ public class DataAutor {
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			LoggerError.log(e.getStackTrace(), e.getMessage());
-			;
+			throw new Exception(e);
 		} finally {
 			try {
 				if (stmt != null)
@@ -138,12 +132,11 @@ public class DataAutor {
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
 				LoggerError.log(e.getStackTrace(), e.getMessage());
-				;
 			}
 		}
-	} // FIN METODO UPDATE
+	}
 
-	public void remove(Autor autor) {
+	public void remove(Autor autor) throws Exception {
 		PreparedStatement stmt = null;
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement("delete from autor where idautor=?");
@@ -151,7 +144,7 @@ public class DataAutor {
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			LoggerError.log(e.getStackTrace(), e.getMessage());
-			;
+			throw new Exception(e);
 		} finally {
 			try {
 				if (stmt != null)
@@ -159,9 +152,8 @@ public class DataAutor {
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
 				LoggerError.log(e.getStackTrace(), e.getMessage());
-				;
 			}
 		}
-	} // FIN METODO REMOVE
+	}
 
 }

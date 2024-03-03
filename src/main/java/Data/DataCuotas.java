@@ -287,7 +287,7 @@ public class DataCuotas {
 		}
 
 		return lasCuotas;
-	} // Fin Metodo GetById
+	}
 
 	public LinkedList<Cuotas> getCuotasAConfirmarByUser(Socio socio) {
 		LinkedList<Cuotas> lasCuotas = new LinkedList<>();
@@ -295,25 +295,19 @@ public class DataCuotas {
 		ResultSet rs = null;
 		try {
 			stmt = DbConnector.getInstancia().getConn()
-					.prepareStatement("select * from cuotas where idSocio=? and estado =?");
+					.prepareStatement("select * from cuotas where idSocio=? and estado = 'A_Confirmar'");
 			stmt.setInt(1, socio.getIdSocio());
-			stmt.setString(2, "A_Confirmar");
 			rs = stmt.executeQuery();
 			if (rs != null) {
 				while (rs.next()) {
 					Cuotas c = new Cuotas();
-					c.setIdCuota(rs.getInt("idcuotas")); // La clase se llama en plural el get es en singular pero la
-															// columna en la bd es en plural
+					c.setIdCuota(rs.getInt("idcuotas"));
 					c.setFechaPago(rs.getDate("fechaPago"));
 					c.setFechaDesde(rs.getDate("fechaDesde"));
 					c.setFechaHasta(rs.getDate("fechaHasta"));
-					// Busco el objeto autor para el libro
 					int idSocio = rs.getInt("idSocio");
 					SocioLogic soclog = new SocioLogic();
-					Socio elSocio = new Socio();
-					elSocio.setIdSocio(idSocio);
-					elSocio = soclog.getOneById(elSocio);
-					// Le agrego el autor
+					Socio elSocio = soclog.getOneById(new Socio(idSocio));
 					c.setSocio(elSocio);
 					c.setEstado(rs.getString("estado"));
 
@@ -337,7 +331,7 @@ public class DataCuotas {
 		}
 
 		return lasCuotas;
-	} // Fin Metodo GetById
+	}
 
 	public LinkedList<Socio> getUsuariosAConfirmar() {
 		LinkedList<Socio> losSocios = new LinkedList<>();
@@ -345,8 +339,7 @@ public class DataCuotas {
 		ResultSet rs = null;
 		try {
 			stmt = DbConnector.getInstancia().getConn()
-					.prepareStatement("SELECT distinct idSocio FROM cuotas where estado =?");
-			stmt.setString(1, "A_Confirmar");
+					.prepareStatement("SELECT distinct idSocio FROM cuotas where estado = 'A_Confirmar'");
 			rs = stmt.executeQuery();
 			if (rs != null) {
 				while (rs.next()) {
@@ -375,6 +368,6 @@ public class DataCuotas {
 		}
 
 		return losSocios;
-	} // Fin Metodo GetById
+	}
 
 }

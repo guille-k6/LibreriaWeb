@@ -7,10 +7,7 @@
 <head>
 	<%@ include file="../HeadTags.jsp" %>  
 	<title>Pagar cuotas</title>
-	<%
-		//if(!c.getAdmin()){
-		//	response.sendRedirect("WEB-INF/pages/menuUser.jsp");
-		//}  			
+	<%	
 		Socio c = (Socio)session.getAttribute("usuario");	
 		CuotasLogic cuolog = new CuotasLogic();
 		LinkedList<Cuotas> lasCuotas = cuolog.getCuotasImpagasByUser(c);
@@ -40,7 +37,7 @@
 									<th>Fecha hasta</th>
 									<th>Precio</th>
 									<th>Estado</th>
-									<th>Pagar?</th>									
+									<th>Pagar</th>									
 								</tr>
 							</thead>
 							<tbody>

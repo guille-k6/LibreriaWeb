@@ -41,7 +41,7 @@
 	<form action="modificarAutor" method="post" class="w-50 mt-3">
 		<div class="input-group mb-3">
 		  <span class="input-group-text" id="inputGroup-sizing-default">&emsp; ID &emsp;</span>
-		  <input type="number" name="id" value="<%=autor.getIdAutor()%>" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+		  <input type="number" name="id" value="<%=autor.getIdAutor()%>" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
 		</div>
 		
 		<div class="input-group mb-3">
