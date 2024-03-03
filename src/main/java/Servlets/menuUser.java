@@ -24,8 +24,8 @@ public class menuUser extends HttpServlet {
 		case ("verCuotasImpagas"):
 			request.getRequestDispatcher("WEB-INF/pages/user/pagarCuotas.jsp").forward(request, response);
 			break;
-		case ("alquilarLibro"):
-			request.getRequestDispatcher("WEB-INF/pages/user/alquilarLibro.jsp").forward(request, response);
+		case ("verLibros"):
+			request.getRequestDispatcher("WEB-INF/pages/user/verLibrosDisponibles.jsp").forward(request, response);
 			break;
 		}
 	}

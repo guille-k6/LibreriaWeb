@@ -10,49 +10,34 @@ import javax.servlet.http.HttpServletResponse;
 
 import Entities.Socio;
 
-/**
- * Servlet implementation class headerForm
- */
 @WebServlet("/headerForm")
 public class headerForm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public headerForm() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+	public headerForm() {
+		super();
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String opc = request.getParameter("opcion");
-		Socio elSocio = (Socio)request.getSession().getAttribute("usuario");
+		Socio elSocio = (Socio) request.getSession().getAttribute("usuario");
 
-
-		switch(opc) {
-		case("menu"):
-			if(elSocio.getAdmin()) {
+		switch (opc) {
+		case ("menu"):
+			if (elSocio.getAdmin()) {
 				request.getRequestDispatcher("WEB-INF/pages/menuAdmin.jsp").forward(request, response);
-			}
-			else {
+			} else {
 				request.getRequestDispatcher("WEB-INF/pages/menuUser.jsp").forward(request, response);
 			}
 
-		case("logout"):
+		case ("logout"):
 			response.sendRedirect("index.jsp");
 			request.getSession().invalidate(); // aca creo que borra el atributo de sesion "usuario"
 		}

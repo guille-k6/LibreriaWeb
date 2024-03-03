@@ -33,6 +33,14 @@ public class LibroLogic {
 		dataLibro.remove(libro);
 	}
 
+	public List<Libro> getAllLibrosDisponibles() {
+		return dataLibro.getAllLibrosDisponibles();
+	}
+
+	public List<Libro> getAllLibrosDisponiblesThatMatch(String input) {
+		return dataLibro.getAllLibrosDisponiblesThatMatch(input);
+	}
+
 	public LinkedList<String> validar(Libro libro, String cantDiasMaxPrestamo) {
 		LinkedList<String> losErrores = new LinkedList<>();
 		int numero;
@@ -73,7 +81,7 @@ public class LibroLogic {
 
 	public boolean parsestring(String cantDiasMaxPrestamo) {
 		try {
-			int numero = Integer.parseInt(cantDiasMaxPrestamo);
+			Integer.parseInt(cantDiasMaxPrestamo);
 			return true;
 		} catch (NumberFormatException e) {
 			return false;

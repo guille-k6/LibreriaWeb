@@ -20,11 +20,18 @@
 
 <%@ include file="../NavigationBar.jsp" %>
 
-<div class="container">
-	<p class="bienvenidoTitulo">Pago de cuotas.</p>
-	<%if(!(error == null)){%>
-	<p class="errorMensaje w-100"><%=error %></p>
-	<%};%>
+<div class="container pt-3">
+
+	<form action="headerForm" method="post">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="opcion" value="menu" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Pagar</li>
+		  </ol>
+		</nav>
+	</form>
+	
+	<p class="welcome-title">Elegir cuotas para pagar</p>
 	<form action="pagarCuotasForm" method="post">							
 		<div class="container">
 			<div class="row">
@@ -47,18 +54,23 @@
 									<td><%=cuo.getFechaHasta().toString() %></td>
 									<td><%=valorCuotas%></td>
 									<td><%=cuo.getEstado() %></td>
-									<td><input type="checkbox" name="idcheck" value="<%=cuo.getIdCuota() %>"></td>
+									<td><input class="form-check-input mt-0" type="checkbox" name="idcheck" value="<%=cuo.getIdCuota() %>"></td>
 								</tr>
 								<% }%>
 							</tbody>
 						</table>
-								<button type="submit" name="opcion" value="pagar" class="btn btn-success mt-3">Pagar seleccionadas</button>	
-								<button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>	
+						<div class="" style="width: max-content; margin-left: auto; margin-right: 1rem">
+							<button type="submit" name="opcion" value="cancelar" class="btn btn-outline-secondary mt-2">Cancelar</button>	
+							<button type="submit" name="opcion" value="pagar" class="btn btn-primary mt-2 px-4">Pagar</button>	
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>  
+	<%if(!(error == null)){%>
+	<p hidden class="mensajeInfo"><%=error %></p>
+	<%};%>
 </div>
 
 </main><%@ include file="../FooterTags.jsp" %></body>

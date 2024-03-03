@@ -12,45 +12,33 @@ import javax.servlet.http.HttpServletResponse;
 import Entities.Cuotas;
 import Logic.CuotasLogic;
 
-/**
- * Servlet implementation class ConfirmarPagoCuotas
- */
 @WebServlet("/ConfirmarPagoCuotas")
 public class ConfirmarPagoCuotas extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ConfirmarPagoCuotas() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	public ConfirmarPagoCuotas() {
+		super();
+	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		CuotasLogic cuolog = new CuotasLogic();
 
 		String opc = request.getParameter("opcion");
-		switch(opc) {
-		case("pagar"):
+		switch (opc) {
+		case ("pagar"):
 			LinkedList<Cuotas> lasCuotas = new LinkedList<>();
 			String cuotasPagar[] = request.getParameterValues("idcheck"); // Array con los ID de las cuotas a pagar.
-
-			for(String idCuota : cuotasPagar) {
+			for (String idCuota : cuotasPagar) {
 				int elId = Integer.parseInt(idCuota);
 				Cuotas cuota = new Cuotas();
 				cuota.setIdCuota(elId);
@@ -59,13 +47,13 @@ public class ConfirmarPagoCuotas extends HttpServlet {
 				cuota.setEstado("A_Confirmar"); // Las actualiza para que el admin se las de como pagas
 				cuolog.update(cuota);
 			}
-			String estado = "Solicitud de pago enviada. Realice el pago fisicamente a la biblioteca y se le aprobar� la solicitud.";
+			String estado = "Solicitud creada. Acerquese a la biblioteca a pagar";
 
 			request.setAttribute("estado", estado);
 			request.getRequestDispatcher("WEB-INF/pages/menuUser.jsp").forward(request, response);
 			break;
-		case("cancelar"):
-			request.getRequestDispatcher("WEB-INF/pages/user/pagarCuotas.jsp").forward(request, response);
+		case ("cancelar"):
+			request.getRequestDispatcher("WEB-INF/pages/menuUser.jsp").forward(request, response);
 			break;
 		}
 	}

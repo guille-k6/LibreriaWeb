@@ -21,6 +21,7 @@
 		double costoPorCuota = valcuolog.getValorActual();
 		double costoTotal = 0;
 		
+		// No es muy costoso hacer un getOne por cada cuota ya que suponemos que la cantidad de cuotas a pagar de un usuario no va a ser muy grande
 		for(String elIdCuota : lasCuotas){
 			int elId = Integer.parseInt(elIdCuota);
 			Cuotas cuota = new Cuotas();
@@ -42,8 +43,19 @@
 
 <%@ include file="../NavigationBar.jsp" %>
 
-<div class="container">
-	<p class="bienvenidoTitulo">Confirmar pago de cuotas.</p>
+<div class="container pt-3">
+
+	<form action="breadcrumb" method="get">
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="menuUser.jsp" class="button-emula-anchor">Home</button></li>
+		    <li class="breadcrumb-item"><button type="submit" name="page" value="user/pagarCuotas.jsp" class="button-emula-anchor">Pagar</button></li>
+		    <li class="breadcrumb-item active" aria-current="page">Confirmar</li>
+		  </ol>
+		</nav>
+	</form>
+	
+	<p class="welcome-title">Confirmar pedido de pago de cuotas</p>
 
 	<form action="ConfirmarPagoCuotas" method="post" class="w-50">							
 		<div class="container">
@@ -69,9 +81,9 @@
 								<% }%>
 							</tbody>
 						</table>
-						<h3>El total a pagar es de: <%=costoTotal %></h3>
-						<button type="submit" name="opcion" value="pagar" class="btn btn-success mt-3">Pagar</button>	
-						<button type="submit" name="opcion" value="cancelar" class="btn btn-danger mt-3">Cancelar</button>	
+						<div class="fs-4 mb-2">El total a pagar es de: <span class="fw-semibold">$<%=costoTotal%></span></div>
+						<button type="submit" name="opcion" value="pagar" class="btn btn-primary mt-2 px-4">Pagar</button>	
+						<button type="submit" name="opcion" value="cancelar" class="btn btn-outline-secondary mt-2">Cancelar</button>	
 					</div>
 				</div>
 			</div>

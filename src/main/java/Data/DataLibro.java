@@ -240,4 +240,97 @@ public class DataLibro {
 		return libros;
 	}
 
+	public List<Libro> getAllLibrosDisponibles() {
+		Statement stmt = null;
+		ResultSet rs = null;
+		List<Libro> libros = new LinkedList<>();
+		try {
+			stmt = DbConnector.getInstancia().getConn().createStatement();
+			rs = stmt.executeQuery(
+					"select *, count(e.idEjemplar) as cantidad from ejemplar e inner join libro l on l.idlibro = e.idLibro where e.disponible = 1 group by l.idLibro having cantidad > 0;");
+			if (rs != null) {
+				while (rs.next()) {
+					Libro l = new Libro();
+					l.setIdLibro(rs.getInt("idlibro"));
+					l.setIsbn(rs.getString("isbn"));
+					l.setTitulo(rs.getString("titulo"));
+					l.setEditorial(rs.getString("editorial"));
+					l.setFechaEdicion(rs.getDate("fechaEdicion"));
+					l.setCantDiasMaxPrestamo(rs.getInt("cantDiasMaxPrestamo"));
+
+					int idAutor = rs.getInt("idAutor");
+					AutorLogic autlog = new AutorLogic();
+					Autor elAutor = autlog.getOneById(new Autor(idAutor));
+					l.setAutor(elAutor);
+					libros.add(l);
+				}
+			}
+		} catch (SQLException e) {
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+			}
+		}
+		return libros;
+	}
+
+	public List<Libro> getAllLibrosDisponiblesThatMatch(String input) {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Libro> libros = new ArrayList<>();
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+					"select *, count(e.idejemplar) as cantidad from ejemplar e inner join libro l on l.idlibro = e.idLibro inner join autor a on l.idAutor = a.idautor where e.disponible = 1 and l.titulo LIKE ? OR a.nombre LIKE ? OR a.apellido LIKE ? OR concat(a.nombre, ' ', a.apellido) LIKE ? group by l.idLibro having cantidad > 0;");
+			String likeMatcher = "%" + input + "%";
+			stmt.setString(1, likeMatcher);
+			stmt.setString(2, likeMatcher);
+			stmt.setString(3, likeMatcher);
+			stmt.setString(4, likeMatcher);
+			rs = stmt.executeQuery();
+			if (rs != null) {
+				while (rs.next()) {
+					Autor a = new Autor();
+					a.setNombre(rs.getString("nombre"));
+					a.setApellido(rs.getString("apellido"));
+					Libro l = new Libro();
+					l.setIdLibro(rs.getInt("idLibro"));
+					l.setTitulo(rs.getString("titulo"));
+					l.setIsbn(rs.getString("isbn"));
+					l.setEditorial(rs.getString("editorial"));
+					l.setFechaEdicion(rs.getDate("fechaEdicion"));
+					l.setCantDiasMaxPrestamo(rs.getInt("cantDiasMaxPrestamo"));
+					l.setAutor(a);
+					libros.add(l);
+				}
+			}
+
+		} catch (SQLException e) {
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+			}
+		}
+		return libros;
+	}
+
 }

@@ -35,6 +35,8 @@
 		</div>		
 	</form> 
 </div>
-
+	<%if(mensaje != null){ %>
+		<p hidden class="mensajeInfo"><%=mensaje%></p>
+	<%} %>	
 </main><%@ include file="FooterTags.jsp" %></body>
 </html>
