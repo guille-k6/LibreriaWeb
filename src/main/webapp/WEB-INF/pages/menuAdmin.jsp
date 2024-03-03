@@ -30,6 +30,7 @@
 				    <button type="submit" name="opcion" value="abmLibros" class="opcionMenu">> Administrar libros</button>
 				    <button type="submit" name="opcion" value="abmEjemplares" class="opcionMenu">> Administrar ejemplares</button>			
 				    <button type="submit" name="opcion" value="abmPoliticaPrestamos" class="opcionMenu">> Administrar politica de prestamo</button>
+				    <button type="submit" name="opcion" value="abmSocios" class="opcionMenu">> Administrar socios</button>
 				</div>
 			</div>
 			<div class="col-3">

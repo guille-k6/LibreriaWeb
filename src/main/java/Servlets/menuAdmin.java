@@ -38,6 +38,9 @@ public class menuAdmin extends HttpServlet {
 		case ("abmEjemplares"):
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMEjemplares.jsp").forward(request, response);
 			break;
+		case ("abmSocios"):
+			request.getRequestDispatcher("WEB-INF/pages/admin/ABMSocios.jsp").forward(request, response);
+			break;
 		case ("cobrarCuotas"):
 			request.getRequestDispatcher("WEB-INF/pages/admin/UsuariosAConfirmar.jsp").forward(request, response);
 			break;
