@@ -1,5 +1,6 @@
 package Data;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -368,6 +369,29 @@ public class DataCuotas {
 		}
 
 		return losSocios;
+	}
+	
+	/**
+	 * obtiene una lista de todos para todos los socios que no tienen una cuota registrada este mes. Luego, iterara sobre esta lista y inserta las cuotas nuevas
+	 */
+	public void addCuotaForAll() {
+	    String sqlGetSocios = "SELECT idSocio FROM socios WHERE idSocio NOT IN (SELECT idSocio FROM cuotas WHERE MONTH(fechaDesde) = MONTH(CURDATE()) AND YEAR(fechaDesde) = YEAR(CURDATE()))";
+	    String sqlAddCuota = "INSERT INTO cuotas(idSocio, fechaPago, fechaDesde, fechaHasta, estado) VALUES (?, NULL, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 1 MONTH), 'pendiente')";
+
+	    try (Connection conn = DbConnector.getInstancia().getConn();
+	         PreparedStatement pstmtGetSocios = conn.prepareStatement(sqlGetSocios);
+	         ResultSet rs = pstmtGetSocios.executeQuery();
+	         PreparedStatement pstmtAddCuota = conn.prepareStatement(sqlAddCuota)) {
+
+	        while (rs.next()) {
+	            int idSocio = rs.getInt("idSocio");
+	            pstmtAddCuota.setInt(1, idSocio);
+	            pstmtAddCuota.executeUpdate();
+	        }
+
+	    } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	    }
 	}
 
 }

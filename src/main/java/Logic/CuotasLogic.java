@@ -66,4 +66,8 @@ public class CuotasLogic {
 	public LinkedList<Socio> getSocioAConfirmar() {
 		return dataCuotas.getUsuariosAConfirmar();
 	}
+
+	public void addCuotaForAll() {
+		dataCuotas.addCuotaForAll();
+	}
 }
