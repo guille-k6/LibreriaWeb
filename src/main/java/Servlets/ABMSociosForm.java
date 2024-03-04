@@ -45,16 +45,7 @@ public class ABMSociosForm extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/pages/admin/AltaSocios.jsp").forward(request, response);
 		} else if (edit != null) {
 			String idModificar = request.getParameter("editar");
-			SocioLogic liblog = new SocioLogic();
-			Socio Socio = new Socio();
-
 			request.setAttribute("idModificar", idModificar);
-
-			// Busco el Socio con ese ID y lo mando como par�metro al autor a la p�gina de
-			// modificar.
-			Socio.setIdSocio(Integer.parseInt(idModificar));
-			Socio SocioModificar = liblog.getOneById(Socio);
-			request.setAttribute("SocioModificar", SocioModificar);
 			request.getRequestDispatcher("WEB-INF/pages/admin/ModificarSocios.jsp").forward(request, response);
 		} else if (eliminar != null) {
 			String idBaja = request.getParameter("eliminar");

@@ -37,15 +37,20 @@
 	for (String error : errores) {%>
 	<p class="errorMensaje"><%=error %></p>
 	<%}};%>
-	<form action="altaSocio" method="post" class="w-50 mt-3">	
+	<form action="altaSocio" method="post" class="w-50 mt-3">
 		<div class="input-group mb-3">
-		  <span class="input-group-text" id="inputGroup-sizing-default">Apellido</span>
-		  <input type="text" name="apellido" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-		</div>
+		  <span class="input-group-text" id="inputGroup-sizing-default">Usuario</span>
+		  <input type="text" name="usuario" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+		</div>	
 		
 		<div class="input-group mb-3">
 		  <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
 		  <input type="text" name="nombre" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+		</div>
+		
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Apellido</span>
+		  <input type="text" name="apellido" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 		</div>
 		
 		<div class="input-group mb-3">
@@ -71,12 +76,11 @@
 			<span class="input-group-text" id="inputGroup-sizing-default">Repetir Contraseña</span>
 			<input type="password" name="repetirContrasenia" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 		</div>
-		<div>
-			<input type="checkbox" id="isAdmin" name="isAdmin" class="form-check-input mt-0" aria-label="Checkbox for following text input">
-		</div>
 		<div class="input-group mb-3">
-		  <span class="input-group-text" id="inputGroup-sizing-default">Usuario</span>
-		  <input type="text" name="usuario" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+		  <div class="input-group-text">
+		    <input class="form-check-input mt-0" type="checkbox" name="isadmin" aria-label="Checkbox for following text input">
+		  </div>
+		  <div class="form-control" aria-label="Text input with checkbox">Es administrador?</div>
 		</div>
 				
 		<button type="submit" name="opcion" value="crearSocio" class="btn btn-primary mt-2 px-4">Crear</button>

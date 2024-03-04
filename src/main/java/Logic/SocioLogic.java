@@ -27,12 +27,20 @@ public class SocioLogic {
 		dataSocio.add(socio);
 	}
 
-	public void update(Socio socio) {
+	public void update(Socio socio) throws Exception {
 		dataSocio.update(socio);
 	}
 
-	public void remove(Socio socio) {
+	public void updateWithoutPassword(Socio socio) throws Exception {
+		dataSocio.updateWithoutPassword(socio);
+	}
+
+	public void remove(Socio socio) throws Exception {
 		dataSocio.remove(socio);
+	}
+
+	public boolean isUsernameAvailable(String username) {
+		return dataSocio.isUsernameAvailable(username);
 	}
 
 	public LinkedList<Socio> getAllByApellido(Socio socio) {
@@ -71,11 +79,4 @@ public class SocioLogic {
 		PoliticaPrestamo pp = ppl.getLast();
 		return pp.getCantMaxLibrosPend() - this.getCantidadLibrosPrestadosBySocio(socio);
 	}
-	/*
-	 * public Socio getByUser(Socio socio){ Socio elSocio = new Socio();
-	 * elSocio.setIdSocio(-1); LinkedList<Socio> losSocios = dataSocio.getAll(); for
-	 * (Socio s : losSocios) { if (s.getUsuario().equals(socio.getUsuario()) && ) {
-	 * elSocio = s; } } return elSocio; // si no se encuentra el socio, devuelve un
-	 * socio vacio con id = -1 }
-	 */
 }

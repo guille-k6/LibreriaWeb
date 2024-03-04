@@ -35,7 +35,7 @@ public class LoggerError {
 
 			fh.close();
 		} catch (Exception e) {
-			LoggerError.log(e.getStackTrace(), e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -61,7 +61,7 @@ public class LoggerError {
 				libraryLogs.add(lLog);
 			}
 		} catch (Exception e) {
-			LoggerError.log(e.getStackTrace(), e.getMessage());
+			e.printStackTrace();
 		}
 		return libraryLogs;
 	}

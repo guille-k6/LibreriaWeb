@@ -72,6 +72,7 @@ public class DataSocio {
 				s.setDomicilio(rs.getString("domicilio"));
 				s.setTelefono(rs.getString("telefono"));
 				s.setUsuario(rs.getString("usuario"));
+				s.setAdmin(rs.getBoolean("isAdmin"));
 			}
 		} catch (SQLException e) {
 			LoggerError.log(e.getStackTrace(), e.getMessage());
@@ -91,7 +92,7 @@ public class DataSocio {
 		}
 
 		return s;
-	} // Fin Metodo GetById
+	}
 
 	public void add(Socio socio) {
 		PreparedStatement stmt = null;
@@ -129,9 +130,9 @@ public class DataSocio {
 			}
 		}
 
-	} // FIN METODO ADD
+	}
 
-	public void update(Socio socio) {
+	public void update(Socio socio) throws Exception {
 		PreparedStatement stmt = null;
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement(
@@ -146,8 +147,9 @@ public class DataSocio {
 			stmt.setString(8, socio.getUsuario());
 			stmt.setInt(9, socio.getIdSocio());
 			stmt.executeUpdate();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			LoggerError.log(e.getStackTrace(), e.getMessage());
+			throw new Exception(e);
 		} finally {
 			try {
 				if (stmt != null)
@@ -157,9 +159,37 @@ public class DataSocio {
 				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
-	} // FIN METODO UPDATE
+	}
 
-	public void remove(Socio socio) {
+	public void updateWithoutPassword(Socio socio) throws Exception {
+		PreparedStatement stmt = null;
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+					"update socio set nombre=?, apellido=?, email=?, domicilio=?, telefono=?, isAdmin=?, usuario=? where idsocio=?");
+			stmt.setString(1, socio.getNombre());
+			stmt.setString(2, socio.getApellido());
+			stmt.setString(3, socio.getEmail());
+			stmt.setString(4, socio.getDomicilio());
+			stmt.setString(5, socio.getTelefono());
+			stmt.setBoolean(6, socio.getAdmin());
+			stmt.setString(7, socio.getUsuario());
+			stmt.setInt(8, socio.getIdSocio());
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+			throw new Exception(e);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+			}
+		}
+	}
+
+	public void remove(Socio socio) throws Exception {
 		PreparedStatement stmt = null;
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement("delete from socio where idsocio=?");
@@ -167,6 +197,7 @@ public class DataSocio {
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			LoggerError.log(e.getStackTrace(), e.getMessage());
+			throw new Exception(e);
 		} finally {
 			try {
 				if (stmt != null)
@@ -176,7 +207,7 @@ public class DataSocio {
 				LoggerError.log(e.getStackTrace(), e.getMessage());
 			}
 		}
-	} // FIN METODO REMOVE
+	}
 
 	public Socio getByUser(Socio socio) {
 		Socio returnedSocio = null;
@@ -300,6 +331,35 @@ public class DataSocio {
 			}
 		}
 		return socios;
+	}
+
+	public boolean isUsernameAvailable(String username) {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		boolean isAvailable = true;
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("select * from socio where usuario=?");
+			stmt.setString(1, username);
+			rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+				isAvailable = false;
+			}
+		} catch (SQLException e) {
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				LoggerError.log(e.getStackTrace(), e.getMessage());
+			}
+		}
+		return isAvailable;
 	}
 
 }

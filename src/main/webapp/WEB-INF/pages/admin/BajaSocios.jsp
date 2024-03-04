@@ -40,13 +40,18 @@
 		</div>	
 	
 		<div class="input-group mb-3">
-		  <span class="input-group-text" id="inputGroup-sizing-default">Apellido</span>
-		  <input type="text" name="apellido" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=Socio.getApellido()%>" readonly value="<%=Socio.getIdSocio()%>" readonly>
+		  <span class="input-group-text" id="inputGroup-sizing-default">Usuario</span>
+		  <input type="text" name="usuario" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=Socio.getUsuario()%>" readonly>
 		</div>
 		
 		<div class="input-group mb-3">
 		  <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
 		  <input type="text" name="nombre" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=Socio.getNombre()%>" readonly>
+		</div>
+		
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="inputGroup-sizing-default">Apellido</span>
+		  <input type="text" name="apellido" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=Socio.getApellido()%>" readonly value="<%=Socio.getIdSocio()%>" readonly>
 		</div>
 		
 		<div class="input-group mb-3">
@@ -62,17 +67,7 @@
 		<div class="input-group mb-3">
 		  <span class="input-group-text" id="inputGroup-sizing-default">Telefono</span>
 		  <input type="text" name="telefono" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=Socio.getTelefono()%>" readonly>
-		</div>
-		
-		<div class="input-group mb-3">
-	      <span class="input-group-text" id="inputGroup-sizing-default">Admin</span>
-	      <input type="checkbox" name="admin" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" <%=Socio.getAdmin() ? "checked" : ""%> readonly>
-		</div>
-		
-		<div class="input-group mb-3">
-		  <span class="input-group-text" id="inputGroup-sizing-default">Usuario</span>
-		  <input type="text" name="usuario" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=Socio.getUsuario()%>" readonly>
-		</div>
+		</div>	
 				
 		<button type="submit" name="opcion" value="eliminar" class="btn btn-primary mt-2 px-4">Eliminar</button>
         <button type="submit" name="opcion" value="cancelar" class="btn btn-outline-secondary mt-2">Cancelar</button>

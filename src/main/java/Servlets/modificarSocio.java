@@ -1,10 +1,6 @@
 package Servlets;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.LinkedList;
-import java.util.List;
-import utils.PasswordEncrypter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import Entities.Socio;
 import Logic.SocioLogic;
+import utils.PasswordEncrypter;
 
 /**
  * Servlet implementation class modificarSocio
@@ -37,33 +34,48 @@ public class modificarSocio extends HttpServlet {
 			throws ServletException, IOException {
 		String opc = request.getParameter("opcion");
 		int id = Integer.parseInt(request.getParameter("id"));
-		Socio Socio = new Socio(id);
+		Socio socio = new Socio(id);
 
 		SocioLogic soclog = new SocioLogic();
 		if (opc.equals("editar")) {
-			Socio SocioModificar = soclog.getOneById(Socio);
-			request.setAttribute("SocioModificar", SocioModificar);
+			Socio socioModificar = soclog.getOneById(socio);
+			request.setAttribute("SocioModificar", socioModificar);
 			String apellido = request.getParameter("apellido");
 			String nombre = request.getParameter("nombre");
 			String email = request.getParameter("email");
 			String domicilio = request.getParameter("domicilio");
 			String telefono = request.getParameter("telefono");
 			String contrasenia = request.getParameter("contrasenia");
+			String isAdminString = request.getParameter("isadmin");
+			String usuario = request.getParameter("usuario");
 
-			Socio.setApellido(apellido);
-			Socio.setNombre(nombre);
-			Socio.setEmail(email);
-            Socio.setDomicilio(domicilio);
-            Socio.setTelefono(telefono);
-			if (contrasenia != null && !contrasenia.isBlank()) {
-				Socio.setContrasenia(PasswordEncrypter.sha256(contrasenia));
+			socio.setApellido(apellido);
+			socio.setNombre(nombre);
+			socio.setEmail(email);
+			socio.setDomicilio(domicilio);
+			socio.setTelefono(telefono);
+			if (soclog.isUsernameAvailable(usuario) || socioModificar.getUsuario().equals(usuario)) {
+				socio.setUsuario(usuario);
+			} else {
+				request.setAttribute("mensaje", "El usuario: " + usuario + ". No esta disponible");
+				request.getRequestDispatcher("WEB-INF/pages/admin/ABMSocios.jsp").forward(request, response);
 			}
+			boolean isAdmin = false;
+			if (isAdminString != null) {
+				isAdmin = true;
+			}
+			socio.setAdmin(isAdmin);
 			try { // Si esta todo bien, ejecuto el update
-				soclog.update(Socio);
+				if (contrasenia != null && !contrasenia.isBlank()) {
+					socio.setContrasenia(PasswordEncrypter.sha256(contrasenia));
+					soclog.update(socio);
+				} else {
+					soclog.updateWithoutPassword(socio);
+				}
 				request.setAttribute("mensaje", "Modificacion existosa");
 				request.getRequestDispatcher("WEB-INF/pages/admin/ABMSocios.jsp").forward(request, response);
 			} catch (Exception e) {
-				request.setAttribute("mensaje", "Error al modificar el Socio: " + Socio.getIdSocio());
+				request.setAttribute("mensaje", "Error al modificar el Socio: " + socio.getIdSocio());
 				request.getRequestDispatcher("WEB-INF/pages/admin/ABMSocios.jsp").forward(request, response);
 			}
 

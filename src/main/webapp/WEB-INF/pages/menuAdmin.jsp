@@ -18,7 +18,7 @@
 </head>
 <body style="display: flex; flex-direction: column; min-height: 100vh;"><main>
 <%@ include file="NavigationBar.jsp" %>
-<div class="container">
+<div class="container mt-3">
 	<p class="welcome-title mb-3">Bienvenido de nuevo, <%= c.getNombre() + " " + c.getApellido()%>.</p>
 	<h3 class="welcome-second-title mt-3">Gestiona tu biblioteca</h3>
 	<form action="menuAdmin" method="get">		
