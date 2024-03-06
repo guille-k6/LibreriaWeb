@@ -2,7 +2,7 @@
 Trabajo práctico integrador de la cátedra de Java (cursado año 2022).
 ## Integrantes: 
 - Casey, Guillermo. Legajo: 47026.
-- Dominguez, Bernardo. Legajo: .
+- Dominguez, Bernardo. Legajo: 43213.
 
 ### Especificaciones
 Sistema web para la administración de una biblioteca. 
@@ -20,22 +20,23 @@ Sistema web para la administración de una biblioteca.
 #### Caso de uso complejo
 `Préstamo de un libro`. Cuando un usuario se acerca a la biblioteca y elige los libros que tomará como préstamo, el usuario administrador generará un préstamo para ese usuario. En el proceso se validará que el usuario no incumpla la política de préstamo y que tenga la cuota del mes paga.
 
-#### Caso de uso simple.
-
 #### Requerimientos adicionales
 - Logeo de errores. Cada vez que ocurre una excepción, se logea el stacktrace y el mensaje de excepción en un archivo de texto plano.
 
 - Manejo global de excepciones.
 
-#### Listado simple
- - Listado de socios deudores
-
 #### Listado complejo
- - Listado de libros alquilados por socios entre medio de dos fechas.
+ - Listado de cuotas con su estado por un socio entre dos fechas.
 
 #### Niveles de acceso
 - Usuario: Usuario final que podrá ver sus *préstamos* y *libros*.
-- Administrador: Administrador del sistema que podrá modificar todas las entidades y dar de alta los *préstamos*.    
+- Administrador: Administrador del sistema que podrá modificar todas las entidades y dar de alta los *préstamos*.  
+
+#### Users para el sistema
+- juanperez : juanperez1 ADMIN
+- johndoe : johndoe1  
+- gcasey : gcasey
+- bdominguez : bdominguez ADMIN
 
 
 
