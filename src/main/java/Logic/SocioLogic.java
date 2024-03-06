@@ -3,6 +3,7 @@ package Logic;
 import java.util.LinkedList;
 import java.util.List;
 
+import Data.DataCuotas;
 import Data.DataSocio;
 import Entities.PoliticaPrestamo;
 import Entities.Socio;
@@ -78,5 +79,15 @@ public class SocioLogic {
 		PoliticaPrestamoLogic ppl = new PoliticaPrestamoLogic();
 		PoliticaPrestamo pp = ppl.getLast();
 		return pp.getCantMaxLibrosPend() - this.getCantidadLibrosPrestadosBySocio(socio);
+	}
+
+	/**
+	 * Se fija si el socio pago la cuota para este mes
+	 * 
+	 * @return true si el socio pago la cuota actual, false si la debe
+	 */
+	public boolean checkIfSocioPaidCurrentCuota(Socio socio) {
+		DataCuotas dataCuotas = new DataCuotas();
+		return dataCuotas.checkIfSocioPaidCurrentCuota(socio);
 	}
 }

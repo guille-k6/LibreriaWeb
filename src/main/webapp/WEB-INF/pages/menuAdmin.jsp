@@ -50,6 +50,7 @@
 				<p class="menu-title">General</p>
 				<div class="section-column">
 		    	    <button type="submit" name="opcion" value="verErrores" class="opcionMenu">> Registro de errores</button>
+		    	    <button type="submit" name="opcion" value="listarCuotas" class="opcionMenu">> Listado de cuotas</button>
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,9 @@
 package utils;
 
+import Data.DataCuotas;
+import Entities.Socio;
+import Logic.CuotasLogic;
+
 public class Test {
 
 	public static void main(String[] args) {
@@ -93,8 +97,14 @@ public class Test {
 //		Socio s = new Socio();
 //		s.setIdSocio(1);
 //		System.out.println(pl.isUserCapableOfLoan(s));
-		System.out.println(PasswordEncrypter.sha256("nado"));
-		int a = 1;
+//		System.out.println(PasswordEncrypter.sha256("nado"));
+//		int a = 1;
+
+		CuotasLogic cl = new CuotasLogic();
+		cl.addCuotaForAll();
+		DataCuotas dc = new DataCuotas();
+		boolean siono = dc.checkIfSocioPaidCurrentCuota(new Socio(2));
+		System.out.println(siono);
 	}
 
 }

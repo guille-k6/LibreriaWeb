@@ -98,10 +98,13 @@ public class PrestamoLogic {
 	 *         ejecutar un prestamo
 	 */
 	public static Optional<String> isUserCapableOfLoan(Socio socio) {
-        SocioLogic sLogic = new SocioLogic();
-        int cantidadLibrosPrestados = sLogic.getPossibleAmountOfBooks(socio);
+		SocioLogic sLogic = new SocioLogic();
+		int cantidadLibrosPrestados = sLogic.getPossibleAmountOfBooks(socio);
 		if (cantidadLibrosPrestados <= 0) {
 			return Optional.of("El socio no puede pedir prestado mas libros");
+		}
+		if (!sLogic.checkIfSocioPaidCurrentCuota(socio)) {
+			return Optional.of("El socio no pago la cuota este mes");
 		}
 		return Optional.empty();
 	}

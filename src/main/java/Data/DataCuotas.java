@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import Entities.Cuotas;
 import Entities.Socio;
@@ -370,28 +372,74 @@ public class DataCuotas {
 
 		return losSocios;
 	}
-	
+
 	/**
-	 * obtiene una lista de todos para todos los socios que no tienen una cuota registrada este mes. Luego, iterara sobre esta lista y inserta las cuotas nuevas
+	 * obtiene una lista de todos para todos los socios que no tienen una cuota
+	 * registrada este mes. Luego, iterara sobre esta lista e inserta las cuotas
+	 * nuevas
 	 */
 	public void addCuotaForAll() {
-	    String sqlGetSocios = "SELECT idSocio FROM socios WHERE idSocio NOT IN (SELECT idSocio FROM cuotas WHERE MONTH(fechaDesde) = MONTH(CURDATE()) AND YEAR(fechaDesde) = YEAR(CURDATE()))";
-	    String sqlAddCuota = "INSERT INTO cuotas(idSocio, fechaPago, fechaDesde, fechaHasta, estado) VALUES (?, NULL, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 1 MONTH), 'pendiente')";
+		String sqlGetSocios = "SELECT idSocio FROM socio WHERE idSocio NOT IN (SELECT idSocio FROM cuotas WHERE MONTH(fechaDesde) = MONTH(CURDATE()) AND YEAR(fechaDesde) = YEAR(CURDATE()))";
+		String sqlAddCuota = "INSERT INTO cuotas(idSocio, fechaPago, fechaDesde, fechaHasta) VALUES (?, NULL, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 1 MONTH))";
 
-	    try (Connection conn = DbConnector.getInstancia().getConn();
-	         PreparedStatement pstmtGetSocios = conn.prepareStatement(sqlGetSocios);
-	         ResultSet rs = pstmtGetSocios.executeQuery();
-	         PreparedStatement pstmtAddCuota = conn.prepareStatement(sqlAddCuota)) {
+		try (Connection conn = DbConnector.getInstancia().getConn();
+				PreparedStatement pstmtGetSocios = conn.prepareStatement(sqlGetSocios);
+				ResultSet rs = pstmtGetSocios.executeQuery();
+				PreparedStatement pstmtAddCuota = conn.prepareStatement(sqlAddCuota)) {
 
-	        while (rs.next()) {
-	            int idSocio = rs.getInt("idSocio");
-	            pstmtAddCuota.setInt(1, idSocio);
-	            pstmtAddCuota.executeUpdate();
-	        }
+			while (rs.next()) {
+				int idSocio = rs.getInt("idSocio");
+				pstmtAddCuota.setInt(1, idSocio);
+				pstmtAddCuota.executeUpdate();
+			}
 
-	    } catch (SQLException e) {
-	        System.out.println(e.getMessage());
-	    }
+		} catch (SQLException e) {
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+		}
+	}
+
+	public boolean checkIfSocioPaidCurrentCuota(Socio socio) {
+		boolean socioPaid = true;
+		String query = "SELECT * FROM cuotas c where idSocio = ? AND MONTH(c.fechaDesde) = MONTH(CURDATE()) AND YEAR(c.fechaDesde) = YEAR(CURDATE()) AND fechaPago is null";
+		try (Connection conn = DbConnector.getInstancia().getConn();
+				PreparedStatement pStatement = conn.prepareStatement(query)) {
+			pStatement.setInt(1, socio.getIdSocio());
+			ResultSet rs = pStatement.executeQuery();
+
+			while (rs != null && rs.next()) {
+				socioPaid = false;
+			}
+
+		} catch (SQLException e) {
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+		}
+		return socioPaid;
+	}
+
+	public List<Cuotas> getCuotasBySocioAndDate(Socio socio, java.sql.Date fechaDesde, java.sql.Date fechaHasta) {
+		List<Cuotas> cuotas = new ArrayList<>();
+		String query = "SELECT * FROM cuotas WHERE idSocio = ? AND fechaDesde >= ? AND fechaHasta <= ?";
+		try (Connection conn = DbConnector.getInstancia().getConn();
+				PreparedStatement pStatement = conn.prepareStatement(query)) {
+			pStatement.setInt(1, socio.getIdSocio());
+			pStatement.setDate(2, fechaDesde);
+			pStatement.setDate(3, fechaHasta);
+			ResultSet rs = pStatement.executeQuery();
+
+			while (rs != null && rs.next()) {
+				Cuotas cuota = new Cuotas();
+				cuota.setIdCuota(rs.getInt("idcuotas"));
+				cuota.setFechaDesde(rs.getDate("fechaDesde"));
+				cuota.setFechaHasta(rs.getDate("fechaHasta"));
+				cuota.setFechaPago(rs.getDate("fechaPago"));
+				cuota.setEstado(rs.getString("estado"));
+				cuotas.add(cuota);
+			}
+
+		} catch (SQLException e) {
+			LoggerError.log(e.getStackTrace(), e.getMessage());
+		}
+		return cuotas;
 	}
 
 }

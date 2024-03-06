@@ -23,7 +23,6 @@
 	 	if(sociosBuscados == null || sociosBuscados.size() == 0){
 	 		sociosBuscados = socioLogic.getAll();	 		
 	 	}
-	 	
 
 	%>
 </head>

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Logic.CuotasLogic;
+
 @WebServlet("/menuAdmin")
 public class menuAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,6 +29,7 @@ public class menuAdmin extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		CuotasLogic cuotasLogic = new CuotasLogic();
 		String opc = request.getParameter("opcion");
 		switch (opc) {
 		case ("abmAutores"):
@@ -42,6 +45,8 @@ public class menuAdmin extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/pages/admin/ABMSocios.jsp").forward(request, response);
 			break;
 		case ("cobrarCuotas"):
+			// Agrega cuotas a los usuarios que les falte para este mes;
+			cuotasLogic.addCuotaForAll();
 			request.getRequestDispatcher("WEB-INF/pages/admin/UsuariosAConfirmar.jsp").forward(request, response);
 			break;
 		case ("prestarEjemplar"):
@@ -58,6 +63,9 @@ public class menuAdmin extends HttpServlet {
 			break;
 		case ("verErrores"):
 			request.getRequestDispatcher("WEB-INF/pages/admin/LogErrores.jsp").forward(request, response);
+			break;
+		case ("listarCuotas"):
+			request.getRequestDispatcher("WEB-INF/pages/admin/ListadoCuotas.jsp").forward(request, response);
 			break;
 		}
 

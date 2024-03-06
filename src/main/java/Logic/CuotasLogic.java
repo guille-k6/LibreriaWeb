@@ -1,6 +1,7 @@
 package Logic;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import Data.DataCuotas;
 import Entities.Cuotas;
@@ -69,5 +70,9 @@ public class CuotasLogic {
 
 	public void addCuotaForAll() {
 		dataCuotas.addCuotaForAll();
+	}
+
+	public List<Cuotas> getCuotasBySocioAndDate(Socio socio, java.sql.Date fechaDesde, java.sql.Date fechaHasta) {
+		return dataCuotas.getCuotasBySocioAndDate(socio, fechaDesde, fechaHasta);
 	}
 }

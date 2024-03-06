@@ -4,3 +4,5 @@ feb. 25, 2024 11:34:48 P. M. utils.LoggerError log
 SEVERE:  Stack: [utils.Test.main(Test.java:72)] // Message: / by zero @
 feb. 25, 2024 11:34:49 P. M. utils.LoggerError log
 SEVERE:  Stack: [utils.Test.main(Test.java:72)] // Message: / by zero @
+mar. 05, 2024 7:25:47 P. M. utils.LoggerError log
+SEVERE:  Stack: [com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1009), Data.DataCuotas.addCuotaForAll(DataCuotas.java:385), Logic.CuotasLogic.addCuotaForAll(CuotasLogic.java:71), utils.Test.main(Test.java:102)] // Message: Table 'biblioteca.socios' doesn't exist @
