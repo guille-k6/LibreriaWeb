@@ -1,7 +1,0 @@
-usuarios y contraseñas:
-
-juanperez : juanperez1
-johndoe : johndoe1
-gcasey : gcasey
-bdominguez : bdominguez
-
